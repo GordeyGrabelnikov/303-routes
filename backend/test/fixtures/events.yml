@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id_route: 1
+  description: MyText
+  event_date: 2019-08-13
+
+two:
+  id_route: 1
+  description: MyText
+  event_date: 2019-08-13

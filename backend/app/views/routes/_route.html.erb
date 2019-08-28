@@ -1,0 +1,6 @@
+<tr>
+  <td><%= route.name  %></td>
+  <td><%= route.route_type %></td>
+  <td><%= link_to 'Show', route %></td>
+  <td><%= link_to 'Delete', route_path(route), method: :delete, data: {confirm: 'Are you sure?'} %>
+</tr>

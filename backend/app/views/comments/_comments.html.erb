@@ -1,0 +1,6 @@
+<strong> Comments: </strong>
+  <% commentable.comments.each do |x|%>
+  <div>
+    <%= "#{x.user.first_name} #{x.user.last_name}: #{x.comment}" %>
+  </div>
+<% end %>

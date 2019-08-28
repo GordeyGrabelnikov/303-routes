@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Routes303</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application'%>
+  </head>
+
+  <body>
+
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+
+  <div>
+  <% if user_signed_in? %>
+    <%= link_to 'Exit', destroy_user_session_path, method: :delete %>
+  <% else %>
+    <%= link_to 'Sign in', new_user_session_path %>
+  <% end %>
+  </div>
+
+  <%= yield %>
+
+  <p>Copyright © 2019 Grabelnikov Gordey</p>
+
+  </body>
+</html>

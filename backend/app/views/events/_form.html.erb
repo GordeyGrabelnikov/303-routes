@@ -1,0 +1,21 @@
+<%= form_with(model: @event, local: true) do |f| %>
+
+  <%= render 'common/errors', resource: @event %>
+
+  <div class="field">
+    <%= f.label :event_name %>
+    <%= f.text_field :event_name %>
+
+    <%= f.label :event_description %>
+    <%= f.text_area :event_description %>
+
+    <%= f.label :event_date %>
+    <%= f.date_field :event_date %>
+
+    <%= f.collection_select(:route_id, Route.all, :id, :name)%>
+
+  </div>
+  <div class="actions">
+    <%= f.submit "#{@event.new_record? ? 'Create' : 'Update' }"%>
+  </div>
+<% end %>

@@ -1,0 +1,21 @@
+<h1>List of routes</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name </th>
+    <th>Type</th>
+    <th colspan="1"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <%= render @routes %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Create route', new_route_path %>
+
+<%= link_to 'Home page', welcome_index_path %>

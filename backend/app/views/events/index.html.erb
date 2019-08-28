@@ -1,0 +1,29 @@
+<h1>List of events</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Date</th>
+    <th>Route</th>
+    <th colspan="1"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @events.each do |event| %>
+    <tr>
+      <td><%= event.event_name  %></td>
+      <td><%= event.event_date  %></td>
+      <td><%= event.route.name  %></td>
+      <td><%= link_to 'Show', event %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Create event', new_event_path %>
+
+<%= link_to 'Home page', welcome_index_path %>

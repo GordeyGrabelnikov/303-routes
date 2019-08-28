@@ -1,0 +1,12 @@
+<p>
+  <strong> Point name: </strong>
+  <%= @point.name %>
+</p>
+  <%= @point.description %>
+</p>
+
+<%= render 'comments/comments', commentable: @point  %>
+
+<%= render 'comments/form', commentable: @point %>
+
+<%= link_to 'Back', points_path %>

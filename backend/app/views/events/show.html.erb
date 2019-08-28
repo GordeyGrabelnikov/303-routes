@@ -1,0 +1,42 @@
+<p>
+  <strong> Name of event: </strong>
+  <%= @event.event_name %>
+</p>
+  <strong>Description: </strong>
+  <%= @event.event_description %>
+</p>
+</p>
+  <strong>Selected route: </strong>
+  <%= link_to "#{@event.route.name}",  @event.route %>
+
+</p>
+  <% if current_user == nil %>
+    <%= link_to 'You must register to subscribe to this event.', new_user_registration_path %>
+  <% else %>
+    <% if @event.users.include?(current_user) %>
+      <%=  link_to  'Unsubscribe', event_events_user_path(@event.events_users.find_by(user_id: current_user.id)), method: :delete, data: {confirm: 'Are you sure?'} %>
+    <% else %>
+      <%=  link_to  'Subscribe', "/events/#{@event.id}/events_users", method: :post %>
+    <% end %>
+  <% end %>
+</p>
+<strong>Creator: </strong>
+  <%= @event.users.find_by(events_users: {role: 1}).first_name %>
+  <%= @event.users.find_by(events_users: {role: 1}).last_name %>
+<p>
+
+</p>
+
+
+<p>
+  <strong>Subscribers: </strong>
+  <% @event.users.each do |x|%>
+  <div>
+    <%= x.first_name %>
+    <%= x.last_name %>
+  </div>
+<% end %>
+</p>
+
+<%= link_to 'Back', events_path %>
+<%= link_to 'Update', edit_event_path %>
