@@ -6,9 +6,11 @@
   <%= @point.description %>
 </p>
 
-<p>
-  <%= image_tag(@point.image) if @point.image.attached? %>
-</p>
+<div>
+  <% @point.images.each do |x| %>
+    <%= image_tag(x) if @point.images.attached? %>
+  <% end %>
+</div>
 
 
 <%= render 'comments/comments', commentable: @point  %>

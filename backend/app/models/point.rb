@@ -4,5 +4,5 @@ class Point < ApplicationRecord
 
   has_many :comments, as: :commentable
 
-  has_one_attached :image
+  has_many_attached :images
 end
