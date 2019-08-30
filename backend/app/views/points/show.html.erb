@@ -2,8 +2,14 @@
   <strong> Point name: </strong>
   <%= @point.name %>
 </p>
+<p>
   <%= @point.description %>
 </p>
+
+<p>
+  <%= image_tag(@point.image) if @point.image.attached? %>
+</p>
+
 
 <%= render 'comments/comments', commentable: @point  %>
 

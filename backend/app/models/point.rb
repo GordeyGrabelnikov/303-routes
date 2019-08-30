@@ -3,4 +3,6 @@ class Point < ApplicationRecord
   has_many :routes, through: :points_routes
 
   has_many :comments, as: :commentable
+
+  has_one_attached :image
 end
