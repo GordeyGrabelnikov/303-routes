@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class PointsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :edit, :destroy]
-  before_action :set_point, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: %i[new edit destroy]
+  before_action :set_point, only: %i[show edit update destroy]
   def index
     @points = Point.all
   end
@@ -45,6 +47,4 @@ class PointsController < ApplicationController
   def set_point
     @point = Point.find(params[:id])
   end
-
-
 end

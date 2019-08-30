@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Points::CommentsController < CommentsController
   before_action :set_commentable
 

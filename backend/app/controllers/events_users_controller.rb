@@ -1,5 +1,6 @@
-class EventsUsersController < ApplicationController
+# frozen_string_literal: true
 
+class EventsUsersController < ApplicationController
   def create
     @event = Event.find(params[:event_id])
     @event_user = @event.events_users.new

@@ -1,4 +1,4 @@
-<h2>Add your comment:</h2>
+<strong>Add your comment:</strong>
 <%= form_with(model: [ commentable, commentable.comments.build ], local: true) do |f| %>
   <p>
     <%= f.text_area :comment %>

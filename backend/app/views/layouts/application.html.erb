@@ -10,21 +10,21 @@
   </head>
 
   <body>
-
+  <div class="container">
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
 
   <div>
   <% if user_signed_in? %>
-    <%= link_to 'Exit', destroy_user_session_path, method: :delete %>
+    <%= link_to 'Exit', destroy_user_session_path, method: :delete,  class: 'btn btn-link'  %>
   <% else %>
-    <%= link_to 'Sign in', new_user_session_path %>
+    <%= link_to 'Sign in', new_user_session_path,  class: 'btn btn-link' %>
   <% end %>
   </div>
 
   <%= yield %>
 
   <p>Copyright © 2019 Grabelnikov Gordey</p>
-
+  </div>
   </body>
 </html>

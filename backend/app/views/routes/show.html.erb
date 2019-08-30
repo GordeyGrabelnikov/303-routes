@@ -21,11 +21,12 @@
   <%= @route.user.first_name %>
   <%= @route.user.last_name %>
 </p>
-
+<div>
 <%= render 'comments/comments', commentable: @route  %>
-
+</div>
+<div>
 <%= render 'comments/form', commentable: @route %>
-
+</div>
 <%= link_to 'Back', routes_path %>
 
 <%= link_to 'Update', edit_route_path %>

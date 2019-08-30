@@ -1,6 +1,6 @@
 <h1>List of events</h1>
 
-<table>
+<table class='table table-striped'>
   <thead>
   <tr>
     <th>Name</th>
@@ -16,7 +16,7 @@
       <td><%= event.event_name  %></td>
       <td><%= event.event_date  %></td>
       <td><%= event.route.name  %></td>
-      <td><%= link_to 'Show', event %></td>
+      <td><%= link_to 'Show', event,  class: 'btn btn-success'  %></td>
     </tr>
   <% end %>
   </tbody>
@@ -24,6 +24,6 @@
 
 <br>
 
-<%= link_to 'Create event', new_event_path %>
+<%= link_to 'Create event', new_event_path,  class: 'btn btn-success'  %>
 
-<%= link_to 'Home page', welcome_index_path %>
+<%= link_to 'Home page', welcome_index_path,  class: 'btn btn-success' %>

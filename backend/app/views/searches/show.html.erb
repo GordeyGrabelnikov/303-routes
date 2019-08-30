@@ -1,18 +1,18 @@
 <h1>Search</h1>
 
-<%= form_tag route_points_routes_path(route) do %>
+<%#= form_tag route_points_routes_path(route) do %>
 
-    <%= collection_check_boxes(Route, :point_ids, Point.all.order('id DESC'), :id, :name) do |b| %>
-      <div class="input-group-text">
-        <%= b.check_box %>
-        <%= b.label points: 'form-control text-center text-uppercase' %>
-      </div>
-    <% end %>
+    <%#= collection_check_boxes(Route, :point_ids, Point.all.order('id DESC'), :id, :name) do |b| %>
+<!--      <div class="input-group-text">-->
+        <%#= b.check_box %>
+        <%#= b.label points: 'form-control text-center text-uppercase' %>
+<!--      </div>-->
+    <%# end %>
 
-  <div class="actions">
-    <%= submit_tag 'Search'%>
-  </div>
-<% end %>
+<!--  <div class="actions">-->
+    <%#= submit_tag 'Search'%>
+<!--  </div>-->
+<%# end %>
 
 <%# Event.all.where(route_id: 1).each do |x|%>
   <%#= x.event_name %>

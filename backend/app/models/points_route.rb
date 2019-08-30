@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PointsRoute < ActiveRecord::Base
   belongs_to :point
   belongs_to :route
