@@ -22,6 +22,16 @@
   <%= @route.user.last_name %>
 </p>
 
+
+<p>
+  <% @route.route_images.each do |image| %>
+
+  <%= image_tag(image) if @route.route_images.attached? %>
+
+  <% end %>
+</p>
+
+
 <%= render 'comments/comments', commentable: @route  %>
 
 <%= render 'comments/form', commentable: @route %>
@@ -29,5 +39,3 @@
 <%= link_to 'Back', routes_path %>
 
 <%= link_to 'Update', edit_route_path %>
-
-
