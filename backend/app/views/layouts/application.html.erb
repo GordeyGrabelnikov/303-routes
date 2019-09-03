@@ -17,6 +17,7 @@
   <div>
   <% if user_signed_in? %>
     <%= link_to 'Exit', destroy_user_session_path, method: :delete,  class: 'btn btn-link'  %>
+      <p> Current user: <%= "#{current_user.first_name} #{current_user.last_name}" %></p>
   <% else %>
     <%= link_to 'Sign in', new_user_session_path,  class: 'btn btn-link' %>
   <% end %>
