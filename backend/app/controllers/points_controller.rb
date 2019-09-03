@@ -16,7 +16,6 @@ class PointsController < ApplicationController
   def create
     @point = Point.new(point_params)
 
-
     if @point.save
       redirect_to @point
     else
