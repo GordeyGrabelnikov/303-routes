@@ -7,11 +7,15 @@
     <%= f.label :coordinates %>
     <%= f.text_field :coordinates %>
 
-    <%= f.label :image_url %>
-    <%= f.text_field :image_url %>
-
     <%= f.label :description %>
     <%= f.text_area :description %>
+
+    <%= f.label :tags %>
+    <%= f.text_field :tags %>
+
+
+    <%= f.file_field :images, multiple: true %>
+
   </div>
   <div class="actions">
     <%= f.submit "#{@point.new_record? ? 'Create' : 'Update'}"%>

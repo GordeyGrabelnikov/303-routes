@@ -2,11 +2,25 @@
   <strong> Point name: </strong>
   <%= @point.name %>
 </p>
+<p>
   <%= @point.description %>
 </p>
+
 <div><%= render 'comments/comments', commentable: @point  %>
 </div>
 <div>
+
+
+<div>
+  <% @point.images.each do |x| %>
+    <%= image_tag(x) if @point.images.attached? %>
+  <% end %>
+</div>
+
+
+<%= render 'comments/comments', commentable: @point  %>
+
+
 <%= render 'comments/form', commentable: @point %>
 </div>
 <%= link_to 'Back', points_path %>

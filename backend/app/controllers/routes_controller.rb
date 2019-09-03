@@ -44,7 +44,7 @@ class RoutesController < ApplicationController
   private
 
   def route_params
-    params.require(:route).permit(:name, :route_type, :route_image_url, point_ids: [])
+    params.require(:route).permit(:name, :route_type, route_images: [], point_ids: [])
   end
 
   def set_route

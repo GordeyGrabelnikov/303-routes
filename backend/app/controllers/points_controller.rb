@@ -16,6 +16,7 @@ class PointsController < ApplicationController
   def create
     @point = Point.new(point_params)
 
+
     if @point.save
       redirect_to @point
     else
@@ -41,7 +42,7 @@ class PointsController < ApplicationController
   private
 
   def point_params
-    params.require(:point).permit(:name, :description, :tags, :image_url, :coordinates)
+    params.require(:point).permit(:name, :description, :tags, :coordinates, images: [])
   end
 
   def set_point
