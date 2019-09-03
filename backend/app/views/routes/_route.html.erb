@@ -2,5 +2,6 @@
   <td><%= route.name  %></td>
   <td><%= route.route_type %></td>
   <td><%= link_to 'Show', route,  class: 'btn btn-success' %></td>
+  <td><%= link_to 'Update', edit_route_path(route),  class: 'btn btn-success'  %></td>
   <td><%= link_to 'Delete', route_path(route), method: :delete, data: {confirm: 'Are you sure?'} ,  class: 'btn btn-success' %>
 </tr>

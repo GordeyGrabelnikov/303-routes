@@ -7,7 +7,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
 
   has_many :routes
-  has_many :events_users
+  has_many :events_users, dependent: :destroy
   has_many :events, through: :events_users
-  has_many :comments
+  has_many :comments, dependent: :destroy
 end
