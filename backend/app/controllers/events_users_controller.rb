@@ -3,8 +3,8 @@
 class EventsUsersController < ApplicationController
   def create
     @event = Event.find(params[:event_id])
-    @event_user = @event.events_users.new
-    @event_user.user = current_user
+    @event.users << current_user
+
     redirect_to @event, notice: 'You successfully subscribed' if @event.save
   end
 

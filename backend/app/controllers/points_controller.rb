@@ -3,6 +3,7 @@
 class PointsController < ApplicationController
   before_action :authenticate_user!, only: %i[new edit destroy]
   before_action :set_point, only: %i[show edit update destroy]
+
   def index
     @points = Point.all
   end

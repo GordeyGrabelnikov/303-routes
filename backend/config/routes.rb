@@ -3,12 +3,17 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  resources :comments do
+    resources :comments
+  end
+
   resources :points do
-    resources :comments, module: :points
+    resources :comments
   end
   resources :routes do
-    resources :comments, module: :routes
+    resources :comments
   end
+
   resources :events do
     resources :events_users
   end

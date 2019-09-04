@@ -21,9 +21,9 @@
   <%= @route.user.first_name %>
   <%= @route.user.last_name %>
 </p>
-<div>
-<%= render 'comments/comments', commentable: @route  %>
-</div>
+<ul>
+  <%= render(partial: 'comments/comment', commentable: @route, collection: @route.comments) %>
+</ul>
 <div>
 <%= render 'comments/form', commentable: @route %>
 </div>

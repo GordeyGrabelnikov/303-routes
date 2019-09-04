@@ -4,8 +4,9 @@
 </p>
   <%= @point.description %>
 </p>
-<div><%= render 'comments/comments', commentable: @point  %>
-</div>
+<ul>
+  <%= render(partial: 'comments/comment', collection: @point.comments) %>
+</ul>
 <div>
 <%= render 'comments/form', commentable: @point %>
 </div>

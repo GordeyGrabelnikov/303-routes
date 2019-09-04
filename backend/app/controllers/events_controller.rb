@@ -16,7 +16,7 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(event_params)
-    @event_user = @event.events_users.new(role: 1)
+    @event_user = @event.events_users.new(role: EventsUser.roles[:creator])
     @event_user.user = current_user
 
     if @event.save
