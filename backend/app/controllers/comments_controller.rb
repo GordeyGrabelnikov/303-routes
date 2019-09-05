@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class CommentsController < ApplicationController
+
   before_action :load_commentable
+
 
   def create
     @comment = @commentable.comments.new(allowed_params)
