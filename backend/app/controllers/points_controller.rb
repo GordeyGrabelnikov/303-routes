@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PointsController < ApplicationController
-  before_action :authenticate_user!, only: %i[new edit destroy]
+  skip_before_action :authenticate_user!, only: %i[index show]
   before_action :set_point, only: %i[show edit update destroy]
 
   def index
