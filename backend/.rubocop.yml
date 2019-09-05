@@ -1,8 +1,22 @@
-Rails:
+require: rubocop-rails
+Style/FrozenStringLiteralComment:
   Enabled: true
-
 Metrics/LineLength:
   Max: 120
-
 Style/Documentation:
   Enabled: false
+Metrics/MethodLength:
+  Max: 30
+AllCops:
+  Exclude:
+    - 'bin/*'
+    - 'db/schema.rb'
+    - 'db/migrate/*'
+    - 'log/**/*'
+    - 'node_modules/**/*'
+    - 'public/**/*'
+    - 'scripts/**/*'
+    - 'vendor/**/*'
+    - 'tmp/**/*'
+    - '.git/**/*'
+    - 'config/**/*'
