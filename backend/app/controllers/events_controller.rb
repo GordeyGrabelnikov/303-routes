@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class EventsController < ApplicationController
-  before_action :authenticate_user!, only: %i[new edit destroy]
+  skip_before_action :authenticate_user!, only: %i[index show]
   before_action :set_event, only: %i[show edit update destroy]
 
   def index
@@ -16,7 +16,7 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(event_params)
-    @event_user = @event.events_users.new(role: 1)
+    @event_user = @event.events_users.new(role: EventsUser.roles[:creator])
     @event_user.user = current_user
 
     if @event.save

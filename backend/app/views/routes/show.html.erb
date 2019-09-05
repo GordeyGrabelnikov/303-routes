@@ -22,6 +22,7 @@
   <%= @route.user.last_name %>
 </p>
 
+
 <div>
 <p>
   <% @route.route_images.each do |image| %>
@@ -29,9 +30,12 @@
   <%= image_tag(image) if @route.route_images.attached? %>
 
   <% end %>
-</p>
-<%= render 'comments/comments', commentable: @route  %>
-</div>
+
+
+<ul>
+  <%= render(partial: 'comments/comment', commentable: @route, collection: @route.comments) %>
+</ul>
+
 <div>
 <%= render 'comments/form', commentable: @route %>
 </div>

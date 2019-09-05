@@ -7,11 +7,16 @@
     <%= f.label :coordinates %>
     <%= f.text_field :coordinates %>
 
+    <%= f.label :image %>
+    <%= f.text_field :image %>
+
+    <%= f.label :tags %>
+    <%= f.text_area :tags %>
+
+
     <%= f.label :description %>
     <%= f.text_area :description %>
 
-    <%= f.label :tags %>
-    <%= f.text_field :tags %>
 
 
     <%= f.file_field :images, multiple: true %>

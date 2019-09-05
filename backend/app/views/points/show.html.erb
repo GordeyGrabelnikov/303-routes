@@ -5,6 +5,11 @@
 <p>
   <%= @point.description %>
 </p>
+
+<ul>
+  <%= render(partial: 'comments/comment', collection: @point.comments) %>
+</ul>
+
 <div>
   <div>
     <% @point.images.each do |x| %>
