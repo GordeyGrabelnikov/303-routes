@@ -3,8 +3,6 @@
 class CommentsController < ApplicationController
   before_action :load_commentable
 
-
-
   def create
     @comment = @commentable.comments.new(allowed_params)
     @comment.user = current_user
@@ -22,5 +20,4 @@ class CommentsController < ApplicationController
   def allowed_params
     params.require(:comment).permit(:comment)
   end
-
 end

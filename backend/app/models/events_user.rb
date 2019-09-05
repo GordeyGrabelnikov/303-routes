@@ -6,5 +6,5 @@ class EventsUser < ApplicationRecord
 
   validates :user_id, uniqueness: { scope: :event_id }
 
-  enum role: %i[follower creator]
+  enum role: { follower: 0, creator: 1 }
 end

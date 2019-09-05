@@ -16,10 +16,8 @@
       <%= image_tag(x) if @point.images.attached? %>
     <% end %>
   </div>
-  <%= render 'comments/comments', commentable: @point  %>
-  <%= render 'comments/form', commentable: @point %>
+  <div>
+    <%= render 'comments/form', commentable: @point %>
+  </div>
 </div>
 <%= link_to 'Back', points_path %>
-
-
-

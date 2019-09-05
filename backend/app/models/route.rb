@@ -6,13 +6,11 @@ class Route < ApplicationRecord
   has_many :points, through: :points_routes
   has_many :events
 
-
   has_many_attached :route_images
 
   has_many :comments, as: :commentable, dependent: :destroy
 
   validates :name, presence: true
 
-  enum route_type: %i[walk bike car]
-
+  enum route_type: { walk: 0, bike: 1, car: 2 }
 end
