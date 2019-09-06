@@ -16,18 +16,16 @@
 
   <div>
   <% if user_signed_in? %>
-<!--      <div class="media">-->
-<!--        <div class="media-left">-->
-          <%#= image_tag(current_user.avatar) if current_user.avatar.attached?, class: "media-object", style: "width:45px" %>
-<!--          <img src="img_avatar1.png" class="media-object" style="width:45px">-->
-<!--        </div>-->
-<!--        <div class="media-body">-->
-<!--          <h4 class="media-heading">John Doe <small><i>Posted on February 19, 2016</i></small></h4>-->
-<!--        </div>-->
-<!--      </div>-->
-      <%= link_to 'Exit', destroy_user_session_path, method: :delete,  class: 'btn btn-link'  %>
-    <%= link_to 'Edit', edit_user_registration_path(current_user), class: 'btn btn-link'  %>
-    <p> Current user: <%= "#{current_user.first_name} #{current_user.last_name}" %></p>
+      <div class="media">
+        <div class="media-left">
+      <%= image_tag(current_user.avatar, class: "media-object", style: "width:45px;height:45px;border-radius:100%") if current_user.avatar.attached? %>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading"><%= "#{current_user.first_name} #{current_user.last_name}" %></h4>
+          <%= link_to 'Exit', destroy_user_session_path, method: :delete,  class: 'btn btn-link'  %>
+          <%= link_to 'Edit', edit_user_registration_path(current_user), class: 'btn btn-link'  %>
+        </div>
+      </div>
   <% else %>
     <%= link_to 'Sign in', new_user_session_path,  class: 'btn btn-link' %>
   <% end %>
