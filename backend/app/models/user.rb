@@ -10,4 +10,6 @@ class User < ApplicationRecord
   has_many :events_users, dependent: :destroy
   has_many :events, through: :events_users
   has_many :comments, dependent: :destroy
+
+  enum user_role: { user: 0, admin: 1 }
 end

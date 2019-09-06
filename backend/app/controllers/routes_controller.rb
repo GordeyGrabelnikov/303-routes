@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class RoutesController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[index show]
   before_action :set_route, only: %i[show edit update destroy]
 
   def index
     @routes = Route.all
+    authorize @routes
   end
 
   def show; end
@@ -13,11 +13,14 @@ class RoutesController < ApplicationController
   def new
     @route = Route.new
     @route.points_routes.build
+    authorize @route
   end
 
   def create
     @route = Route.new(route_params)
     @route.user = current_user
+    authorize @route
+
 
     if @route.save
       redirect_to @route
@@ -49,5 +52,6 @@ class RoutesController < ApplicationController
 
   def set_route
     @route = Route.find(params[:id])
+    authorize @route
   end
 end

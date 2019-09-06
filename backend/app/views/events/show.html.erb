@@ -21,8 +21,8 @@
   <% end %>
 </p>
 <strong>Creator: </strong>
-  <%= @event.users.find_by(events_users: {role: 1}).first_name %>
-  <%= @event.users.find_by(events_users: {role: 1}).last_name %>
+  <%= @event.users.find_by(events_users: {role: EventsUser.roles[:creator]}).first_name %>
+  <%= @event.users.find_by(events_users: {role: EventsUser.roles[:creator]}).last_name %>
 <p>
 
 </p>
