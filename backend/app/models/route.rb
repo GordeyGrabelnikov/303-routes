@@ -2,13 +2,13 @@
 
 class Route < ApplicationRecord
   belongs_to :user
+  has_many :events
   has_many :points_routes, dependent: :destroy
   has_many :points, through: :points_routes
-  has_many :events
+  has_many :comments, as: :commentable, dependent: :destroy
 
   has_many_attached :route_images
 
-  has_many :comments, as: :commentable, dependent: :destroy
 
   validates :name, presence: true
 
