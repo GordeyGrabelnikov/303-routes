@@ -1,15 +1,18 @@
 # frozen_string_literal: true
 
 class EventsController < ApplicationController
-  #skip_before_action :authenticate_user!, only: %i[index show]
+  skip_before_action :authenticate_user!, only: %i[index show]
   before_action :set_event, only: %i[show edit update destroy]
 
   def index
-    @events = Event.all
+    @events = policy_scope(Event)
     authorize @events
   end
 
-  def show; end
+  def show
+    @event = policy_scope(Event).find(params[:id])
+    authorize @event
+  end
 
   def new
     @event = Event.new

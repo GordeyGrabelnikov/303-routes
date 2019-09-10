@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_06_090211) do
+ActiveRecord::Schema.define(version: 2019_09_09_112746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 2019_09_06_090211) do
     t.date "event_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "event_status", default: 0, null: false
     t.index ["event_name"], name: "index_events_on_event_name"
     t.index ["route_id"], name: "index_events_on_route_id"
   end
@@ -76,9 +77,12 @@ ActiveRecord::Schema.define(version: 2019_09_06_090211) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "tags", default: [], null: false
+    t.integer "point_status", default: 0, null: false
+    t.bigint "user_id"
     t.index ["coordinates"], name: "index_points_on_coordinates"
     t.index ["name"], name: "index_points_on_name"
     t.index ["tags"], name: "index_points_on_tags"
+    t.index ["user_id"], name: "index_points_on_user_id"
   end
 
   create_table "points_routes", force: :cascade do |t|
@@ -94,6 +98,7 @@ ActiveRecord::Schema.define(version: 2019_09_06_090211) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.integer "route_type", default: 0
+    t.integer "route_status", default: 0, null: false
     t.index ["name"], name: "index_routes_on_name"
     t.index ["route_type"], name: "index_routes_on_route_type"
     t.index ["user_id"], name: "index_routes_on_user_id"

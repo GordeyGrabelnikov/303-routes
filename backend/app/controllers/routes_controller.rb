@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 
 class RoutesController < ApplicationController
-  before_action :set_route, only: %i[show edit update destroy]
+  skip_before_action :authenticate_user!, only: %i[index show]
+  before_action :set_route, only: %i[edit update destroy]
 
   def index
-    @routes = Route.all
+    @routes = policy_scope(Route)
     authorize @routes
   end
 
-  def show; end
+  def show
+  @route = policy_scope(Route).find(params[:id])
+  authorize @route
+  end
 
   def new
     @route = Route.new

@@ -1,15 +1,18 @@
 # frozen_string_literal: true
 
 class PointsController < ApplicationController
-  #skip_before_action :authenticate_user!, only: %i[index show]
+  skip_before_action :authenticate_user!, only: %i[index show]
   before_action :set_point, only: %i[show edit update destroy]
 
   def index
-    @points = Point.all
+    @points = policy_scope(Point)
     authorize @points
   end
 
-  def show; end
+  def show
+    @point = policy_scope(Point).find(params[:id])
+    authorize @point
+  end
 
   def new
     @point = Point.new
