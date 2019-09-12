@@ -4,13 +4,13 @@
 
   <div class="field">
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name %><br>
 
     <%= f.label :route_type %>
-    <%= f.select :route_type, options_for_select(Route.route_types.keys.to_a) %>
+    <%= f.select :route_type, options_for_select( Route.route_types.keys.to_a) %><br>
 
     <%= f.label :route_images %>
-    <%= f.file_field :route_images, multiple: true  %>
+    <%= f.file_field :route_images, multiple: true  %><br>
 
     <%= f.collection_check_boxes(:point_ids, Point.all.order('id DESC'), :id, :name) do |b| %>
           <div class="input-group-text">
@@ -21,6 +21,6 @@
 
   </div>
   <div class="actions">
-    <%= f.submit "#{@route.new_record? ? 'Create' : 'Update' }"%>
+    <%= f.submit t("#{@route.new_record? ? 'helpers.links.new' : 'helpers.links.edit' }")%>
   </div>
 <% end %>

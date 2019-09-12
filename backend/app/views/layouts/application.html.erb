@@ -48,16 +48,16 @@
         <a class="navbar-brand" href= / >Routes303</a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li><%= link_to 'Choose route', routes_path%></li>
-            <li><%= link_to 'Choose points', points_path%></li>
-            <li><%= link_to 'Choose event', events_path%></li>
+            <li><%= link_to t('.routes'), routes_path%></li>
+            <li><%= link_to t('.points'), points_path%></li>
+            <li><%= link_to t('.events'), events_path%></li>
           </ul>
           <div class="media pull-right">
             <% if user_signed_in? %>
-              <div class="media-body">
+              <div class="nav navbar-nav">
                 <%= "#{current_user.first_name} #{current_user.last_name}" %>
-                <%= link_to 'Edit', edit_user_registration_path(current_user), class: 'btn btn-link' %>
-                <%= link_to 'Exit', destroy_user_session_path, method: :delete, class: 'btn btn-link' %>
+                <%= link_to 'Edit', edit_user_registration_path(current_user)%>
+                <%= link_to 'Exit', destroy_user_session_path, method: :delete%>
               </div>
             <% else %>
               <div class="nav navbar-nav">
@@ -80,8 +80,6 @@
       <footer>
         <p>Copyright © 2019 Grabelnikov Gordey</p>
       </footer>
-
-    </div> <!-- /container -->
-
+    </div>
   </body>
 </html>
