@@ -5,19 +5,41 @@
 <p>
   <%= @point.description %>
 </p>
-
-<ul>
-  <%= render(partial: 'comments/comment', collection: @point.comments) %>
-</ul>
-
 <div>
   <div>
     <% @point.images.each do |x| %>
       <%= image_tag(x) if @point.images.attached? %>
     <% end %>
   </div>
+  <ul>
+    <%= render(partial: 'comments/comment', collection: @point.comments) %>
+  </ul>
   <div>
     <%= render 'comments/form', commentable: @point %>
   </div>
 </div>
 <%= link_to 'Back', points_path %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

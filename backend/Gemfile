@@ -42,8 +42,9 @@ gem 'devise'
 gem 'execjs'
 gem 'therubyracer'
 
-gem 'bootstrap-sass', '~> 3.4.1'
-gem 'sassc-rails', '>= 2.1.0'
+gem 'therubyracer'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
 
 gem 'rubocop-rails'
 

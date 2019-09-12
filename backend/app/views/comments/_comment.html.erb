@@ -1,13 +1,22 @@
 <li>
-  <%= comment.comment %> -
-  <small>Submitted <%= time_ago_in_words(comment.created_at) %> ago</small>
-
-  <%= form_with(model: [ comment, Comment.new ], local: true) do |f| %>
-    <%= f.text_area :comment, placeholder: "Add a Reply" %><br/>
-    <%= f.submit "Reply"  %>
-  <% end %>
-
+  <div class="media">
+    <div class="media pull-left">
+      <%= image_tag(comment.user.avatar, class: "media-object", style: "width:45px;height:45px;border-radius:100%") if comment.user.avatar.attached? %>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading"><%= "#{comment.user.first_name} #{comment.user.last_name}" %>
+        <small><i>Submitted <%= time_ago_in_words(comment.created_at) %> ago</i></small></h4>
+      <span><%= comment.comment %></span>
+      <%= form_with(model: [ comment, Comment.new ], local: true) do |f| %>
+        <%= f.text_area :comment, placeholder: 'Add a Reply', class: 'form-control', rows: '3'%><br/>
+        <%= f.submit 'Reply'  %>
+      <% end %>
+    </div>
+  </div>
   <ul>
     <%= render partial: 'comments/comment', collection: comment.comments %>
   </ul>
 </li>
+
+
+

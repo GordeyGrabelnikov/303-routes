@@ -1,7 +1,7 @@
 <strong>Add your comment:</strong>
 <%= form_with(model: [ commentable, commentable.comments.build ], local: true) do |f| %>
   <p>
-    <%= f.text_area :comment %>
+    <%= f.text_area :comment, class: 'form-control', rows: '3'%><br/>
   </p>
   <p>
     <%= f.submit 'Comment'%>

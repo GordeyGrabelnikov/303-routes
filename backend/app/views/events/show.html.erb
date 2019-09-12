@@ -14,29 +14,38 @@
     <%= link_to 'You must register to subscribe to this event.', new_user_registration_path %>
   <% else %>
     <% if @event.users.include?(current_user) %>
-      <%=  link_to  'Unsubscribe', event_events_user_path(@event.events_users.find_by(user_id: current_user.id)), method: :delete, data: {confirm: 'Are you sure?'} %>
+      <%=  link_to  'Unsubscribe', event_events_user_path(@event.events_users.find_by(user_id: current_user.id)), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-primary' %>
     <% else %>
-      <%=  link_to  'Subscribe', "/events/#{@event.id}/events_users", method: :post %>
+      <%=  link_to  'Subscribe', "/events/#{@event.id}/events_users", method: :post, class: 'btn btn-success' %>
     <% end %>
   <% end %>
+
+</p>
+
 </p>
 <strong>Creator: </strong>
-  <%= @event.users.find_by(events_users: {role: 1}).first_name %>
-  <%= @event.users.find_by(events_users: {role: 1}).last_name %>
+<%= link_to root_path do %>
+  <% creator = @event.users.find_by(events_users: {role: EventsUser.roles[:creator]}) %>
+    <div class="pull-left">
+      <%= image_tag(creator.avatar, style: "width:45px;height:45px;border-radius:100%;object-fit:cover") if creator.avatar.attached? %>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading"><%= "#{creator.first_name} #{creator.last_name}" %></h4>
+    </div>
+<% end %>
 <p>
-
-</p>
-
 
 <p>
   <strong>Subscribers: </strong>
-  <% @event.users.each do |x|%>
   <div>
-    <%= x.first_name %>
-    <%= x.last_name %>
+    <% @event.users.each do |x|%>
+      <%= link_to root_path do %>
+        <%= image_tag(x.avatar, style: "width:60px;height:60px;border-radius:100%;object-fit:cover") if x.avatar.attached? %>
+      <% end %>
+    <% end %>
   </div>
-<% end %>
 </p>
 
 <%= link_to 'Back', events_path %>
 <%= link_to 'Update', edit_event_path %>
+
