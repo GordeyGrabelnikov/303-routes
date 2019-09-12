@@ -24,3 +24,5 @@
     <%= f.submit t("#{@route.new_record? ? 'helpers.links.new' : 'helpers.links.edit' }")%>
   </div>
 <% end %>
+
+<%= link_to t('helpers.links.back'), routes_path %>

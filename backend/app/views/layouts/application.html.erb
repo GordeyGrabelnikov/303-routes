@@ -56,7 +56,7 @@
             <% if user_signed_in? %>
               <div class="nav navbar-nav">
                 <%= "#{current_user.first_name} #{current_user.last_name}" %>
-                <%= link_to 'Edit', edit_user_registration_path(current_user)%>
+                <%= link_to t('helpers.links.edit'), edit_user_registration_path(current_user)%>
                 <%= link_to 'Exit', destroy_user_session_path, method: :delete%>
               </div>
             <% else %>

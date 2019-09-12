@@ -20,3 +20,5 @@
     <%= f.submit t("#{@event.new_record? ? 'helpers.links.new' : 'helpers.links.edit' }")%>
   </div>
 <% end %>
+
+<%= link_to t('helpers.links.back'), events_path %>
