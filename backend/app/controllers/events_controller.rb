@@ -5,19 +5,25 @@ class EventsController < ApplicationController
   before_action :set_event, only: %i[show edit update destroy]
 
   def index
-    @events = Event.all
+    @events = policy_scope(Event)
+    authorize @events
   end
 
-  def show; end
+  def show
+    @event = policy_scope(Event).find(params[:id])
+    authorize @event
+  end
 
   def new
     @event = Event.new
+    authorize @event
   end
 
   def create
     @event = Event.new(event_params)
     @event_user = @event.events_users.new(role: EventsUser.roles[:creator])
     @event_user.user = current_user
+    authorize @event
 
     if @event.save
       redirect_to @event
@@ -49,5 +55,6 @@ class EventsController < ApplicationController
 
   def set_event
     @event = Event.find(params[:id])
+    authorize @event
   end
 end

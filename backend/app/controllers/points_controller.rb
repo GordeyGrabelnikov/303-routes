@@ -5,17 +5,23 @@ class PointsController < ApplicationController
   before_action :set_point, only: %i[show edit update destroy]
 
   def index
-    @points = Point.all
+    @points = policy_scope(Point)
+    authorize @points
   end
 
-  def show; end
+  def show
+    @point = policy_scope(Point).find(params[:id])
+    authorize @point
+  end
 
   def new
     @point = Point.new
+    authorize @point
   end
 
   def create
     @point = Point.new(point_params)
+    authorize @point
 
     if @point.save
       redirect_to @point
@@ -47,5 +53,6 @@ class PointsController < ApplicationController
 
   def set_point
     @point = Point.find(params[:id])
+    authorize @point
   end
 end

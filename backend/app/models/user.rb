@@ -6,11 +6,16 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
+  has_many :points
   has_many :routes
   has_many :events_users, dependent: :destroy
   has_many :events, through: :events_users
   has_many :comments, dependent: :destroy
 
+
   has_one_attached :avatar
+
+
+  enum user_role: { user: 0, admin: 1 }
 
 end
