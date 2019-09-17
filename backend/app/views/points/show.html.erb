@@ -1,5 +1,5 @@
 <p>
-  <strong> Point name: </strong>
+  <strong><%= t('.point_name') %></strong>
   <%= @point.name %>
 </p>
 <p>
@@ -11,12 +11,12 @@
       <%= image_tag(x) if @point.images.attached? %>
     <% end %>
   </div>
-  <ul>
-    <%= render(partial: 'comments/comment', collection: @point.comments) %>
-  </ul>
   <div>
     <%= render 'comments/form', commentable: @point %>
   </div>
+  <ul>
+    <%= render(partial: 'comments/comment', collection: @point.comments) %>
+  </ul>
 </div>
 <%= link_to t('helpers.links.back'), points_path %>
 

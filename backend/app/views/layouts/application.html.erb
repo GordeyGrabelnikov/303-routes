@@ -57,11 +57,11 @@
               <div class="nav navbar-nav">
                 <%= "#{current_user.first_name} #{current_user.last_name}" %>
                 <%= link_to t('helpers.links.edit'), edit_user_registration_path(current_user)%>
-                <%= link_to 'Exit', destroy_user_session_path, method: :delete%>
+                <%= link_to t('devise.shared.links.exit'), destroy_user_session_path, method: :delete%>
               </div>
             <% else %>
               <div class="nav navbar-nav">
-                <%= link_to 'Sign in', new_user_session_path%>
+                <%= link_to t('devise.shared.links.sign_in'), new_user_session_path%>
               </div>
             <% end %>
           </div>
