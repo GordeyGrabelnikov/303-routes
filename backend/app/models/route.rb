@@ -9,9 +9,10 @@ class Route < ApplicationRecord
 
   has_many_attached :route_images
 
-
   validates :name, presence: true
 
   enum route_type: { walk: 0, bike: 1, car: 2 }
+
   enum route_status: { unpublished: 0, published: 1 }
+
 end

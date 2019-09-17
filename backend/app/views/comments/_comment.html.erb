@@ -8,8 +8,8 @@
         <small><i>Submitted <%= time_ago_in_words(comment.created_at) %> ago</i></small></h4>
       <span><%= comment.comment %></span>
       <%= form_with(model: [ comment, Comment.new ], local: true) do |f| %>
-        <%= f.text_area :comment, placeholder: 'Add a Reply', class: 'form-control', rows: '3'%><br/>
-        <%= f.submit 'Reply'  %>
+        <%= f.text_area :comment, class: 'form-control', rows: '3'%><br/>
+        <%= f.submit t('.reply')  %>
       <% end %>
     </div>
   </div>

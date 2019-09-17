@@ -1,15 +1,15 @@
 <p>
-  <strong> Route name: </strong>
+  <strong><%= t('.route_name') %></strong>
   <%= @route.name %>
 </p>
 
 <p>
-  <strong> Type: </strong>
+  <strong><%= t('.route_type') %></strong>
   <%= @route.route_type %>
 </p>
 
 <p>
-  <strong>Points of route:</strong>
+  <strong><%= t('.route_points') %></strong>
   <% @route.points.each do |x|%>
   <div>
     <%= link_to "#{x.name}", x %>
@@ -17,28 +17,23 @@
 <% end %>
 </p>
 <p>
-  <strong> Creator: </strong>
+  <strong><%= t('.route_author')%></strong>
   <%= @route.user.first_name %>
   <%= @route.user.last_name %>
 </p>
 
 
 <div>
-<p>
   <% @route.route_images.each do |image| %>
-
   <%= image_tag(image) if @route.route_images.attached? %>
-
   <% end %>
-
-
+</div>
+<div>
+  <%= render 'comments/form', commentable: @route %>
+</div>
 <ul>
   <%= render(partial: 'comments/comment', collection: @route.comments) %>
 </ul>
 
-<div>
-<%= render 'comments/form', commentable: @route %>
-</div>
-<%= link_to 'Back', routes_path %>
-
-<%= link_to 'Update', edit_route_path %>
+<%= link_to t('helpers.links.back'), routes_path, class: 'btn btn-success'%>
+<%= link_to  t('helpers.titles.edit', model: t('activerecord.models.route')), edit_route_path, class: 'btn btn-success' %>

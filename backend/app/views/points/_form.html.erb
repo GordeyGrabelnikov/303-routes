@@ -1,28 +1,28 @@
 <%= form_with(model: @point, local: true) do |f| %>
   <%= render 'common/errors', resource: @point %>
   <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-
-    <%= f.label :coordinates %>
+    <%= f.label :name %><br />
+    <%= f.text_field :name,  class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description, class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= f.label :coordinates %><br />
     <%= f.text_field :coordinates %>
-
-    <%= f.label :image %>
-    <%= f.text_field :image %>
-
-    <%= f.label :tags %>
-    <%= f.text_area :tags %>
-
-
-    <%= f.label :description %>
-    <%= f.text_area :description %>
-
-
-
+  </div>
+  <div class="field">
+    <%= f.label :tags %><br />
+    <%= f.text_area :tags, class: 'form-control '%>
+  </div>
+  <div class="field">
+    <%= f.label :image %><br />
     <%= f.file_field :images, multiple: true %>
-
   </div>
   <div class="actions">
-    <%= f.submit "#{@point.new_record? ? 'Create' : 'Update'}"%>
+    <%= f.submit t("#{@point.new_record? ? 'helpers.links.new' : 'helpers.links.edit' }"), class: 'btn btn-default'%>
   </div>
 <% end %>
+
+<%= link_to t('helpers.links.back'), points_path %>

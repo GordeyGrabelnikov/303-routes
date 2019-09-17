@@ -2,7 +2,8 @@
   <td><%= point.name  %></td>
   <td><%= point.coordinates  %></td>
   <td><%= point.tags  %></td>
-  <td><%= link_to 'Show', point_path(point),  class: 'btn btn-success'  %></td>
-  <td><%= link_to 'Update', edit_point_path(point),  class: 'btn btn-success'  %></td>
-  <td><%= link_to 'Delete', point_path(point), method: :delete, data: {confirm: 'Are you sure?'} ,  class: 'btn btn-success' %>
+  <td><%= link_to t('helpers.links.show'), point_path(point),  class: 'btn btn-success'  %></td>
+  <td><%= link_to t('helpers.links.edit'), edit_point_path(point),  class: 'btn btn-success'  %></td>
+  <td><%= link_to t('helpers.links.destroy'), point_path(point), method: :delete, data: {confirm: t('helpers.links.confirm')} ,  class: 'btn btn-success' %>
 </tr>
+

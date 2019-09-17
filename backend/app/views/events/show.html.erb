@@ -1,22 +1,22 @@
 <p>
-  <strong> Name of event: </strong>
+  <strong> <%= t('.event_name') %> </strong>
   <%= @event.event_name %>
 </p>
-  <strong>Description: </strong>
+  <strong><%= t('.event_description') %> </strong>
   <%= @event.event_description %>
 </p>
 </p>
-  <strong>Selected route: </strong>
+  <strong><%= t('.event_route') %> </strong>
   <%= link_to "#{@event.route.name}",  @event.route %>
 
 </p>
   <% if current_user == nil %>
-    <%= link_to 'You must register to subscribe to this event.', new_user_registration_path %>
+  <p> <%= link_to t('devise.authorization.buttons.log_in'), new_user_registration_path %> <%= t('.register_requirement') %> </p>
   <% else %>
     <% if @event.users.include?(current_user) %>
-      <%=  link_to  'Unsubscribe', event_events_user_path(@event.events_users.find_by(user_id: current_user.id)), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-primary' %>
+      <%=  link_to  t('.unsubscribe'), event_events_user_path(@event.events_users.find_by(user_id: current_user.id)), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-primary' %>
     <% else %>
-      <%=  link_to  'Subscribe', "/events/#{@event.id}/events_users", method: :post, class: 'btn btn-success' %>
+      <%=  link_to  t('.subscribe'), "/events/#{@event.id}/events_users", method: :post, class: 'btn btn-success' %>
     <% end %>
   <% end %>
 
@@ -24,7 +24,7 @@
 </p>
 
 </p>
-<strong>Creator: </strong>
+<strong><%= t('.event_author') %></strong>
 <%= link_to root_path do %>
   <% creator = @event.users.find_by(events_users: {role: EventsUser.roles[:creator]}) %>
     <div class="pull-left">
@@ -37,7 +37,7 @@
 <p>
 
 <p>
-  <strong>Subscribers: </strong>
+  <strong><%= t('.event_subscribers') %></strong>
   <div>
     <% @event.users.each do |x|%>
       <%= link_to root_path do %>
@@ -47,6 +47,6 @@
   </div>
 </p>
 
-<%= link_to 'Back', events_path %>
-<%= link_to 'Update', edit_event_path %>
+<%= link_to t('helpers.links.back'), events_path, class: 'btn btn-success' %>
+<%= link_to t('helpers.titles.edit', model: t('activerecord.models.event')), edit_event_path, class: 'btn btn-success' %>
 

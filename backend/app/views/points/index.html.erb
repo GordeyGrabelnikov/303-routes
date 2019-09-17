@@ -1,11 +1,11 @@
-<h1>List of points</h1>
+<h1><%= t('.title')%></h1>
 
 <table class='table table-striped' >
   <thead>
   <tr>
-    <th>Event name</th>
-    <th>Coordinates</th>
-    <th>Tag</th>
+    <th><%= t('.point_name')%></th>
+    <th><%= t('.point_coordinate')%></th>
+    <th><%= t('.point_tags')%></th>
     <th colspan="3"></th>
   </tr>
   </thead>
@@ -17,6 +17,6 @@
 
 <br>
 
-<%= link_to 'Add point', new_point_path, class: 'btn btn-success' %>
+<%= link_to t('helpers.titles.new', model: t('activerecord.models.point')), new_point_path, class: 'btn btn-success' %>
 
 <%= link_to 'Search', search_path, class: 'btn btn-success' %>
