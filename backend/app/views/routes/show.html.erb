@@ -22,10 +22,9 @@
   <%= @route.user.last_name %>
 </p>
 
-
 <div>
   <% @route.route_images.each do |image| %>
-  <%= image_tag(image) if @route.route_images.attached? %>
+  <%= image_tag(image, style: "width:150px;height:160px;object-fit:cover") if @route.route_images.attached? %>
   <% end %>
 </div>
 <div>

@@ -2,7 +2,7 @@
 
 class Point < ApplicationRecord
   belongs_to :user
-  has_many :points_routes
+  has_many :points_routes, dependent: :destroy
   has_many :routes, through: :points_routes
   has_many :comments, as: :commentable, dependent: :destroy
 

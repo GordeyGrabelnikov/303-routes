@@ -10,8 +10,8 @@ class RoutesController < ApplicationController
   end
 
   def show
-  @route = policy_scope(Route).find(params[:id])
-  authorize @route
+    @route = policy_scope(Route).find(params[:id])
+    authorize @route
   end
 
   def new
@@ -24,7 +24,6 @@ class RoutesController < ApplicationController
     @route = Route.new(route_params)
     @route.user = current_user
     authorize @route
-
 
     if @route.save
       redirect_to @route

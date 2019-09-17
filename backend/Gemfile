@@ -47,7 +47,6 @@ gem 'therubyracer'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
 
-
 gem 'rubocop-rails'
 
 gem 'jquery-rails'

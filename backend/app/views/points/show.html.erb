@@ -7,8 +7,8 @@
 </p>
 <div>
   <div>
-    <% @point.images.each do |x| %>
-      <%= image_tag(x) if @point.images.attached? %>
+    <% @point.images.each do |image| %>
+      <%= image_tag(image, style: "width:150px;height:160px;object-fit:cover") if @point.images.attached? %>
     <% end %>
   </div>
   <div>
