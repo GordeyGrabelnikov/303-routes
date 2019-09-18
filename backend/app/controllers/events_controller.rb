@@ -21,8 +21,10 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(event_params)
-    @event_user = @event.events_users.new(role: EventsUser.roles[:creator])
-    @event_user.user = current_user
+    @event_author = @event.events_users.new(role: EventsUser.roles[:creator])
+    @event_author.user = current_user
+    @event_guide = @event.events_users.new(role: EventsUser.roles[:guide])
+    @event_guide.user_id = params[:event][:guide_id]
     authorize @event
 
     if @event.save

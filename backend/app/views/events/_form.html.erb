@@ -13,7 +13,10 @@
     <%= f.date_field :event_date %><br>
 
     <%= f.label :route_id %>
-    <%= f.collection_select(:route_id, Route.all, :id, :name)%>
+    <%= f.collection_select(:route_id, Route.all, :id, :name)%><br>
+
+    <%= f.label :guide_id %>
+    <%= f.collection_select(:guide_id, User.all, :id, :last_name)%>
 
   </div>
   <div class="actions">
