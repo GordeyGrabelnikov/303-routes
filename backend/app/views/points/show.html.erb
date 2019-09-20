@@ -21,25 +21,11 @@
 <%= link_to t('helpers.links.back'), points_path %>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<div>
+  <% if @point.unpublished? &&  current_user.admin?%>
+    <%= form_with(url: update_point_status_point_path, method: :patch, local: true) do |f| %>
+      <%= f.select :point_status, options_for_select( Point.point_statuses.keys.to_a) %><br>
+     <%= submit_tag  %>
+    <% end %>
+  <% end  %>
+</div>

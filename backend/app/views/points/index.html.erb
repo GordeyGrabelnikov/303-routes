@@ -1,21 +1,12 @@
 <h1><%= t('.title')%></h1>
 
-<table class='table table-striped' >
-  <thead>
-  <tr>
-    <th><%= t('.point_name')%></th>
-    <th><%= t('.point_coordinate')%></th>
-    <th><%= t('.point_tags')%></th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
 
-  <tbody>
-  <%= render @points %>
-  </tbody>
-</table>
+<% if current_user %>
+  <%= render('points_list', point_set: Point.unpublished, status: 'unpublished_point') if current_user.admin? %>
+  <%= render('points_list', point_set: current_user.points, status: 'unpublished_point') %>
+<% end %>
 
-<br>
+<%= render('points_list', point_set: Point.published, status: 'published_point') %>
 
 <%= link_to t('helpers.titles.new', model: t('activerecord.models.point')), new_point_path, class: 'btn btn-success' %>
 

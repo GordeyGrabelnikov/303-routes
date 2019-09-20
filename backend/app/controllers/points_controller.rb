@@ -2,7 +2,7 @@
 
 class PointsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index show]
-  before_action :set_point, only: %i[show edit update destroy]
+  before_action :set_point, only: %i[show edit update destroy update_point_status]
 
   def index
     @points = policy_scope(Point)
@@ -21,6 +21,7 @@ class PointsController < ApplicationController
 
   def create
     @point = Point.new(point_params)
+    @point.user = current_user
     authorize @point
 
     if @point.save
@@ -42,6 +43,11 @@ class PointsController < ApplicationController
 
   def destroy
     @point.destroy
+    redirect_to points_path
+  end
+
+  def update_point_status
+    @point.update(point_status: params[:point_status])
     redirect_to points_path
   end
 

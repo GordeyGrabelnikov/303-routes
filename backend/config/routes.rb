@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   end
 
   resources :points do
+    patch :update_point_status, on: :member
     resources :comments
   end
   resources :routes do
