@@ -7,5 +7,7 @@ class Event < ApplicationRecord
 
   validates :event_name, :event_description, :event_date, presence: true
 
+  ratyrate_rateable 'event'
+
   enum event_status: { unpublished: 0, published: 1 }
 end

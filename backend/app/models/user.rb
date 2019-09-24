@@ -15,4 +15,7 @@ class User < ApplicationRecord
   has_one_attached :avatar
 
   enum user_role: { user: 0, admin: 1 }
+
+  ratyrate_rater
+
 end
