@@ -5,7 +5,7 @@ class EventsController < ApplicationController
   before_action :set_event, only: %i[show edit update destroy]
 
   def index
-    @events = policy_scope(Event)
+    @events = FindEvents.new(policy_scope(Event)).call(permitted_params)
     authorize @events
   end
 
@@ -56,5 +56,9 @@ class EventsController < ApplicationController
   def set_event
     @event = Event.find(params[:id])
     authorize @event
+  end
+
+  def permitted_params
+    params.permit(:search, :category)
   end
 end

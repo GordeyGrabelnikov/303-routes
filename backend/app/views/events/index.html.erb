@@ -1,5 +1,11 @@
 <h1><%= t('.event_title')%></h1>
 
+<%= form_tag events_path, method: :get do %>
+  <%= text_field_tag :search, params[:search] %>
+  <%= select_tag :category, options_from_collection_for_select( Route.all, :id, :name), include_blank: 'Choose route'%>
+  <%= submit_tag 'Search' %>
+<% end %>
+
 <table class='table table-striped'>
   <thead>
   <tr>

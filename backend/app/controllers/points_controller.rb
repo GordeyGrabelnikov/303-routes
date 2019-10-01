@@ -5,7 +5,7 @@ class PointsController < ApplicationController
   before_action :set_point, only: %i[show edit update destroy]
 
   def index
-    @points = policy_scope(Point)
+    @points = FindPoints.new(policy_scope(Point)).call(permitted_params)
     authorize @points
   end
 
@@ -54,5 +54,9 @@ class PointsController < ApplicationController
   def set_point
     @point = Point.find(params[:id])
     authorize @point
+  end
+
+  def permitted_params
+    params.permit(:search, :category)
   end
 end

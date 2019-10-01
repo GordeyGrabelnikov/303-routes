@@ -52,6 +52,8 @@ gem 'rubocop-rails'
 
 gem 'jquery-rails'
 
+gem 'dry-initializer'
+
 gem 'pundit'
 
 group :development, :test do

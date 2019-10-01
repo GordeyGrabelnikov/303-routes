@@ -1,5 +1,12 @@
 <h1><%= t('.title') %></h1>
 
+
+<%= form_tag routes_path, method: :get do %>
+  <%= text_field_tag :search, params[:search] %>
+  <%= select_tag :category, options_for_select( Route.route_types.keys.to_a), include_blank: 'Choose route type'%>
+  <%= submit_tag 'Search' %>
+<% end %>
+
 <table class='table table-striped' >
   <thead>
   <tr>
@@ -10,6 +17,7 @@
   </thead>
 
   <tbody>
+  <%#= render partial: 'route', collection: @posts_vo.latest_routes %>
   <%= render @routes %>
   </tbody>
 </table>
@@ -17,3 +25,4 @@
 <br>
 
 <%= link_to t('helpers.titles.new', model: t('activerecord.models.route')), new_route_path, class: 'btn btn-success'  %>
+<%= link_to 'Search',   new_search_path, class: 'btn btn-success' %>
