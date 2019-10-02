@@ -13,4 +13,6 @@ class Route < ApplicationRecord
 
   enum route_type: { walk: 0, bike: 1, car: 2 }
   enum route_status: { unpublished: 0, published: 1 }
+
+  # scope :published, -> { where(route_status: 1) }
 end

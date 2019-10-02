@@ -1,6 +1,14 @@
 <h1><%= t('.title')%></h1>
 
 
+<%= form_tag points_path, method: :get do %>
+  <%= text_field_tag :search, params[:search] %>
+  <%= submit_tag 'Search' %>
+<% end %>
+
+
+
+
 <% if current_user %>
   <%if current_user.admin?%>
     <p>Unpublished points</p>
@@ -15,4 +23,5 @@
 
 <%= link_to t('helpers.titles.new', model: t('activerecord.models.point')), new_point_path, class: 'btn btn-success' %>
 
-<%= link_to 'Search', search_path, class: 'btn btn-success' %>
+<%= link_to 'Search',   new_search_path, class: 'btn btn-success' %>
+<%#= link_to 'Advanced search', new_search_path %>

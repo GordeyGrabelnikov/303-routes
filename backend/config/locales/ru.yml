@@ -1,0 +1,61 @@
+ru:
+  welcome:
+    index:
+      title: 'Здравствуй, путник!'
+  layouts:
+    application:
+      routes: 'Список маршрутов'
+      points: 'Список достопримечательностей'
+      events: 'Список событий'
+  points:
+    index:
+      title: 'Список достопримечательностей'
+      point_name: 'Название'
+      point_coordinate: 'Координаты'
+      point_tags: 'Теги'
+    show:
+      point_name: 'Название:'
+
+  routes:
+    index:
+      title: 'Список маршрутов'
+      route_name: 'Название'
+      route_type: 'Тип'
+    show:
+      route_name: 'Название:'
+      route_type: 'Тип:'
+      route_points: 'Точки маршрута:'
+      route_author: 'Автора маршрута:'
+  events:
+    index:
+      event_title: 'Список событий'
+      event_name: 'Название'
+      event_date: 'Дата'
+      event_route: 'Маршрут'
+    show:
+      event_name: 'Название события:'
+      event_description: 'Описание:'
+      event_route: 'Выбранный маршрут:'
+      event_author: 'Автор события'
+      event_guide: 'Экскурсовод'
+      event_subscribers: 'Подписчики'
+      unsubscribe: 'Отписаться'
+      subscribe: 'Подписаться'
+      register_requirement: 'для того, чтобы подписаться на событие'
+  comments:
+    comment:
+      title: 'Комментарии'
+      reply: 'Ответить'
+    form:
+      add_comment: 'Добавить комментарий'
+      comment: 'Отправить'
+    title: 'Комментарии'
+  common:
+    errors:
+      prohibited: 'Не удалось сохранить. Количество ошибок: %{count}'
+  errors:
+    messages:
+      blank: 'не может быть пустым'
+  notice:
+    messages:
+      not_enough_rights: 'У вас не достаточно прав, чтобы сделать это'

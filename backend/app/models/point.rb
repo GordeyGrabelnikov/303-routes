@@ -11,4 +11,5 @@ class Point < ApplicationRecord
   validates :name, :description, :coordinates, presence: true
 
   enum point_status: { unpublished: 0, published: 1 }
+
 end
