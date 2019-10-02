@@ -2,10 +2,15 @@
 
 
 <% if current_user %>
-  <%= render('points_list', point_set: Point.unpublished, status: 'unpublished_point') if current_user.admin? %>
+  <%if current_user.admin?%>
+    <p>Unpublished points</p>
+    <%= render('points_list', point_set: Point.unpublished, status: 'unpublished_point') %>
+  <% end %>
+  <h2>My points</h2>
   <%= render('points_list', point_set: current_user.points, status: 'unpublished_point') %>
 <% end %>
 
+<h2>Published</h2>
 <%= render('points_list', point_set: Point.published, status: 'published_point') %>
 
 <%= link_to t('helpers.titles.new', model: t('activerecord.models.point')), new_point_path, class: 'btn btn-success' %>
