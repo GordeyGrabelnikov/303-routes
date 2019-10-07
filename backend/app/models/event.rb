@@ -8,4 +8,8 @@ class Event < ApplicationRecord
   validates :event_name, :event_description, :event_date, presence: true
 
   enum event_status: { unpublished: 0, published: 1 }
+
+  def creator
+    users.find_by(events_users: { role: EventsUser.roles[:creator] })
+  end
 end

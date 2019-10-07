@@ -8,7 +8,7 @@ class EventPolicy < ApplicationPolicy
       elsif user.admin?
         scope.all
       else
-        scope.joins(:events_users).where('event_status = ? OR (user_id = ? and role = ?)', Event.event_statuses[:published], user.id, EventsUser.roles[:creator])
+        scope.joins(:events_users).where('event_status = ? OR (user_id = ? and role = ?)', Event.event_statuses[:published], user.id, EventsUser.roles[:creator]).distinct
       end
     end
   end
@@ -31,6 +31,18 @@ class EventPolicy < ApplicationPolicy
 
   def destroy?
     return true if user.present? && (user_is_creator? || user.admin?)
+  end
+
+  def update_event_status?
+    user.present? && user.admin?
+  end
+
+  def follow?
+    user.present?
+  end
+
+  def unfollow?
+    user.present?
   end
 
   private

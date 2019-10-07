@@ -11,12 +11,12 @@
 
 </p>
   <% if current_user == nil %>
-  <p> <%= link_to t('devise.authorization.buttons.log_in'), new_user_registration_path %> <%= t('.register_requirement') %> </p>
+  <p> <%= link_to t('devise.authorization.buttons.log_in'), new_user_session_path %> <%= t('.register_requirement') %> </p>
   <% else %>
     <% if @event.users.include?(current_user) %>
-      <%=  link_to  t('.unsubscribe'), event_events_user_path(@event.events_users.find_by(user_id: current_user.id)), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-primary' %>
+      <%=  link_to  t('.unsubscribe'), unfollow_event_path, method: :post,  data: {confirm: 'Are you sure?'}, class: 'btn btn-primary' %>
     <% else %>
-      <%=  link_to  t('.subscribe'), "/events/#{@event.id}/events_users", method: :post, class: 'btn btn-success' %>
+      <%=  link_to  t('.subscribe'), follow_event_path, method: :post, class: 'btn btn-success' %>
     <% end %>
   <% end %>
 
@@ -26,7 +26,7 @@
 </p>
 <strong><%= t('.event_author') %></strong>
 <%= link_to root_path do %>
-  <% creator = @event.users.find_by(events_users: {role: EventsUser.roles[:creator]}) %>
+  <% creator = @event.creator %>
     <div class="pull-left">
       <%= image_tag(creator.avatar, style: "width:45px;height:45px;border-radius:100%;object-fit:cover") if creator.avatar.attached? %>
     </div>
@@ -50,3 +50,11 @@
 <%= link_to t('helpers.links.back'), events_path, class: 'btn btn-success' %>
 <%= link_to t('helpers.titles.edit', model: t('activerecord.models.event')), edit_event_path, class: 'btn btn-success' %>
 
+
+<div>
+  <% if @event.unpublished? &&  current_user.admin?%>
+    <%= form_with(url: update_event_status_event_path, method: :patch, local: true) do |f| %>
+      <%= submit_tag 'Confirm' %>
+<% end %>
+  <% end  %>
+</div>

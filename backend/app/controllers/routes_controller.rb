@@ -2,21 +2,12 @@
 
 class RoutesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index show]
-  before_action :set_route, only: %i[edit update destroy]
-
-  # def index
-  #   @routes = policy_scope(Route.search(params[:search]))
-  #   authorize @routes
-  # end
+  before_action :set_route, only: %i[edit update destroy update_route_status]
 
   def index
-    @routes = FindRoutes.new(policy_scope(Route)).call(permitted_params)
+    @routes = SearchResources::SearchRoutes.new(policy_scope(Route)).call(permitted_params)
     authorize @routes
   end
-
-  # def index
-  #   @posts_vo = Routes::IndexValueObject.new(current_user)
-  # end
 
   def show
     @route = policy_scope(Route).find(params[:id])
@@ -53,6 +44,11 @@ class RoutesController < ApplicationController
 
   def destroy
     @route.destroy
+    redirect_to routes_path
+  end
+
+  def update_route_status
+    PublishService.new(@route, :route).activated
     redirect_to routes_path
   end
 

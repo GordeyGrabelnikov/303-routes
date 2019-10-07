@@ -36,3 +36,13 @@
 
 <%= link_to t('helpers.links.back'), routes_path, class: 'btn btn-success'%>
 <%= link_to  t('helpers.titles.edit', model: t('activerecord.models.route')), edit_route_path, class: 'btn btn-success' %>
+
+
+
+<div>
+  <% if @route.unpublished? &&  current_user.admin?%>
+    <%= form_with(url: update_route_status_route_path, method: :patch, local: true) do |f| %>
+    <%= submit_tag 'Confirm' %>
+<% end %>
+  <% end  %>
+</div>

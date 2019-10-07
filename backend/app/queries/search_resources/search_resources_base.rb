@@ -1,4 +1,6 @@
-class FindResources
+# frozen_string_literal: true
+
+class SearchResourcesBase
   attr_accessor :initial_scope
 
   def initialize(initial_scope)
@@ -11,5 +13,4 @@ class FindResources
 
     scoped
   end
-
 end

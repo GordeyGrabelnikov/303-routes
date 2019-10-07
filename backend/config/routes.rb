@@ -12,10 +12,16 @@ Rails.application.routes.draw do
     resources :comments
   end
   resources :routes do
-    resources :comments
+    patch :update_route_status, on: :member
+
+  resources :comments
   end
 
   resources :events do
+    post :follow, on: :member
+    post :unfollow, on: :member
+    patch :update_event_status, on: :member
+
     resources :events_users
   end
 

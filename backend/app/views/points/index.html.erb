@@ -6,22 +6,16 @@
   <%= submit_tag 'Search' %>
 <% end %>
 
-
-
-
-<% if current_user %>
-  <%if current_user.admin?%>
-    <p>Unpublished points</p>
-    <%= render('points_list', point_set: Point.unpublished, status: 'unpublished_point') %>
+<% if current_user && current_user.admin?%>
+    <h2>Unpublished points</h2>
+    <%= render('points_list', point_set: @points.unpublished, status: 'unpublished_point') %>
   <% end %>
-  <h2>My points</h2>
-  <%= render('points_list', point_set: current_user.points, status: 'unpublished_point') %>
-<% end %>
+<!--  <h2>My points</h2>-->
+  <%#= render('points_list', point_set: current_user.points, status: 'unpublished_point') %>
+<%# end %>
 
 <h2>Published</h2>
-<%= render('points_list', point_set: Point.published, status: 'published_point') %>
+<%= render('points_list', point_set: @points.published, status: 'published_point') %>
 
 <%= link_to t('helpers.titles.new', model: t('activerecord.models.point')), new_point_path, class: 'btn btn-success' %>
 
-<%= link_to 'Search',   new_search_path, class: 'btn btn-success' %>
-<%#= link_to 'Advanced search', new_search_path %>

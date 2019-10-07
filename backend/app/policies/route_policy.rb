@@ -33,6 +33,10 @@ class RoutePolicy < ApplicationPolicy
     user.present? && (user == route.user || user.admin?)
   end
 
+  def update_route_status?
+    user.present? && user.admin?
+  end
+
   private
 
   def route
