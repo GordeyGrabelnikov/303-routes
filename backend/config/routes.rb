@@ -25,7 +25,8 @@ Rails.application.routes.draw do
     resources :events_users
   end
 
-  resources :searches #, only: %i[show new edit]
+
+  resources :users, only: %i[show]
 
   get 'welcome/index'
   root 'welcome#index'

@@ -25,8 +25,9 @@
 
 </p>
 <strong><%= t('.event_author') %></strong>
-<%= link_to root_path do %>
-  <% creator = @event.creator %>
+
+<%= link_to @event.users.find_by(events_users: {role: EventsUser.roles[:creator]})  do %>
+  <% creator = @event.users.find_by(events_users: {role: EventsUser.roles[:creator]}) %>
     <div class="pull-left">
       <%= image_tag(creator.avatar, style: "width:45px;height:45px;border-radius:100%;object-fit:cover") if creator.avatar.attached? %>
     </div>
@@ -40,7 +41,7 @@
   <strong><%= t('.event_subscribers') %></strong>
   <div>
     <% @event.users.each do |x|%>
-      <%= link_to root_path do %>
+      <%= link_to x do %>
         <%= image_tag(x.avatar, style: "width:60px;height:60px;border-radius:100%;object-fit:cover") if x.avatar.attached? %>
       <% end %>
     <% end %>
