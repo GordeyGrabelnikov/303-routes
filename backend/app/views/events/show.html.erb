@@ -2,16 +2,18 @@
   <strong> <%= t('.event_name') %> </strong>
   <%= @event.event_name %>
 </p>
+<p>
   <strong><%= t('.event_description') %> </strong>
   <%= @event.event_description %>
 </p>
-</p>
+<p>
   <strong><%= t('.event_route') %> </strong>
   <%= link_to "#{@event.route.name}",  @event.route %>
-
 </p>
-  <% if current_user == nil %>
-  <p> <%= link_to t('devise.authorization.buttons.log_in'), new_user_session_path %> <%= t('.register_requirement') %> </p>
+
+<div>
+<% if current_user == nil %>
+  <p> <%= link_to t('devise.authorization.buttons.log_in'), new_user_registration_path %> <%= t('.register_requirement') %> </p>
   <% else %>
     <% if @event.users.include?(current_user) %>
       <%=  link_to  t('.unsubscribe'), unfollow_event_path, method: :post,  data: {confirm: 'Are you sure?'}, class: 'btn btn-primary' %>
@@ -19,24 +21,42 @@
       <%=  link_to  t('.subscribe'), follow_event_path, method: :post, class: 'btn btn-success' %>
     <% end %>
   <% end %>
-
-
-</p>
-
-</p>
+</div>
+<div>
 <strong><%= t('.event_author') %></strong>
 
 <%= link_to @event.creator  do %>
     <div class="pull-left">
       <%= image_tag(@event.creator.avatar, style: "width:45px;height:45px;border-radius:100%;object-fit:cover") if @event.creator.avatar.attached? %>
     </div>
+<<<<<<< HEAD
     <div class="media-body">
       <h4 class="media-heading"><%= "#{@event.creator.first_name} #{@event.creator.last_name}" %></h4>
+=======
+    <div>
+      <h4><%= "#{creator.first_name} #{creator.last_name}" %></h4>
+>>>>>>> feature/add_guider_for_event
     </div>
 <% end %>
-<p>
+</div>
 
-<p>
+
+<% unless @event.users.find_by(events_users: {role: EventsUser.roles[:guide]}).nil? %>
+  <div>
+  <strong><%= t('.event_guide') %></strong>
+  <%= link_to root_path do %>
+    <% guide = @event.users.find_by(events_users: {role: EventsUser.roles[:guide]}) %>
+    <div class="pull-left">
+      <%= image_tag(guide.avatar, style: "width:45px;height:45px;border-radius:100%;object-fit:cover") if guide.avatar.attached? %>
+    </div>
+    <div>
+      <h4><%= "#{guide.first_name} #{guide.last_name}" %></h4>
+    </div>
+  <% end %>
+  </div>
+<% end %>
+
+<div>
   <strong><%= t('.event_subscribers') %></strong>
   <div>
     <% @event.users.each do |x|%>
@@ -45,7 +65,7 @@
       <% end %>
     <% end %>
   </div>
-</p>
+</div>
 
 <%= link_to t('helpers.links.back'), events_path, class: 'btn btn-success' %>
 <%= link_to t('helpers.titles.edit', model: t('activerecord.models.event')), edit_event_path, class: 'btn btn-success' %>

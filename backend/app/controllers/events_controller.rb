@@ -21,6 +21,9 @@ class EventsController < ApplicationController
 
   def create
     @event = Events::Create.call(current_user, event_params)
+
+    @event_guide = @event.events_users.new(role: EventsUser.roles[:guide])
+    @event_guide.user_id = params[:event][:guide_id]
     authorize @event
 
     if @event
