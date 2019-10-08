@@ -26,13 +26,12 @@
 </p>
 <strong><%= t('.event_author') %></strong>
 
-<%= link_to @event.users.find_by(events_users: {role: EventsUser.roles[:creator]})  do %>
-  <% creator = @event.users.find_by(events_users: {role: EventsUser.roles[:creator]}) %>
+<%= link_to @event.creator  do %>
     <div class="pull-left">
-      <%= image_tag(creator.avatar, style: "width:45px;height:45px;border-radius:100%;object-fit:cover") if creator.avatar.attached? %>
+      <%= image_tag(@event.creator.avatar, style: "width:45px;height:45px;border-radius:100%;object-fit:cover") if @event.creator.avatar.attached? %>
     </div>
     <div class="media-body">
-      <h4 class="media-heading"><%= "#{creator.first_name} #{creator.last_name}" %></h4>
+      <h4 class="media-heading"><%= "#{@event.creator.first_name} #{@event.creator.last_name}" %></h4>
     </div>
 <% end %>
 <p>

@@ -50,15 +50,16 @@
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="routes#index"><%= t('.routes')%>
+              <%= link_to  t('.routes'), routes_path, class: "nav-link"%>
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="points#index"><%= t('.points')%></a>
+              <%= link_to  t('.points'), points_path, class: "nav-link"%>
+
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="events#index"><%= t('.events')%></a>
+              <%= link_to  t('.events'), events_path, class: "nav-link"%>
             </li>
 
           </ul>
