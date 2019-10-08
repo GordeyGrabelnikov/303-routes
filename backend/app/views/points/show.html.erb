@@ -23,6 +23,8 @@
 
 <div>
   <% if @point.unpublished? &&  current_user.admin?%>
-    <%= submit_tag 'Confirm' %>
+    <%= form_with(url: update_point_status_point_path, method: :patch, local: true) do |f| %>
+      <%= submit_tag 'Confirm' %>
+    <% end %>
   <% end %>
 </div>

@@ -77,6 +77,7 @@ GEM
     commonjs (0.2.7)
     concurrent-ruby (1.1.5)
     crass (1.0.4)
+    database_cleaner (1.7.0)
     devise (4.7.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -89,6 +90,11 @@ GEM
     execjs (2.7.0)
     factory_bot (5.1.1)
       activesupport (>= 4.2.0)
+    factory_bot_rails (5.1.1)
+      factory_bot (~> 5.1.0)
+      railties (>= 4.2.0)
+    faker (2.5.0)
+      i18n (~> 1.6.0)
     ffi (1.11.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -277,10 +283,12 @@ DEPENDENCIES
   capybara (>= 2.15)
   chromedriver-helper
   coffee-rails (~> 4.2)
+  database_cleaner
   devise
   dry-initializer
   execjs
-  factory_bot
+  factory_bot_rails
+  faker
   jbuilder (~> 2.5)
   jquery-rails
   less-rails

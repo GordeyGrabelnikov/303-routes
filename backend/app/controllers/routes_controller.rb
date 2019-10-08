@@ -48,7 +48,7 @@ class RoutesController < ApplicationController
   end
 
   def update_route_status
-    PublishService.new(@route, :route).activated
+    PublishService::PublishService.new(@route, :route).call
     redirect_to routes_path
   end
 

@@ -46,7 +46,7 @@ class EventsController < ApplicationController
   end
 
   def update_event_status
-    PublishService.new(@event, :event).activated
+    PublishService::PublishEventService.new(@event, :event).call
     redirect_to events_path
   end
 
