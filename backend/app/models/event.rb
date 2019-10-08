@@ -12,6 +12,11 @@ class Event < ApplicationRecord
 
   def creator
     users.find_by(events_users: { role: EventsUser.roles[:creator] })
+  end
+
+  def guide
+    users.find_by(events_users: { role: EventsUser.roles[:guide] })
+  end
 
   private
 

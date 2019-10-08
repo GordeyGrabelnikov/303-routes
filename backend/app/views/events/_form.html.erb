@@ -16,7 +16,7 @@
     <%= f.collection_select(:route_id, Route.all, :id, :name)%><br>
 
     <%= f.label :guide_id %>
-    <%= f.collection_select(:guide_id, User.all, :id, :last_name)%>
+    <%= f.collection_select(:guide_id, User.all, :id, :last_name, include_blank: 'Choose guide')%>
 
   </div>
   <div class="actions">

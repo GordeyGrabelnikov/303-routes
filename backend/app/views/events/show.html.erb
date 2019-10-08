@@ -29,13 +29,8 @@
     <div class="pull-left">
       <%= image_tag(@event.creator.avatar, style: "width:45px;height:45px;border-radius:100%;object-fit:cover") if @event.creator.avatar.attached? %>
     </div>
-<<<<<<< HEAD
     <div class="media-body">
       <h4 class="media-heading"><%= "#{@event.creator.first_name} #{@event.creator.last_name}" %></h4>
-=======
-    <div>
-      <h4><%= "#{creator.first_name} #{creator.last_name}" %></h4>
->>>>>>> feature/add_guider_for_event
     </div>
 <% end %>
 </div>
@@ -44,13 +39,12 @@
 <% unless @event.users.find_by(events_users: {role: EventsUser.roles[:guide]}).nil? %>
   <div>
   <strong><%= t('.event_guide') %></strong>
-  <%= link_to root_path do %>
-    <% guide = @event.users.find_by(events_users: {role: EventsUser.roles[:guide]}) %>
+  <%= link_to @event.guide do %>
     <div class="pull-left">
-      <%= image_tag(guide.avatar, style: "width:45px;height:45px;border-radius:100%;object-fit:cover") if guide.avatar.attached? %>
+      <%= image_tag(@event.guide.avatar, style: "width:45px;height:45px;border-radius:100%;object-fit:cover") if @event.guide.avatar.attached? %>
     </div>
     <div>
-      <h4><%= "#{guide.first_name} #{guide.last_name}" %></h4>
+      <h4><%= "#{@event.guide.first_name} #{@event.guide.last_name}" %></h4>
     </div>
   <% end %>
   </div>
