@@ -8,6 +8,8 @@ class Event < ApplicationRecord
   validates :event_name, :event_description, :event_date, presence: true
   validate :event_date_cannot_be_in_the_past
 
+  ratyrate_rateable 'event'
+
   enum event_status: { unpublished: 0, published: 1 }
 
   def creator

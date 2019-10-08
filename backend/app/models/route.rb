@@ -11,6 +11,8 @@ class Route < ApplicationRecord
 
   validates :name, presence: true
 
+  ratyrate_rateable 'route'
+
   enum route_type: { walk: 0, bike: 1, car: 2 }
   enum route_status: { unpublished: 0, published: 1 }
 
