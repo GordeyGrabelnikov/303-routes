@@ -17,5 +17,4 @@ class User < ApplicationRecord
   enum user_role: { user: 0, admin: 1 }
 
   ratyrate_rater
-
 end

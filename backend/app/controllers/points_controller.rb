@@ -47,7 +47,7 @@ class PointsController < ApplicationController
   end
 
   def update_point_status
-    PublishService::PublishService.new(@point, :point).call
+    PublishService::PublishService.new(@point).call
     redirect_to points_path
   end
 

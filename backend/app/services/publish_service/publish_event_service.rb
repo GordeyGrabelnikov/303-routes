@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module PublishService
   class PublishEventService < PublishService::PublishService
     def call

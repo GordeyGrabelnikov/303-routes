@@ -20,14 +20,14 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = Events::Create.call(current_user, event_params, guide_id: params[:event][:guide_id])
-    authorize @event
-
-    if @event
+    authorize Event
+    @event = Events::Create.call(current_user, event_params.to_h)
+    if @event.valid?
       redirect_to @event
     else
       render :new
     end
+
   end
 
   def edit; end
@@ -46,7 +46,7 @@ class EventsController < ApplicationController
   end
 
   def update_event_status
-    PublishService::PublishEventService.new(@event, :event).call
+    PublishService::PublishEventService.new(@event).call
     redirect_to events_path
   end
 
@@ -67,7 +67,7 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:event_name, :event_description, :event_date, :route_id)
+    params.require(:event).permit(:event_name, :event_description, :event_date, :route_id, :guide_id)
   end
 
   def set_event

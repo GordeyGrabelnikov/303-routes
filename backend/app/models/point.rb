@@ -13,5 +13,4 @@ class Point < ApplicationRecord
   enum point_status: { unpublished: 0, published: 1 }
 
   ratyrate_rateable 'name'
-
 end

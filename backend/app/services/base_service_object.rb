@@ -3,8 +3,8 @@
 class BaseServiceObject
   extend Dry::Initializer # use `param` and `option` for dependencies
 
-  # option :errors, default: -> { Errors.new }
-  #
+  option :errors, default: -> { Errors.new }
+
   # attr_accessor :result
 
   class << self

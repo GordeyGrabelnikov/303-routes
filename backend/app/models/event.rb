@@ -13,11 +13,11 @@ class Event < ApplicationRecord
   enum event_status: { unpublished: 0, published: 1 }
 
   def creator
-    users.find_by(events_users: { role: EventsUser.roles[:creator] })
+    users.find_by(events_users: { role: :creator })
   end
 
   def guide
-    users.find_by(events_users: { role: EventsUser.roles[:guide] })
+    users.find_by(events_users: { role: :guide })
   end
 
   private
