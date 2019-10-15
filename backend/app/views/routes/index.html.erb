@@ -3,7 +3,7 @@
 
 <%= form_tag routes_path, method: :get do %>
   <%= text_field_tag :search, params[:search] %>
-  <%= select_tag :category, options_for_select( Route.route_types.keys.to_a), include_blank: 'Choose route type'%>
+  <%= select_tag :category, options_for_select( Route.movement_types.keys.to_a), include_blank: 'Choose route type'%>
   <%= submit_tag 'Search' %>
 <% end %>
 

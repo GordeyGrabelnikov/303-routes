@@ -5,12 +5,12 @@ class Event < ApplicationRecord
   has_many :events_users, dependent: :destroy
   has_many :users, through: :events_users
 
-  validates :event_name, :event_description, :event_date, presence: true
-  validate :event_date_cannot_be_in_the_past
+  validates :name, :description, :date, presence: true
+  validate :date_cannot_be_in_the_past
 
   ratyrate_rateable 'event'
 
-  enum event_status: { unpublished: 0, published: 1 }
+  enum record_status: { unpublished: 0, published: 1 }
 
   def creator
     users.find_by(events_users: { role: :creator })
@@ -22,7 +22,7 @@ class Event < ApplicationRecord
 
   private
 
-  def event_date_cannot_be_in_the_past
-    errors.add(:expiration_date, "can't be in the past") if event_date.present? && event_date < Date.today
+  def date_cannot_be_in_the_past
+    errors.add(:expiration_date, "can't be in the past") if date.present? && date < Date.today
   end
 end

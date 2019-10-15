@@ -9,6 +9,7 @@ module EventsUsers
 
     def call
       events_user.save!
+      events_user
     end
 
     private

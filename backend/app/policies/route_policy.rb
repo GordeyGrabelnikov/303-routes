@@ -4,11 +4,11 @@ class RoutePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if user.nil?
-        scope.where(route_status: :published)
+        scope.where(record_status: :published)
       elsif user.admin?
         scope.all
       else
-        scope.where('route_status = ? OR user_id = ?', Route.route_statuses[:published], user.id)
+        scope.where('record_status = ? OR user_id = ?', Route.record_statuses[:published], user.id)
       end
     end
   end

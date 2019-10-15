@@ -4,11 +4,11 @@ class EventPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if user.nil?
-        scope.where(event_status: :published)
+        scope.where(record_status: :published)
       elsif user.admin?
         scope.all
       else
-        scope.joins(:events_users).where('event_status = ? OR (user_id = ? and role = ?)', Event.event_statuses[:published], user.id, EventsUser.roles[:creator]).distinct
+        scope.joins(:events_users).where('record_status = ? OR (user_id = ? and role = ?)', Event.record_statuses[:published], user.id, EventsUser.roles[:creator]).distinct
       end
     end
   end
@@ -52,6 +52,6 @@ class EventPolicy < ApplicationPolicy
   end
 
   def user_is_creator?
-    return true if user == event.users.find_by(events_users: { role: EventsUser.roles[:creator] })
+    user == event.users.find_by(events_users: { role: EventsUser.roles[:creator] })
   end
 end

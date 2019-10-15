@@ -5,7 +5,7 @@ class RoutesController < ApplicationController
   before_action :set_route, only: %i[edit update destroy update_route_status]
 
   def index
-    @routes = SearchResources::SearchRoutes.new(policy_scope(Route)).call(permitted_params)
+    @routes = SearchResources::Routes::Search.call(policy_scope(Route), permitted_params.to_h)
     authorize @routes
   end
 
@@ -48,7 +48,7 @@ class RoutesController < ApplicationController
   end
 
   def update_route_status
-    PublishService::PublishService.new(@route).call
+    Routes::Publish.call(@route)
     redirect_to routes_path
   end
 

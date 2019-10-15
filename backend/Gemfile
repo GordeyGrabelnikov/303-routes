@@ -52,7 +52,10 @@ gem 'rubocop-rails'
 
 gem 'jquery-rails'
 
+gem 'dry-container'
 gem 'dry-initializer-rails'
+gem 'dry-monads'
+gem 'dry-transaction'
 
 gem 'pundit'
 

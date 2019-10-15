@@ -4,11 +4,11 @@ class PointPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if user.nil?
-        scope.where(point_status: :published)
+        scope.where(record_status: :published)
       elsif user.admin?
         scope.all
       else
-        scope.where('point_status = ? OR user_id = ?', Point.point_statuses[:published], user.id)
+        scope.where('record_status = ? OR user_id = ?', Point.record_statuses[:published], user.id)
       end
     end
   end

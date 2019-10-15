@@ -3,11 +3,11 @@
 <%= render 'common/errors', resource: @route %>
 
   <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %><br>
+    <%= f.label :name  %>
+    <%= f.text_field :name, value: Faker::FunnyName.name %><br>
 
-    <%= f.label :route_type %>
-    <%= f.select :route_type, options_for_select( Route.route_types.keys.to_a) %><br>
+    <%= f.label :movement_type %>
+    <%= f.select :movement_type, options_for_select( Route.movement_types.keys.to_a) %><br>
 
     <%= f.label :route_images %>
     <%= f.file_field :route_images, multiple: true  %><br>

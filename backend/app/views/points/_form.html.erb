@@ -2,15 +2,15 @@
   <%= render 'common/errors', resource: @point %>
   <div class="field">
     <%= f.label :name %><br />
-    <%= f.text_field :name,  class: 'form-control' %>
+    <%= f.text_field :name, value: Faker::FunnyName.name, class: 'form-control' %>
   </div>
   <div class="field">
     <%= f.label :description %><br />
-    <%= f.text_area :description, class: 'form-control' %>
+    <%= f.text_area :description, value: Faker::Lorem.sentence, class: 'form-control' %>
   </div>
   <div class="field">
     <%= f.label :coordinates %><br />
-    <%= f.text_field :coordinates %>
+    <%= f.text_field :coordinates, value: "#{Faker::Address.latitude}, #{Faker::Address.longitude}" %>
   </div>
   <div class="field">
     <%= f.label :tags %><br />

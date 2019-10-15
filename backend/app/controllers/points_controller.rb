@@ -5,7 +5,7 @@ class PointsController < ApplicationController
   before_action :set_point, only: %i[show edit update destroy update_point_status]
 
   def index
-    @points = SearchResources::SearchPoints.new(policy_scope(Point)).call(permitted_params)
+    @points = SearchResources::Points::Search.call(policy_scope(Point), permitted_params.to_h)
     authorize @points
   end
 
@@ -47,7 +47,7 @@ class PointsController < ApplicationController
   end
 
   def update_point_status
-    PublishService::PublishService.new(@point).call
+    Points::Publish.call(@point)
     redirect_to points_path
   end
 

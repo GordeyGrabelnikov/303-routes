@@ -1,41 +1,49 @@
 # frozen_string_literal: true
 
+require 'dry/transaction'
+
 module Events
-  class Create < BaseServiceObject
-    param :user
+  class Create
+    include Dry::Transaction(container: TransactionContainer)
 
-    option :event_name
-    option :event_description
-    option :event_date
-    option :route_id
-    option :guide_id, optional: true
+    around :transaction, with: 'transaction'
+    tee :params
+    step :create_event
+    step :add_creator
+    step :add_guide
 
-    def call
-      validate
-      return event unless valid?
+    def params(input)
+      @event_params = input.fetch(:params)
+      @guide_id = input.fetch(:guide_id)
+      @user = input.fetch(:user)
+    end
 
-      event.save!
-      EventsUsers::Create.call(event, user, role: :creator)
-      if guide_id.present?
-        guide = User.find_by(id: guide_id)
-        EventsUsers::Create.call(event, guide, role: :guide)
+    def create_event
+      @event = Event.create(@event_params)
+
+      if @event.errors.any?
+        Failure(error: @event.errors.full_messages.join(' | '))
+      else
+        Success(@event)
       end
-      event
     end
 
-    private
-
-    def validate
-      errors.add(:base, 'please specify user') unless user
-      errors.merge_with_models(event) unless event.valid?
+    def add_creator
+      creator = EventsUsers::Create.call(@event, @user, role: :creator)
+      if creator.errors.any?
+        Failure(error: creator.errors.full_messages.join(' | '))
+      else
+        Success(@event)
+      end
     end
 
-    def event
-      @event ||= Event.new(event_name: event_name, event_description: event_description, event_date: event_date, route_id: route_id)
+    def add_guide
+      if @guide_id.present?
+        guide = User.find_by(id: @guide_id)
+        event_guide = EventsUsers::Create.call(@event, guide, role: :guide)
+        return Failure(error: event_guide.errors.full_messages.join(' | ')) if event_guide.errors.any?
+      end
+      Success(@event)
     end
   end
 end
-
-
-
-

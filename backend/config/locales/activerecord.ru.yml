@@ -34,7 +34,8 @@ ru:
         remember_me: 'Запомнить пароль'
     errors:
       messages:
-#        blank: 'не может быть пустым'
+        blank: 'не может быть пустым'
+        record_invalid: 'Возникли ошибки: %{errors}'
       models:
         user:
           attributes:
@@ -42,3 +43,10 @@ ru:
               blank: 'должен быть введен'
 #        <%= f.collection_check_boxes(:point_ids, Point.all.order('id DESC'), :id, :name) do |b| %>
 #        <%= b.label points: 'form-control text-center text-uppercase' %>
+        events_user:
+          attributes:
+            user:
+              required: 'не может отсутствовать'
+            event:
+              required: 'нужно указать событие'
+

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BaseServiceObject
   class Errors
     extend Dry::Initializer
