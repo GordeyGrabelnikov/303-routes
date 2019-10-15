@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  post '/rate' => 'rater#create', :as => 'rate'
   devise_for :users
 
   resources :comments do
@@ -8,17 +9,25 @@ Rails.application.routes.draw do
   end
 
   resources :points do
+    patch :update_point_status, on: :member
     resources :comments
   end
   resources :routes do
-    resources :comments
+    patch :update_route_status, on: :member
+
+  resources :comments
   end
 
   resources :events do
+    post :follow, on: :member
+    post :unfollow, on: :member
+    patch :update_event_status, on: :member
+
     resources :events_users
   end
 
-  resource :search, only: %i[show new edit]
+
+  resources :users, only: %i[show]
 
   get 'welcome/index'
   root 'welcome#index'

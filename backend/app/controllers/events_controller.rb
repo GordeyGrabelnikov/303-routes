@@ -2,10 +2,10 @@
 
 class EventsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index show]
-  before_action :set_event, only: %i[show edit update destroy]
+  before_action :set_event, only: %i[show edit update destroy update_event_status follow unfollow]
 
   def index
-    @events = policy_scope(Event)
+    @events = SearchResources::Events::Search.call(policy_scope(Event), permitted_params.to_h)
     authorize @events
   end
 
@@ -20,15 +20,15 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = Event.new(event_params)
-    @event_user = @event.events_users.new(role: EventsUser.roles[:creator])
-    @event_user.user = current_user
-    authorize @event
+    authorize Event
+    Events::Create.new.call(user: current_user, params: event_params, guide_id: params[:event][:guide_id]) do |f|
+      f.failure do |error|
+        redirect_to events_path, notice: error.to_s
+      end
 
-    if @event.save
-      redirect_to @event
-    else
-      render :new
+      f.success do |event|
+        redirect_to event
+      end
     end
   end
 
@@ -47,6 +47,25 @@ class EventsController < ApplicationController
     redirect_to events_path
   end
 
+  def update_event_status
+    Events::Publish.call(@event)
+    redirect_to events_path
+  end
+
+  def follow
+    EventsUsers::Create.call(@event, current_user)
+    redirect_to @event, notice: 'You successfully subscribed' if @event.save
+  end
+
+  def unfollow
+    event = EventsUsers::Destroy.call(@event, current_user)
+    if event
+      redirect_to event
+    else
+      redirect_to events_path
+    end
+  end
+
   private
 
   def event_params
@@ -56,5 +75,9 @@ class EventsController < ApplicationController
   def set_event
     @event = Event.find(params[:id])
     authorize @event
+  end
+
+  def permitted_params
+    params.permit(:search, :category)
   end
 end

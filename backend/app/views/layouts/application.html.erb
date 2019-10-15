@@ -11,23 +11,23 @@
 
     <!-- For third-generation iPad with high-resolution Retina display: -->
     <!-- Size should be 144 x 144 pixels -->
-    <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
+    <%#= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
 
     <!-- For iPhone with high-resolution Retina display: -->
     <!-- Size should be 114 x 114 pixels -->
-    <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
+    <%#= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
 
     <!-- For first- and second-generation iPad: -->
     <!-- Size should be 72 x 72 pixels -->
-    <%= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
+    <%#= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
 
     <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
     <!-- Size should be 57 x 57 pixels -->
-    <%= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
+    <%#= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
 
     <!-- For all other devices -->
     <!-- Size should be 32 x 32 pixels -->
-    <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
+    <%#= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
 
     <%= javascript_include_tag "application" %>
 
@@ -37,6 +37,7 @@
     <![endif]-->
   </head>
   <body>
+
 
     <div class="navbar navbar-default navbar-static-top">
       <div class="container">
@@ -48,23 +49,46 @@
         <a class="navbar-brand" href= / >Routes303</a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li><%= link_to t('.routes'), routes_path%></li>
-            <li><%= link_to t('.points'), points_path%></li>
-            <li><%= link_to t('.events'), events_path%></li>
+            <li class="nav-item">
+              <%= link_to  t('.routes'), routes_path, class: "nav-link"%>
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <%= link_to  t('.points'), points_path, class: "nav-link"%>
+
+            </li>
+            <li class="nav-item">
+              <%= link_to  t('.events'), events_path, class: "nav-link"%>
+            </li>
+
           </ul>
-          <div class="media pull-right">
-            <% if user_signed_in? %>
-              <div class="nav navbar-nav">
-                <%= "#{current_user.first_name} #{current_user.last_name}" %>
-                <%= link_to t('helpers.links.edit'), edit_user_registration_path(current_user)%>
-                <%= link_to t('devise.shared.links.exit'), destroy_user_session_path, method: :delete%>
-              </div>
-            <% else %>
-              <div class="nav navbar-nav">
-                <%= link_to t('devise.shared.links.sign_in'), new_user_session_path%>
-              </div>
-            <% end %>
-          </div>
+          <% if user_signed_in? %>
+            <ul class="nav navbar-nav navbar-right user-nav">
+              <li class="user-name"><span> <%= "#{current_user.first_name} #{current_user.last_name}" %></span></li>
+              <li class="dropdown avatar-dropdown">
+                <div class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 <%= image_tag(current_user.avatar, class: "img-circle avatar", style: "width:40px", alt: " avatar image") if current_user.avatar.attached? %>
+                </div>
+                <ul class="dropdown-menu user-dropdown">
+                  <li><%= link_to 'My profile', current_user%></li>
+                  <li role="separator" class="divider"></li>
+                  <li class="more">
+                    <ul>
+                      <li><%= link_to t('helpers.links.edit'), edit_user_registration_path(current_user)%></li>
+                      <li><%= link_to t('devise.shared.links.exit'), destroy_user_session_path, method: :delete%></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+             </ul>
+          <% else %>
+            <ul class="nav navbar-nav navbar-right user-nav">
+              <li class="user-name">
+                <span><%= link_to t('devise.shared.links.sign_in'), new_user_session_path%></span>
+              </li>
+            </ul>
+          <% end %>
         </div>
       </div>
     </div>

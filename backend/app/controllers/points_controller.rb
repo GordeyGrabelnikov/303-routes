@@ -2,10 +2,10 @@
 
 class PointsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index show]
-  before_action :set_point, only: %i[show edit update destroy]
+  before_action :set_point, only: %i[show edit update destroy update_point_status]
 
   def index
-    @points = policy_scope(Point)
+    @points = SearchResources::Points::Search.call(policy_scope(Point), permitted_params.to_h)
     authorize @points
   end
 
@@ -21,6 +21,7 @@ class PointsController < ApplicationController
 
   def create
     @point = Point.new(point_params)
+    @point.user = current_user
     authorize @point
 
     if @point.save
@@ -45,6 +46,11 @@ class PointsController < ApplicationController
     redirect_to points_path
   end
 
+  def update_point_status
+    Points::Publish.call(@point)
+    redirect_to points_path
+  end
+
   private
 
   def point_params
@@ -54,5 +60,9 @@ class PointsController < ApplicationController
   def set_point
     @point = Point.find(params[:id])
     authorize @point
+  end
+
+  def permitted_params
+    params.permit(:search, :category)
   end
 end
