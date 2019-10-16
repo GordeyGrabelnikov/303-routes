@@ -8,7 +8,7 @@ module EventsUsers
     option :role, default: -> { :follower }
 
     def call
-      events_user.save!
+      events_user.save
       events_user
     end
 

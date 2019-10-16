@@ -21,7 +21,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    Events::Create.new.call(user: current_user, params: event_params, guide_id: params[:event][:guide_id]) do |f|
+    Events::Create.new.call(user_id: current_user.id, params: event_params, guide_id: params[:event][:guide_id]) do |f|
       f.failure do |error|
         redirect_to events_path, notice: error.to_s
       end

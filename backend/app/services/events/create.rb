@@ -15,7 +15,7 @@ module Events
     def params(input)
       @event_params = input.fetch(:params)
       @guide_id = input.fetch(:guide_id)
-      @user = input.fetch(:user)
+      @user_id = input.fetch(:user_id)
     end
 
     def create_event
@@ -29,7 +29,7 @@ module Events
     end
 
     def add_creator
-      creator = EventsUsers::Create.call(@event.id, @user.id, role: :creator)
+      creator = EventsUsers::Create.call(@event.id, @user_id, role: :creator)
       if creator.errors.any?
         Failure(error: creator.errors.full_messages.join(' | '))
       else
