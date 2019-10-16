@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module SearchResources::Points
+module Points
   class Search < BaseQueryObject
     param :initial_scope
 

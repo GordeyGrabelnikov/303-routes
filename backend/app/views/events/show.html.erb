@@ -36,7 +36,7 @@
 </div>
 
 
-<% unless @event.users.find_by(events_users: {role: EventsUser.roles[:guide]}).nil? %>
+<% unless @event.guide.nil? %>
   <div>
   <strong><%= t('.event_guide') %></strong>
   <%= link_to @event.guide do %>

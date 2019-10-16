@@ -2,8 +2,8 @@
 
 module EventsUsers
   class Create < BaseServiceObject
-    param :event
-    param :user
+    param :event_id
+    param :user_id
 
     option :role, default: -> { :follower }
 
@@ -15,7 +15,7 @@ module EventsUsers
     private
 
     def events_user
-      @events_user ||= EventsUser.new(event: event, user: user, role: role)
+      @events_user ||= EventsUser.new(event_id: event_id, user_id: user_id, role: role)
     end
   end
 end

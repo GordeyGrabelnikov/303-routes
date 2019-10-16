@@ -29,7 +29,7 @@ module Events
     end
 
     def add_creator
-      creator = EventsUsers::Create.call(@event, @user, role: :creator)
+      creator = EventsUsers::Create.call(@event.id, @user.id, role: :creator)
       if creator.errors.any?
         Failure(error: creator.errors.full_messages.join(' | '))
       else
@@ -39,8 +39,7 @@ module Events
 
     def add_guide
       if @guide_id.present?
-        guide = User.find_by(id: @guide_id)
-        event_guide = EventsUsers::Create.call(@event, guide, role: :guide)
+        event_guide = EventsUsers::Create.call(@event.id, @guide_id, role: :guide)
         return Failure(error: event_guide.errors.full_messages.join(' | ')) if event_guide.errors.any?
       end
       Success(@event)
