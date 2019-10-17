@@ -3,7 +3,7 @@
 class RoutesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index show]
   before_action :set_route, only: %i[edit update destroy update_route_status]
-  before_action :authorize_route
+  before_action :authorize_route, only: %i[create index new]
 
   def index
     @routes = Routes::Search.call(policy_scope(Route), permitted_params.to_h)
@@ -52,11 +52,12 @@ class RoutesController < ApplicationController
   private
 
   def route_params
-    params.require(:route).permit(:name, :route_type, route_images: [], point_ids: [])
+    params.require(:route).permit(:name, :movement_type, route_images: [], point_ids: [])
   end
 
   def set_route
     @route = Route.find(params[:id])
+    authorize @route
   end
 
   def authorize_route
@@ -65,5 +66,5 @@ class RoutesController < ApplicationController
 
   def permitted_params
     params.permit(:search, :category)
-   end
+  end
 end

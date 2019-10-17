@@ -6,9 +6,10 @@ class Event < ApplicationRecord
   has_many :users, through: :events_users
 
   validates :name, :description, :date, presence: true
+  validates :name, uniqueness: { scope: %i[date route_id], message: 'This event exist already' }
   validate :date_cannot_be_in_the_past
 
-  ratyrate_rateable 'event'
+  ratyrate_rateable :event
 
   enum record_status: { unpublished: 0, published: 1 }
 

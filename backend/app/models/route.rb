@@ -10,6 +10,7 @@ class Route < ApplicationRecord
   has_many_attached :route_images
 
   validates :name, presence: true
+  validates :name, uniqueness: { scope: :movement_type, message: 'A route with the same name already exists.' }
 
   ratyrate_rateable 'route'
 
