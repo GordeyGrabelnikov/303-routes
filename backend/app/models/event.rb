@@ -11,7 +11,7 @@ class Event < ApplicationRecord
 
   ratyrate_rateable :event
 
-  enum record_status: { unpublished: 0, published: 1 }
+  enum record_status: { unpublished: 0, published: 1, archived: 2 }
 
   def creator
     users.find_by(events_users: { role: :creator })
@@ -24,6 +24,6 @@ class Event < ApplicationRecord
   private
 
   def date_cannot_be_in_the_past
-    errors.add(:expiration_date, "can't be in the past") if date.present? && date < Date.today
+    errors.add(:expiration_date, "can't be in the past") if date.present? && date < Time.zone.today
   end
 end

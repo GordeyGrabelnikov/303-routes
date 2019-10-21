@@ -5,10 +5,9 @@ require 'rails_helper'
 describe Events::Create do
   subject { described_class.new.call(event_params) }
 
-  let(:event_params) { { user_id: create(:user).id, params: { name: 'ASd', description: 'asdasdad', date: '2020-12-12', route_id: create(:route).id},  guide_id: create(:user).id }}
+  let(:event_params) { { user_id: create(:user).id, params: { name: 'ASd', description: 'asdasdad', date: '2020-12-12', route_id: create(:route).id }, guide_id: create(:user).id } }
 
   shared_examples 'event is not created' do |_messages|
-
     it { is_expected.to be_failure }
 
     it 'returns Event#count' do
@@ -21,7 +20,6 @@ describe Events::Create do
   end
 
   shared_examples 'event is created' do |_messages|
-
     it { is_expected.to be_success }
 
     it 'returns Event#count' do
@@ -41,14 +39,14 @@ describe Events::Create do
 
   context 'with event' do
     context 'without creator' do
-      let(:event_params) { { user_id: {}, params: { name: 'ASd', description: 'asdasdad', date: '2020-12-12', route_id: create(:route).id},  guide_id: create(:user).id }}
+      let(:event_params) { { user_id: {}, params: { name: 'ASd', description: 'asdasdad', date: '2020-12-12', route_id: create(:route).id }, guide_id: create(:user).id } }
 
       it_behaves_like 'event is not created', ['User must exist']
     end
 
     context 'with creator' do
       context 'without guide' do
-        let(:event_params) { { user_id: create(:user).id, params: { name: 'ASd', description: 'asdasdad', date: '2020-12-12', route_id: create(:route).id},  guide_id: {} }}
+        let(:event_params) { { user_id: create(:user).id, params: { name: 'ASd', description: 'asdasdad', date: '2020-12-12', route_id: create(:route).id }, guide_id: {} } }
 
         it_behaves_like 'event is created'
 
@@ -58,7 +56,6 @@ describe Events::Create do
       end
 
       context 'with guide' do
-
         it_behaves_like 'event is created'
 
         it 'creates two users' do
