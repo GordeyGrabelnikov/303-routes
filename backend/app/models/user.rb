@@ -6,8 +6,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
-  has_many :points
-  has_many :routes
+  has_many :points, dependent: :nullify
+  has_many :routes, dependent: :nullify
   has_many :events_users, dependent: :destroy
   has_many :events, through: :events_users
   has_many :comments, dependent: :destroy

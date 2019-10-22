@@ -13,7 +13,7 @@ module Events
     step :add_guide
 
     def params(input)
-      @event_params = input.fetch(:params)
+      @event_params = input.fetch(:event_params)
       @guide_id = input.fetch(:guide_id)
       @user_id = input.fetch(:user_id)
     end

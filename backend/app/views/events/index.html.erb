@@ -18,8 +18,8 @@
 
   <tbody>
   <% if current_user && current_user.admin?%>
-    <h2>Unpublished points</h2>
-    <%= render(partial: 'event', collection: @events.unpublished) %>
+    <h2>Unpublished events</h2>
+    <%= render(partial: 'event', collection: @events.unpublished.order(:date)) %>
   <% end %>
 </table>
 

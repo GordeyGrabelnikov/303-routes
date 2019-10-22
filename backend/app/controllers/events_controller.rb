@@ -18,7 +18,9 @@ class EventsController < ApplicationController
   end
 
   def create
-    Events::Create.new.call(user_id: current_user.id, event_params: event_params, guide_id: params[:event][:guide_id]) do |f|
+    Events::Create.new.call(user_id: current_user.id,
+                            event_params: event_params,
+                            guide_id: params[:event][:guide_id]) do |f|
       f.failure do |error|
         redirect_to events_path, alert: error.to_s
       end
@@ -32,7 +34,9 @@ class EventsController < ApplicationController
   def edit; end
 
   def update
-    Events::Update.new.call(event: @event, event_params: event_params, guide_id: params[:event][:guide_id]) do |f|
+    Events::Update.new.call(event: @event,
+                            event_params: event_params,
+                            guide_id: params[:event][:guide_id]) do |f|
       f.failure do |error|
         redirect_to event_path, alert: error.to_s
       end

@@ -253,9 +253,13 @@ GEM
     rubocop-rails (2.3.1)
       rack (>= 1.1)
       rubocop (>= 0.72.0)
+    rubocop-rspec (1.36.0)
+      rubocop (>= 0.68.1)
     ruby-progressbar (1.10.1)
     ruby_dep (1.5.0)
     rubyzip (1.2.3)
+    rufus-scheduler (3.6.0)
+      fugit (~> 1.1, >= 1.1.6)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -280,6 +284,11 @@ GEM
     sidekiq-cron (1.1.0)
       fugit (~> 1.1)
       sidekiq (>= 4.2.1)
+    sidekiq-scheduler (3.0.0)
+      redis (>= 3, < 5)
+      rufus-scheduler (~> 3.2)
+      sidekiq (>= 3)
+      tilt (>= 1.4.0)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -352,11 +361,13 @@ DEPENDENCIES
   rspec-rails
   rubocop-performance
   rubocop-rails
+  rubocop-rspec
   sass-rails (~> 5.0)
   selenium-webdriver
   shoulda-matchers
   sidekiq
   sidekiq-cron
+  sidekiq-scheduler
   spring
   spring-watcher-listen (~> 2.0.0)
   therubyracer

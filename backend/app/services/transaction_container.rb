@@ -10,11 +10,8 @@ class TransactionContainer
       ActiveRecord::Base.transaction do
         result = block.call(Dry::Monads.Success(input))
         raise ActiveRecord::Rollback if result.failure?
-
-        result
       end
-    rescue ActiveRecord::Rollback
+      result
     end
-    result
   end
 end
