@@ -1,19 +1,28 @@
 <%= form_with(model: @point, local: true) do |f| %>
   <%= render 'common/errors', resource: @point %>
   <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-
-    <%= f.label :coordinates %>
-    <%= f.text_field :coordinates %>
-
-    <%= f.label :image_url %>
-    <%= f.text_field :image_url %>
-
-    <%= f.label :description %>
-    <%= f.text_area :description %>
+    <%= f.label :name %><br />
+    <%= f.text_field :name, value: Faker::FunnyName.name, class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description, value: Faker::Lorem.sentence, class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= f.label :coordinates %><br />
+    <%= f.text_field :coordinates, value: "#{Faker::Address.latitude}, #{Faker::Address.longitude}" %>
+  </div>
+  <div class="field">
+    <%= f.label :tags %><br />
+    <%= f.text_area :tags, class: 'form-control '%>
+  </div>
+  <div class="field">
+    <%= f.label :image %><br />
+    <%= f.file_field :images, multiple: true %>
   </div>
   <div class="actions">
-    <%= f.submit "#{@point.new_record? ? 'Create' : 'Update'}"%>
+    <%= f.submit t("#{@point.new_record? ? 'helpers.links.new' : 'helpers.links.edit' }"), class: 'btn btn-default'%>
   </div>
 <% end %>
+
+<%= link_to t('helpers.links.back'), points_path %>

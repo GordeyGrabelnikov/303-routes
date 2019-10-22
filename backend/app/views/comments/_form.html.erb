@@ -1,9 +1,9 @@
-<h2>Add your comment:</h2>
-<%= form_with(model: [ commentable, commentable.comments.build ], local: true) do |f| %>
+<h1><%= t('comments.title') %></h1>
+<%= form_with(model: [ commentable, Comment.new ], local: true) do |f| %>
   <p>
-    <%= f.text_area :comment %>
+    <%= f.text_area :body, placeholder: t('.add_comment'), class: 'form-control', rows: '3'%><br/>
   </p>
   <p>
-    <%= f.submit 'Comment'%>
+    <%= f.submit t('.comment')%>
   </p>
 <% end %>

@@ -1,42 +1,83 @@
 <p>
-  <strong> Name of event: </strong>
-  <%= @event.event_name %>
+  <strong> <%= t('.event_name') %> </strong>
+  <%= @event.name %>
 </p>
-  <strong>Description: </strong>
-  <%= @event.event_description %>
+<p>
+  <strong><%= t('.event_description') %> </strong>
+  <%= @event.description %>
 </p>
-</p>
-  <strong>Selected route: </strong>
+<p>
+  <strong><%= t('.event_route') %> </strong>
   <%= link_to "#{@event.route.name}",  @event.route %>
-
 </p>
-  <% if current_user == nil %>
-    <%= link_to 'You must register to subscribe to this event.', new_user_registration_path %>
+
+<div>
+<% if current_user == nil %>
+  <p> <%= link_to t('devise.authorization.buttons.log_in'), new_user_registration_path %> <%= t('.register_requirement') %> </p>
   <% else %>
     <% if @event.users.include?(current_user) %>
-      <%=  link_to  'Unsubscribe', event_events_user_path(@event.events_users.find_by(user_id: current_user.id)), method: :delete, data: {confirm: 'Are you sure?'} %>
+      <%=  link_to  t('.unsubscribe'), unfollow_event_path, method: :post,  data: {confirm: 'Are you sure?'}, class: 'btn btn-primary' %>
     <% else %>
-      <%=  link_to  'Subscribe', "/events/#{@event.id}/events_users", method: :post %>
+      <%=  link_to  t('.subscribe'), follow_event_path, method: :post, class: 'btn btn-success' %>
     <% end %>
   <% end %>
-</p>
-<strong>Creator: </strong>
-  <%= @event.users.find_by(events_users: {role: 1}).first_name %>
-  <%= @event.users.find_by(events_users: {role: 1}).last_name %>
-<p>
+</div>
+<div>
+<strong><%= t('.event_author') %></strong>
 
-</p>
+<%= link_to @event.creator  do %>
+    <div class="pull-left">
+      <%= image_tag(@event.creator.avatar, style: "width:45px;height:45px;border-radius:100%;object-fit:cover") if @event.creator.avatar.attached? %>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading"><%= "#{@event.creator.first_name} #{@event.creator.last_name}" %></h4>
+    </div>
+<% end %>
+</div>
 
 
-<p>
-  <strong>Subscribers: </strong>
-  <% @event.users.each do |x|%>
+<% unless @event.guide.nil? %>
   <div>
-    <%= x.first_name %>
-    <%= x.last_name %>
+  <strong><%= t('.event_guide') %></strong>
+  <%= link_to @event.guide do %>
+    <div class="pull-left">
+      <%= image_tag(@event.guide.avatar, style: "width:45px;height:45px;border-radius:100%;object-fit:cover") if @event.guide.avatar.attached? %>
+    </div>
+    <div>
+      <h4><%= "#{@event.guide.first_name} #{@event.guide.last_name}" %></h4>
+    </div>
+  <% end %>
   </div>
 <% end %>
-</p>
 
-<%= link_to 'Back', events_path %>
-<%= link_to 'Update', edit_event_path %>
+<div>
+  <strong><%= t('.event_subscribers') %></strong>
+  <div>
+    <% @event.users.each do |x|%>
+      <%= link_to x do %>
+        <%= image_tag(x.avatar, style: "width:60px;height:60px;border-radius:100%;object-fit:cover") if x.avatar.attached? %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <% if current_user %>
+    <div class="small-2 large-4 columns">
+      <%= rating_for_user @event, current_user, 'event', half_show: true, star: 5, readonly: true, disable: true, cancel: false%>
+      <%= imdb_style_rating_for @event, 'event' %>
+    </div>
+  <% end %>
+</div>
+
+<%= link_to t('helpers.links.back'), events_path, class: 'btn btn-success' %>
+<%= link_to t('helpers.titles.edit', model: t('activerecord.models.event')), edit_event_path, class: 'btn btn-success' %>
+
+
+<div>
+  <% if @event.unpublished? &&  current_user.admin?%>
+    <%= form_with(url: update_event_status_event_path, method: :patch, local: true) do |f| %>
+      <%= submit_tag 'Confirm' %>
+<% end %>
+  <% end  %>
+</div>

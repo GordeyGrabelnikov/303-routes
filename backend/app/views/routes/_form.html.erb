@@ -3,16 +3,16 @@
 <%= render 'common/errors', resource: @route %>
 
   <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.label :name  %>
+    <%= f.text_field :name, value: Faker::FunnyName.name %><br>
 
-    <%= f.label :route_type %>
-    <%= f.select :route_type, options_for_select(Route.route_types.keys.to_a) %>
+    <%= f.label :movement_type %>
+    <%= f.select :movement_type, options_for_select( Route.movement_types.keys.to_a) %><br>
 
-    <%= f.label :route_image_url %>
-    <%= f.text_field :route_image_url %>
+    <%= f.label :route_images %>
+    <%= f.file_field :route_images, multiple: true  %><br>
 
-    <%= f.collection_check_boxes(:point_ids, Point.all.order('id DESC'), :id, :name) do |b| %>
+    <%= f.collection_check_boxes(:point_ids, Point.all.published.order('id DESC'), :id, :name) do |b| %>
           <div class="input-group-text">
             <%= b.check_box %>
             <%= b.label points: 'form-control text-center text-uppercase' %>
@@ -21,6 +21,8 @@
 
   </div>
   <div class="actions">
-    <%= f.submit "#{@route.new_record? ? 'Create' : 'Update' }"%>
+    <%= f.submit t("#{@route.new_record? ? 'helpers.links.new' : 'helpers.links.edit' }")%>
   </div>
 <% end %>
+
+<%= link_to t('helpers.links.back'), routes_path %>

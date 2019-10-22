@@ -1,17 +1,33 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
+  post '/rate' => 'rater#create', :as => 'rate'
   devise_for :users
 
+  resources :comments do
+    resources :comments
+  end
+
   resources :points do
-    resources :comments, module: :points
+    patch :update_point_status, on: :member
+    resources :comments
   end
   resources :routes do
-    resources :comments, module: :routes
+    patch :update_route_status, on: :member
+
+  resources :comments
   end
+
   resources :events do
+    post :follow, on: :member
+    post :unfollow, on: :member
+    patch :update_event_status, on: :member
+
     resources :events_users
   end
 
-  resource :search, only: [:show, :new, :edit ]
+
+  resources :users, only: %i[show]
 
   get 'welcome/index'
   root 'welcome#index'

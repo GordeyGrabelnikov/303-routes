@@ -1,21 +1,45 @@
-<h1>List of routes</h1>
+<h1><%= t('.title') %></h1>
 
-<table>
+
+<%= form_tag routes_path, method: :get do %>
+  <%= text_field_tag :search, params[:search] %>
+  <%= select_tag :category, options_for_select( Route.movement_types.keys.to_a), include_blank: 'Choose route type'%>
+  <%= submit_tag 'Search' %>
+<% end %>
+
+<table class='table table-striped' >
   <thead>
   <tr>
-    <th>Name </th>
-    <th>Type</th>
-    <th colspan="1"></th>
+    <th><%= t('.route_name') %></th>
+    <th><%= t('.route_type') %></th>
+    <th colspan="2"></th>
   </tr>
   </thead>
 
   <tbody>
-  <%= render @routes %>
+    <% if current_user && current_user.admin?%>
+      <h2>Unpublished points</h2>
+      <%= render(partial: 'route', collection: @routes.unpublished) %>
+    <% end %>
   </tbody>
 </table>
 
+<table class='table table-striped' >
+  <thead>
+  <tr>
+    <th><%= t('.route_name') %></th>
+    <th><%= t('.route_type') %></th>
+    <th colspan="2"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+    <h2>Published</h2>
+    <%= render(partial: 'route', collection: @routes.published) %>
+  </tbody>
+</table>
+
+
 <br>
 
-<%= link_to 'Create route', new_route_path %>
-
-<%= link_to 'Home page', welcome_index_path %>
+<%= link_to t('helpers.titles.new', model: t('activerecord.models.route')), new_route_path, class: 'btn btn-success'  %>

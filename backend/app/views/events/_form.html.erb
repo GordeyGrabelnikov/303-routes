@@ -1,21 +1,28 @@
+
 <%= form_with(model: @event, local: true) do |f| %>
 
   <%= render 'common/errors', resource: @event %>
 
   <div class="field">
-    <%= f.label :event_name %>
-    <%= f.text_field :event_name %>
+    <%= f.label :name %>
+    <%= f.text_field :name, value: Faker::FunnyName.name %><br>
 
-    <%= f.label :event_description %>
-    <%= f.text_area :event_description %>
+    <%= f.label :description %>
+    <%= f.text_area :description, value: Faker::Lorem.sentence %><br>
 
-    <%= f.label :event_date %>
-    <%= f.date_field :event_date %>
+    <%= f.label :date %>
+    <%= f.date_field :date, value: Faker::Date.forward %><br>
 
-    <%= f.collection_select(:route_id, Route.all, :id, :name)%>
+    <%= f.label :route_id %>
+    <%= f.collection_select(:route_id, Route.all, :id, :name)%><br>
+
+    <%= f.label :guide_id %>
+    <%= f.collection_select(:guide_id, User.all, :id, :last_name, include_blank: 'Choose guide')%>
 
   </div>
   <div class="actions">
-    <%= f.submit "#{@event.new_record? ? 'Create' : 'Update' }"%>
+    <%= f.submit t("#{@event.new_record? ? 'helpers.links.new' : 'helpers.links.edit' }")%>
   </div>
 <% end %>
+
+<%= link_to t('helpers.links.back'), events_path %>
