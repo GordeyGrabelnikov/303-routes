@@ -2,13 +2,13 @@
 
 module EventsUsers
   class Destroy < BaseServiceObject
-    param :event
-    param :user
+    param :event_id
+    param :user_id
 
     def call
-      @event_user = EventsUser.where(event_id: event.id, user_id: user.id).first
+      @event_user = EventsUser.where(event_id: event_id, user_id: user_id).first
       if @event_user.creator?
-        event.destroy
+        Event.destroy(event_id)
       else
         @event_user.destroy
         event

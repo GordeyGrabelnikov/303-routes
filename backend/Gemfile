@@ -49,6 +49,7 @@ gem 'twitter-bootstrap-rails'
 
 gem 'rubocop-performance'
 gem 'rubocop-rails'
+gem 'rubocop-rspec'
 
 gem 'jquery-rails'
 
@@ -60,6 +61,11 @@ gem 'dry-transaction'
 gem 'pundit'
 
 gem 'ratyrate'
+
+gem 'redis'
+gem 'sidekiq'
+gem 'sidekiq-cron'
+gem 'sidekiq-scheduler'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

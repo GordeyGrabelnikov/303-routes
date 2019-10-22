@@ -1,14 +1,68 @@
 require:
-  - 'rubocop-performance'
-  - 'rubocop-rails'
-Style/FrozenStringLiteralComment:
-  Enabled: true
-Metrics/LineLength:
-  Max: 120
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
 Style/Documentation:
   Enabled: false
-Metrics/MethodLength:
-  Max: 30
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - spec/**/*
+    -
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+Style/NumericPredicate:
+  Enabled: false
+
+Metrics/BlockLength:
+  Max: 34
+  Exclude:
+    - spec/**/*
+    - config/routes.rb
+    - app/admin/**/*
+    - app/**/*.arb
+    -
+Metrics/LineLength:
+  Max: 120
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/MultilineBlockChain:
+  Enabled: false
+
+Bundler/OrderedGems:
+  Enabled: false
+
+RSpec/BeforeAfterAll:
+  Exclude:
+    - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
+    - 'spec/support/**/*.rb'
+    -
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/AnyInstance:
+  Enabled: false
+
+RSpec/VerifiedDoubles:
+  Enabled: false
+
+RSpec/ExpectChange:
+  EnforcedStyle: block
+
+RSpec/MessageSpies:
+  EnforcedStyle: receive
+
+RSpec/NestedGroups:
+  Max: 4
+
 AllCops:
   Exclude:
     - 'bin/*'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_15_113003) do
+ActiveRecord::Schema.define(version: 2019_10_17_091232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 2019_10_15_113003) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "record_status", default: 0, null: false
+    t.index ["name", "date", "route_id"], name: "index_events_on_name_and_date_and_route_id", unique: true
     t.index ["name"], name: "index_events_on_name"
     t.index ["route_id"], name: "index_events_on_route_id"
   end
@@ -99,6 +100,7 @@ ActiveRecord::Schema.define(version: 2019_10_15_113003) do
     t.integer "record_status", default: 0, null: false
     t.bigint "user_id"
     t.index ["coordinates"], name: "index_points_on_coordinates"
+    t.index ["name", "coordinates"], name: "index_points_on_name_and_coordinates", unique: true
     t.index ["name"], name: "index_points_on_name"
     t.index ["tags"], name: "index_points_on_tags"
     t.index ["user_id"], name: "index_points_on_user_id"
@@ -143,6 +145,7 @@ ActiveRecord::Schema.define(version: 2019_10_15_113003) do
     t.integer "movement_type", default: 0
     t.integer "record_status", default: 0, null: false
     t.index ["movement_type"], name: "index_routes_on_movement_type"
+    t.index ["name", "movement_type"], name: "index_routes_on_name_and_movement_type", unique: true
     t.index ["name"], name: "index_routes_on_name"
     t.index ["user_id"], name: "index_routes_on_user_id"
   end
