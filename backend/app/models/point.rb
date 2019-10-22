@@ -11,7 +11,6 @@ class Point < ApplicationRecord
   validates :name, :description, :coordinates, presence: true
   validates :name, uniqueness: { scope: :coordinates, message: 'This point exist already' }
 
-
   enum record_status: { unpublished: 0, published: 1 }
 
   ratyrate_rateable 'name'

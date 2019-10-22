@@ -3,7 +3,6 @@ class DeleteImageUrl < ActiveRecord::Migration[5.2]
     remove_column :points, :image
     remove_column :routes, :image_url
     remove_column :users, :avatar
-
   end
 
   def down

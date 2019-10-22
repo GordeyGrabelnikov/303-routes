@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :routes do
     patch :update_route_status, on: :member
 
-  resources :comments
+    resources :comments
   end
 
   resources :events do
@@ -25,7 +25,6 @@ Rails.application.routes.draw do
 
     resources :events_users
   end
-
 
   resources :users, only: %i[show]
 

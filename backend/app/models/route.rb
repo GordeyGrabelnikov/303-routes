@@ -2,7 +2,7 @@
 
 class Route < ApplicationRecord
   belongs_to :user
-  has_many :events
+  has_many :events, dependent: :nullify
   has_many :points_routes, dependent: :destroy
   has_many :points, through: :points_routes
   has_many :comments, as: :commentable, dependent: :destroy

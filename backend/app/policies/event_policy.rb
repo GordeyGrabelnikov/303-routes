@@ -8,7 +8,9 @@ class EventPolicy < ApplicationPolicy
       elsif user.admin?
         scope.all
       else
-        scope.joins(:events_users).where('record_status = ? OR (user_id = ? and role = ?)', Event.record_statuses[:published], user.id, EventsUser.roles[:creator]).distinct
+        scope.joins(:events_users)
+             .where('record_status = ? OR (user_id = ? and role = ?)', :published, user.id, :creator)
+             .distinct
       end
     end
   end
@@ -26,11 +28,11 @@ class EventPolicy < ApplicationPolicy
   end
 
   def update?
-    user.present? && (user_is_creator? || user.admin?)
+    user.present? && (user == event.creator || user.admin?)
   end
 
   def destroy?
-    return true if user.present? && (user_is_creator? || user.admin?)
+    return true if user.present? && (user == event.creator || user.admin?)
   end
 
   def update_event_status?
@@ -49,9 +51,5 @@ class EventPolicy < ApplicationPolicy
 
   def event
     record
-  end
-
-  def user_is_creator?
-    user == event.users.find_by(events_users: { role: EventsUser.roles[:creator] })
   end
 end
