@@ -1,5 +1,11 @@
 <h1><%= t('.event_title')%></h1>
 
+<%= form_tag events_path, method: :get do %>
+  <%= text_field_tag :search, params[:search] %>
+  <%= select_tag :category, options_from_collection_for_select( Route.all, :id, :name), include_blank: 'Choose route'%>
+  <%= submit_tag 'Search' %>
+<% end %>
+
 <table class='table table-striped'>
   <thead>
   <tr>
@@ -11,9 +17,29 @@
   </thead>
 
   <tbody>
-  <%= render @events %>
-  </tbody>
+  <% if current_user && current_user.admin?%>
+    <h2>Unpublished points</h2>
+    <%= render(partial: 'event', collection: @events.unpublished) %>
+  <% end %>
 </table>
+
+<table class='table table-striped'>
+  <thead>
+  <tr>
+    <th><%= t('.event_name')%></th>
+    <th><%= t('.event_date')%></th>
+    <th><%= t('.event_route')%></th>
+    <th colspan="1"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+    <h2>Published</h2>
+    <%= render(partial: 'event', collection: @events.published) %>
+  </tbody>
+  </table>
+
+
 
 <br>
 

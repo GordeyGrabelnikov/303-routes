@@ -6,9 +6,9 @@
     <div class="media-body">
       <h4 class="media-heading"><%= "#{comment.user.first_name} #{comment.user.last_name}" %>
         <small><i>Submitted <%= time_ago_in_words(comment.created_at) %> ago</i></small></h4>
-      <span><%= comment.comment %></span>
+      <span><%= comment.body %></span>
       <%= form_with(model: [ comment, Comment.new ], local: true) do |f| %>
-        <%= f.text_area :comment, class: 'form-control', rows: '3'%><br/>
+        <%= f.text_area :body, class: 'form-control', rows: '3'%><br/>
         <%= f.submit t('.reply')  %>
       <% end %>
     </div>

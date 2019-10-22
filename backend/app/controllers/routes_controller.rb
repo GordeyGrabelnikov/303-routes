@@ -2,10 +2,10 @@
 
 class RoutesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index show]
-  before_action :set_route, only: %i[edit update destroy]
+  before_action :set_route, only: %i[edit update destroy update_route_status]
 
   def index
-    @routes = policy_scope(Route)
+    @routes = SearchResources::Routes::Search.call(policy_scope(Route), permitted_params.to_h)
     authorize @routes
   end
 
@@ -47,6 +47,11 @@ class RoutesController < ApplicationController
     redirect_to routes_path
   end
 
+  def update_route_status
+    Routes::Publish.call(@route)
+    redirect_to routes_path
+  end
+
   private
 
   def route_params
@@ -57,4 +62,8 @@ class RoutesController < ApplicationController
     @route = Route.find(params[:id])
     authorize @route
   end
+
+  def permitted_params
+    params.permit(:search, :category)
+   end
 end

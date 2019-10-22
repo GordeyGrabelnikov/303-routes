@@ -5,7 +5,7 @@
 
 <p>
   <strong><%= t('.route_type') %></strong>
-  <%= @route.route_type %>
+  <%= @route.movement_type %>
 </p>
 
 <p>
@@ -34,5 +34,24 @@
   <%= render(partial: 'comments/comment', collection: @route.comments) %>
 </ul>
 
+<div class="row">
+  <% if current_user %>
+    <div class="small-2 large-4 columns">
+      <%= rating_for_user @route, current_user, 'route', half_show: true, star: 5, readonly: true, disable: true, cancel: false%>
+      <%= imdb_style_rating_for @route, 'route' %>
+    </div>
+  <% end %>
+</div>
+
 <%= link_to t('helpers.links.back'), routes_path, class: 'btn btn-success'%>
 <%= link_to  t('helpers.titles.edit', model: t('activerecord.models.route')), edit_route_path, class: 'btn btn-success' %>
+
+
+
+<div>
+  <% if @route.unpublished? &&  current_user.admin?%>
+    <%= form_with(url: update_route_status_route_path, method: :patch, local: true) do |f| %>
+    <%= submit_tag 'Confirm' %>
+<% end %>
+  <% end  %>
+</div>

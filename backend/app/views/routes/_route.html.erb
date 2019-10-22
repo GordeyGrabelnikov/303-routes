@@ -1,6 +1,7 @@
 <tr>
   <td><%= route.name  %></td>
-  <td><%= route.route_type %></td>
+  <td><%= route.movement_type %></td>
+  <td><%= route.record_status %></td>
   <td><%= link_to t('helpers.links.show'), route,  class: 'btn btn-success' %></td>
   <td><%= link_to t('helpers.links.edit'), edit_route_path(route),  class: 'btn btn-success'%></td>
   <td><%= link_to t('helpers.links.destroy'), route_path(route), method: :delete, data: {confirm: t('helpers.links.confirm')}, class: 'btn btn-success' %>

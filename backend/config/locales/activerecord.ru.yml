@@ -1,0 +1,52 @@
+ru:
+  activerecord:
+    models:
+      point: 'достопримечательность'
+      event: 'сoбытие'
+      route: 'маршрут'
+      user: 'пользователь'
+    attributes:
+      point:
+        name: 'Название достопримечательности'
+        coordinates: 'Координаты'
+        image: 'Фотография'
+        tags: 'Теги'
+        description: 'Описание'
+      event:
+        event_name: 'Название события'
+        event_description: 'Описание события'
+        event_date: 'Дата'
+        route_id: 'Выберите маршрут'
+        guide_id: 'Экскурсовод'
+      route:
+        name: 'Название маршрута'
+        route_type: 'Тип маршрута'
+        route_images: 'Фотографии'
+      user:
+        first_name: 'Имя'
+        last_name: 'Фамилия'
+        birthday: 'Дата рождения'
+        avatar: 'Фото'
+        email: 'Адрес электронной почты'
+        password: 'Пароль'
+        password_confirmation: 'Подтверждение пароля'
+        current_password: 'Текущий пароль'
+        remember_me: 'Запомнить пароль'
+    errors:
+      messages:
+        blank: 'не может быть пустым'
+        record_invalid: 'Возникли ошибки: %{errors}'
+      models:
+        user:
+          attributes:
+            current_password:
+              blank: 'должен быть введен'
+#        <%= f.collection_check_boxes(:point_ids, Point.all.order('id DESC'), :id, :name) do |b| %>
+#        <%= b.label points: 'form-control text-center text-uppercase' %>
+        events_user:
+          attributes:
+            user:
+              required: 'не может отсутствовать'
+            event:
+              required: 'нужно указать событие'
+

@@ -1,7 +1,7 @@
 <h1><%= t('comments.title') %></h1>
 <%= form_with(model: [ commentable, Comment.new ], local: true) do |f| %>
   <p>
-    <%= f.text_area :comment, placeholder: t('.add_comment'), class: 'form-control', rows: '3'%><br/>
+    <%= f.text_area :body, placeholder: t('.add_comment'), class: 'form-control', rows: '3'%><br/>
   </p>
   <p>
     <%= f.submit t('.comment')%>
