@@ -12,7 +12,7 @@ stages:
     policy: pull
   before_script:
     - gem install bundler -v 2.0.2 --no-document
-    - bundle install --gemfile backend/ --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+    - bundle install --gemfile backend/Gemfile.lock --jobs $(nproc) "${FLAGS[@]}" --path=backend/vendor
       ​
 .base_db:
   extends: .base
