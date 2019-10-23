@@ -20,7 +20,7 @@ stages:
     - postgres:latest
   variables:
     RAILS_ENV: test
-    POSTGRES_DB: test_db
+    POSTGRES_DB: routes_303_test
     POSTGRES_USER: runner
   before_script:
     - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
