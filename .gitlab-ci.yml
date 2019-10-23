@@ -1,7 +1,7 @@
 stages:
 - build
 - test
-  ​
+
 .base:
   image: ruby:2.6.3
   cache:
@@ -13,7 +13,7 @@ stages:
   before_script:
     - gem install bundler -v 2.0.2 --no-document
     - bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
-  ​
+      ​
 .base_db:
   extends: .base
   services:
@@ -29,7 +29,7 @@ stages:
     - gem install bundler --no-document
     - bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
     - bundle exec rake db:create db:schema:load
-  ​
+
 build:rubocop:
   extends: .base
   stage: build
@@ -37,13 +37,13 @@ build:rubocop:
     policy: pull-push
   script:
     - bundle exec rubocop
-  ​
+
 test:bundle_audit:
   extends: .base
   allow_failure: true
   script:
     - bundle exec bundle audit check --update
-  ​
+
 test:rspec:
   extends: .base_db
   stage: test
