@@ -38,7 +38,6 @@ build:rubocop:
   cache:
     policy: pull-push
   script:
-    - cd rubocop
     - bundle exec rubocop
 
 test:bundle_audit:
