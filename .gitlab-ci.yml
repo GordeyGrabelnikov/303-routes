@@ -26,6 +26,7 @@ stages:
   before_script:
     - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
     - apt-get update -qq && apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq nodejs
+    - cd backend
     - cp config/database.yml.example config/database.yml
     - gem install bundler --no-document
     - bundle backend/Gemfile --jobs $(nproc) "${FLAGS[@]}" --path=vendor
