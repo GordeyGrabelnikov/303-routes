@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+require 'pathname'
+require 'fileutils'
+include FileUtils
+
+# path to your application root.
+APP_ROOT = Pathname.new File.expand_path('../../', __FILE__)
+
+def system!(*args)
+  system(*args) || abort("\n== Command #{args} failed ==")
+end
+chdir APP_ROOT do
+  system! 'bundle exec rubocop'
+  system! 'bundle exec bundle audit check --update'
+  system! 'bundle exec rspec --require spec_helper spec --format progress'
+end
+
+puts "\e[#{32}m+-------------TODO: remove bundle audit ignore-------------------+\e[0m"
+puts "\e[#{32}m+----------------------------------------------------------------+\e[0m"
+puts "\e[#{32}m|                    All checks passed!                          |\e[0m"
+puts "\e[#{32}m+----------------------------------------------------------------+\e[0m"

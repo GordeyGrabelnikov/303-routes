@@ -12,31 +12,21 @@ describe Events::Update do
     { name: 'Some name', description: 'Some_description', date: Time.zone.today, route_id: route.id }
   end
 
-  shared_examples 'event is not update' do |_messages|
+  shared_examples 'event is not update' do
     it { is_expected.to be_failure }
   end
 
-  shared_examples 'event is update' do |_messages|
+  shared_examples 'event is update' do
     it { is_expected.to be_success }
 
-    it 'change name' do
+    it 'changes updated_at' do
       call_service
-      expect(event.reload.name).to eql service_params[:event_params][:name]
+      expect(event.updated_at).not_to eq(event.reload.updated_at)
     end
 
-    it 'change description' do
-      subject
-      expect(event.reload.description).to eql service_params[:event_params][:description]
-    end
-
-    it 'change date' do
+    it 'updates attributes' do
       call_service
-      expect(event.reload.date).to eql service_params[:event_params][:date]
-    end
-
-    it 'change route_id' do
-      call_service
-      expect(event.reload.route_id).to eql service_params[:event_params][:route_id]
+      expect(event.reload).to have_attributes(service_params[:event_params])
     end
   end
 

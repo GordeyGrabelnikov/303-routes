@@ -5,6 +5,8 @@ class Event < ApplicationRecord
   has_many :events_users, dependent: :destroy
   has_many :users, through: :events_users
 
+  # has_one :guide, -> { events_users.find_by(role: :guide).user }
+
   validates :name, :description, :date, presence: true
   validates :name, uniqueness: { scope: %i[date route_id], message: 'This event exist already' }
   validate :date_cannot_be_in_the_past

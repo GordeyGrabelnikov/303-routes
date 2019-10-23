@@ -74,6 +74,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails'
+  gem 'bundle-audit', '~> 0.1.0'
 end
 
 group :development do
