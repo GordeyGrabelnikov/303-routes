@@ -12,8 +12,8 @@ stages:
     policy: pull
   before_script:
     - gem install bundler -v 2.0.2 --no-document
-    - bundle install
-      ​
+    - bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+
 .base_db:
   extends: .base
   services:
