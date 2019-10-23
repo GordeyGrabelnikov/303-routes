@@ -29,7 +29,7 @@ stages:
     - cd backend
     - cp config/database.yml.example config/database.yml
     - gem install bundler --no-document
-    - bundle backend/Gemfile --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+    - bundle --jobs $(nproc) "${FLAGS[@]}" --path=vendor
     - bundle exec rake db:create db:schema:load
 
 build:rubocop:
