@@ -12,7 +12,7 @@ stages:
     policy: pull
   before_script:
     - gem install bundler -v 2.0.2 --no-document
-    - bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+    - bundle install --gemfile backend/Gemfile --jobs $(nproc) "${FLAGS[@]}" --path=vendor
 
 .base_db:
   extends: .base
@@ -27,7 +27,7 @@ stages:
     - apt-get update -qq && apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq nodejs
     - cp config/database.yml.example config/database.yml
     - gem install bundler --no-document
-    - bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+    - bundle install --gemfile backend/Gemfile --jobs $(nproc) "${FLAGS[@]}" --path=vendor
     - bundle exec rake db:create db:schema:load
 
 build:rubocop:
