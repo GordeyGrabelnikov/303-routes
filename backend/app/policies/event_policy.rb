@@ -4,7 +4,7 @@ class EventPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if user.nil?
-        scope.where(record_status: :published)
+        scope.where.not(record_statuses: :unpublished)
       elsif user.admin?
         scope.all
       else
@@ -32,7 +32,7 @@ class EventPolicy < ApplicationPolicy
   end
 
   def destroy?
-    return true if user.present? && (user == event.creator || user.admin?)
+    user.present? && (user == event.creator || user.admin?)
   end
 
   def update_event_status?
