@@ -14,7 +14,7 @@ class EventsController < ApplicationController
   end
 
   def new
-    @event = Event.new(route_id: params[:route_id])
+    @event = Event.new(name: params[:name], description: params[:description], route_id: params[:route_id])
   end
 
   def create

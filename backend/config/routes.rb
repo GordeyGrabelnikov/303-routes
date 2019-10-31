@@ -4,6 +4,11 @@ Rails.application.routes.draw do
   post '/rate' => 'rater#create', :as => 'rate'
   devise_for :users
 
+  authenticate :user, -> (user) { user.admin? } do
+    mount PgHero::Engine, at: "pgdashboard"
+  end
+
+
   resources :comments do
     resources :comments
   end
@@ -27,6 +32,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: %i[show]
+
 
   get 'welcome/index'
   root 'welcome#index'

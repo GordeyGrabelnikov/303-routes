@@ -15,6 +15,13 @@
       </li>
 
       <li>
+        <a data-toggle="tab" href="#user_events">
+          <i class="blue ace-icon fa fa-users bigger-120"></i>
+          My events
+        </a>
+      </li>
+
+      <li>
         <% if current_user.present? && current_user.admin?  %>
           <a data-toggle="tab" href="#unpublished_events">
             <i class="orange ace-icon fa fa-rss bigger-120"></i>
@@ -23,7 +30,7 @@
         <% end %>
       </li>
 
-      <li>
+      <li style="float:right">
         <%= form_tag events_path, method: :get do %>
           <%= text_field_tag :search, params[:search] %>
           <%= select_tag :category, options_from_collection_for_select( Route.published, :id, :name), include_blank: 'Choose route'%>
@@ -45,7 +52,7 @@
           </thead>
 
           <tbody>
-        <%= render(partial: 'event', collection: @events.published) %>
+        <%= render(partial: 'published_event', collection: @events.published.includes([:route])) %>
           </tbody>
           </table>
       </div>
@@ -62,10 +69,28 @@
           </thead>
 
           <tbody>
-          <%= render(partial: 'event', collection: @events.archived) %>
+          <%= render(partial: 'archived_event', collection: @events.archived.includes(%i[route event_average])) %>
           </tbody>
         </table>
       </div>
+
+      <div id="user_events" class="tab-pane">
+        <table class='table table-striped'>
+          <thead>
+          <tr>
+            <th><%= t('.event_name')%></th>
+            <th><%= t('.event_date')%></th>
+            <th><%= t('.event_route')%></th>
+            <th colspan="1"></th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <%= render(partial: 'user_event', collection: @events.joins(:events_users).where(events_users: {user: current_user}).includes([:route]))%>
+          </tbody>
+        </table>
+      </div>
+
 
       <div id="unpublished_events" class="tab-pane">
         <table class='table table-striped'>
@@ -80,7 +105,7 @@
 
           <tbody>
         <% if current_user && current_user.admin?%>
-        <%= render(partial: 'event', collection: @events.unpublished.order(:date)) %>
+          <%= render(partial: 'unpublished_event', collection: @events.unpublished.order(:date).includes([:route])) %>
         <% end %>
           </table>
         <div class="space-12"></div>

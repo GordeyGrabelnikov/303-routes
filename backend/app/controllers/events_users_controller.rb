@@ -2,7 +2,7 @@
 
 class EventsUsersController < ApplicationController
   def create
-    @event_user = ::EventsUsers::Create.call(@event.id, current_user.id)
+    @event_user = EventsUsers::Create.call(@event.id, current_user.id)
 
     redirect_to @event, notice: 'You successfully subscribed' if @event.save
   end

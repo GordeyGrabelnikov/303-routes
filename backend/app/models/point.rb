@@ -8,8 +8,8 @@ class Point < ApplicationRecord
 
   has_many_attached :images
 
-  validates :name, :description, :coordinates, presence: true
-  validates :name, uniqueness: { scope: :coordinates, message: 'This point exist already' }
+  validates :name, :description, :latitude, :longitude, presence: true
+  validates :name, uniqueness: { scope: %i[latitude longitude], message: 'This point exist already' }
 
   enum record_status: { unpublished: 0, published: 1 }
 

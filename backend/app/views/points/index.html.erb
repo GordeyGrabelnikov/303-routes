@@ -16,7 +16,7 @@
       <% end %>
     </li>
 
-    <li>
+    <li style="float:right" >
       <%= form_tag points_path, method: :get do %>
         <%= text_field_tag :search, params[:search] %>
         <%= submit_tag 'Search' %>

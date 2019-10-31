@@ -4,7 +4,7 @@ class Route < ApplicationRecord
   belongs_to :user
   has_many :events, dependent: :nullify
   has_many :points_routes, dependent: :destroy
-  has_many :points, through: :points_routes
+  has_many :points, -> { order('points_routes.id') }, through: :points_routes
   has_many :comments, as: :commentable, dependent: :destroy
 
   has_many_attached :route_images
@@ -14,6 +14,6 @@ class Route < ApplicationRecord
 
   ratyrate_rateable 'route'
 
-  enum movement_type: { walk: 0, bike: 1, car: 2 }
+  enum movement_type: { WALKING: 0, BICYCLING: 1, DRIVING: 2 }
   enum record_status: { unpublished: 0, published: 1 }
 end

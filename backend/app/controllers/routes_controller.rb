@@ -22,7 +22,7 @@ class RoutesController < ApplicationController
     @route = Route.new(route_params)
     @route.user = current_user
 
-    if @route.save
+    if @route.save!
       redirect_to @route
     else
       render :new

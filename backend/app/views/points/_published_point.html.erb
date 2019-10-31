@@ -1,6 +1,6 @@
 <tr>
   <td><%= published_point.name  %></td>
-  <td><%= published_point.coordinates  %></td>
+  <td><%= "#{published_point.latitude},  #{published_point.longitude}" %></td>
   <td><%= published_point.tags  %></td>
   <td><%= link_to t('helpers.links.show'), point_path(published_point),  class: 'btn btn-success'  %></td>
 </tr>

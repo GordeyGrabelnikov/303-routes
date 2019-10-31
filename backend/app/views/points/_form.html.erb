@@ -2,15 +2,29 @@
   <%= render 'common/errors', resource: @point %>
   <div class="field">
     <%= f.label :name %><br />
-    <%= f.text_field :name, value: Faker::FunnyName.name, class: 'form-control' %>
+    <%= f.text_field :name %>
+    <%#= f.text_field :name, value: Faker::FunnyName.name, class: 'form-control' %>
   </div>
   <div class="field">
     <%= f.label :description %><br />
-    <%= f.text_area :description, value: Faker::Lorem.sentence, class: 'form-control' %>
+    <%= f.text_area :description%>
+    <%#= f.text_area :description, value: Faker::Lorem.sentence, class: 'form-control' %>
   </div>
   <div class="field">
-    <%= f.label :coordinates %><br />
-    <%= f.text_field :coordinates, value: "#{Faker::Address.latitude}, #{Faker::Address.longitude}" %>
+    <%= f.label :latitude %><br />
+    <%= f.text_field :latitude%>
+  </div>
+  <div class="field">
+    <%= f.label :longitude %><br />
+    <%= f.text_field :longitude%>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address%>
+  </div>
+  <div class="field">
+    <%= f.label :google_point_id %><br />
+    <%= f.text_field :google_point_id%>
   </div>
   <div class="field">
     <%= f.label :tags %><br />
@@ -23,6 +37,150 @@
   <div class="actions">
     <%= f.submit t("#{@point.new_record? ? 'helpers.links.new' : 'helpers.links.edit' }"), class: 'btn btn-default'%>
   </div>
-<% end %>
 
 <%= link_to t('helpers.links.back'), points_path %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<title>Marker Labels</title>
+
+<script>
+    function initMap2() {
+        var lat = document.getElementById('point_latitude').value;
+        var lng = document.getElementById('point_longitude').value;
+
+        // if not defined create default position
+        if (!lat || !lng){
+            lat = 54.991105;
+            lng = 73.371160;
+            document.getElementById('point_latitude').value = lat;
+            document.getElementById('point_longitude').value = lng;
+        }
+        var myCoords = new google.maps.LatLng(lat, lng);
+        var mapOptions = {
+            center: myCoords,
+            zoom: 14
+        };
+        var map = new google.maps.Map(document.getElementById('map2'), mapOptions);
+        var marker = new google.maps.Marker({
+            position: myCoords,
+            animation: google.maps.Animation.DROP,
+            map: map,
+            draggable: true
+        });
+        // refresh marker position and recenter map on marker
+        function refreshMarker(){
+            var lat = document.getElementById('point_latitude').value;
+            var lng = document.getElementById('point_longitude').value;
+            var myCoords = new google.maps.LatLng(lat, lng);
+            marker.setPosition(myCoords);
+            map.setCenter(marker.getPosition());
+        }
+        // when input values change call refreshMarker
+        document.getElementById('point_latitude').onchange = refreshMarker;
+        document.getElementById('point_longitude').onchange = refreshMarker;
+        // when marker is dragged update input values
+        marker.addListener('drag', function() {
+            latlng = marker.getPosition();
+            newlat=(Math.round(latlng.lat()*1000000))/1000000;
+            newlng=(Math.round(latlng.lng()*1000000))/1000000;
+            document.getElementById('point_latitude').value = newlat;
+            document.getElementById('point_longitude').value = newlng;
+        });
+        // When drag ends, center (pan) the map on the marker position
+        marker.addListener('dragend', function() {
+            var marker_position = marker.getPosition();
+            map.panTo(marker_position);
+            geocodeLatLng(geocoder, map, infowindow, marker_position);
+        });
+
+
+        var geocoder = new google.maps.Geocoder;
+        var infowindow = new google.maps.InfoWindow;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function geocodeLatLng(geocoder, map, infowindow, coordinate) {
+            var latlng = coordinate;
+            geocoder.geocode({'location': latlng}, function (results, status) {
+                if (status === 'OK') {
+                    if (results[0]) {
+                        infowindow.setContent(results[0].formatted_address);
+                        infowindow.open(map, marker);
+                        document.getElementById('point_google_point_id').value = results[0].place_id;
+                        document.getElementById('point_address').value = results[0].formatted_address;
+                    } else {
+                        window.alert('No results found');
+                    }
+                } else {
+                    window.alert('Geocoder failed due to: ' + status);
+                }
+            });
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHXX8DjN4Fb2rQAarckXap5EKeAhUs8Uk&libraries=places&callback=initMap2">
+</script>
+<body>
+<div id="map2"></div>
+</body>
+
+<style>
+  /* Always set the map height explicitly to define the size of the div
+   * element that contains the map. */
+  #map2 {
+    height: 400px;
+    width: 100%;
+  }
+  /* Optional: Makes the sample page fill the window. */
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+</style>
+<% end %>

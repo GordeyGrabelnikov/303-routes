@@ -1,4 +1,215 @@
 <h1> <%= t('helpers.titles.edit', model: t('activerecord.models.routes')) %></h1>
 
-<%= render 'form' %>
+<%= form_with(model: @route, local: true, html: { multipart: true }) do |f| %>
+
+  <div class="field">
+    <%= f.label :name  %>
+    <%= f.text_field :name%><br>
+
+    <%= f.label :route_images %>
+    <%= f.file_field :route_images, multiple: true  %><br>
+
+    <div id="mode">
+      <b>Mode of Travel: </b>
+      <% selected = @route.movement_type.present? ? {selected: @route.movement_type} : { } %>
+      <%= f.select(:movement_type, Route.movement_types.keys.to_a.collect {|movement_type| [ movement_type.capitalize, movement_type ] }, selected)%>
+    </div>
+    <div id="points" style="display:none;"></div>
+    <div>
+      <div>
+        <b>Start:</b>
+        <% selected = @route.points.present? ? {selected: @route.points.first.google_point_id} : { } %>
+        <%= select(Point, :google_point_id, Point.published.collect {|point| [ point.name, point.google_point_id ] }, selected, id: 'start')%>
+        <br>
+      </div>
+      <b>Waypoints:</b> <br>
+      <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br>
+      <%= select_tag 'waypoints', options_from_collection_for_select(Point.published, :google_point_id, :name, ['ChIJicCo3OH9qkMRHsrPdbmyBzc']), multiple: true, size: '10%' %>
+      <br>
+      <div>
+        <b>End:</b>
+          <% selected = @route.points.present? ? {selected: @route.points.last.google_point_id} : { } %>
+          <%= select(Point, :google_point_id, Point.published.collect {|point| [ point.name, point.google_point_id ] }, selected, id: 'end' )%>
+        <br>
+      </div>
+      <input type="button" id="submit" value="Show route">
+    </div>
+
+
+  </div>
+  <div class="actions">
+    <%= f.submit t("#{@route.new_record? ? 'helpers.links.new' : 'helpers.links.edit' }")%>
+  </div>
+
+  <%= link_to t('helpers.links.back'), routes_path %>
+
+<% end %>
+
+<title>Waypoints in Directions</title>
+
+
+<div id="map"></div>
+<div id="right-panel">
+  <p>Total Distance: <span id="total"></span></p>
+
+</div>
+<script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 14,
+            center: {lat: 54.991105, lng: 73.371160}
+        });
+        var directionsService = new google.maps.DirectionsService;
+        var directionsRenderer = new google.maps.DirectionsRenderer({
+            panel: document.getElementById('right-panel')
+        });
+
+        directionsRenderer.setMap(map);
+
+        DisplayRoute(directionsService, directionsRenderer);
+
+        document.getElementById('submit').addEventListener('click', function() {
+            calculateAndDisplayRoute(directionsService, directionsRenderer);
+
+        });
+        document.getElementById('mode').addEventListener('change', function() {
+            calculateAndDisplayRoute(directionsService, directionsRenderer);
+        });
+    }
+
+    function computeTotalDistance(result) {
+        var total = 0;
+        var myroute = result.routes[0];
+        for (var i = 0; i < myroute.legs.length; i++) {
+            total += myroute.legs[i].distance.value;
+        }
+        total = total / 1000;
+        document.getElementById('total').innerHTML = total + ' km';
+    }
+
+    function DisplayRoute(directionsService, directionsRenderer) {
+        var selectedMode = "<%= @route.movement_type %>";
+        console.log(selectedMode)
+        var waypts = [];
+        <% @route.points.each do |point|%>
+        waypts.push({placeId: "<%= point.google_point_id %>"});
+        <% end %>
+        var src = waypts.shift();
+        var dest = waypts.pop();
+        waypts = waypts.map(function (point) {
+            return {
+                location: point,
+                stopover: true
+            };
+        });
+        directionsService.route({
+            origin: src,
+            destination: dest,
+            waypoints: waypts,
+            optimizeWaypoints: true,
+            travelMode: google.maps.TravelMode[selectedMode]
+        }, function (response, status) {
+            if (status === 'OK') {
+                directionsRenderer.setDirections(response);
+                computeTotalDistance(directionsRenderer.getDirections());
+            } else {
+                window.alert('Directions request failed due to ' + status);
+            }
+        });
+    }
+
+    function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+        var selectedMode = document.getElementById('route_movement_type').value;
+        var waypts = [];
+        var checkboxArray = document.getElementById('waypoints');
+        for (var i = 0; i < checkboxArray.length; i++) {
+            if (checkboxArray.options[i].selected) {
+                waypts.push({
+                    location: {placeId: checkboxArray[i].value},
+                    stopover: true
+                });
+            }
+        }
+        console.log( document.getElementById('start').value)
+        console.log( document.getElementById('end').value)
+        directionsService.route({
+            origin: {placeId: document.getElementById('start').value},
+            destination: {placeId: document.getElementById('end').value},
+            waypoints: waypts,
+            optimizeWaypoints: true,
+            travelMode: google.maps.TravelMode[selectedMode]
+        }, function (response, status) {
+            if (status === 'OK') {
+                directionsRenderer.setDirections(response);
+                computeTotalDistance(directionsRenderer.getDirections());
+                const results = waypts.map(function (point) {
+                    return point.location.placeId;
+                });
+                results.unshift(document.getElementById('start').value);
+                results.push(document.getElementById('end').value);
+                const pointsContainer = document.getElementById('points');
+                while (pointsContainer.firstChild) {
+                    pointsContainer.removeChild(pointsContainer.firstChild);
+                }
+                results.forEach(function (point) {
+                    console.log(point);
+                    const point_input = document.createElement('input');
+                    point_input.name = 'route[point_ids][]';
+                    point_input.setAttribute('value', point);
+                    pointsContainer.appendChild(point_input);
+                })
+            } else {
+                window.alert('Directions request failed due to ' + status);
+            }
+
+        });
+    }
+
+
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHXX8DjN4Fb2rQAarckXap5EKeAhUs8Uk&callback=initMap">
+</script>
+
+
+
+<style>
+  #right-panel {
+    font-family: 'Roboto','sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+  }
+
+  #right-panel select, #right-panel input {
+    font-size: 15px;
+  }
+
+  #right-panel select {
+    width: 100%;
+  }
+
+  #right-panel i {
+    font-size: 12px;
+  }
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  #map {
+    height: 400px;
+    float: left;
+    width: 70%;
+  }
+  #right-panel {
+    margin: 20px;
+    border-width: 2px;
+    width: 20%;
+    height: 400px;
+    float: left;
+    text-align: left;
+    padding-top: 0;
+  }
+
+</style>
 

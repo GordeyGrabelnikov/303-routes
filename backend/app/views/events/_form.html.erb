@@ -5,13 +5,13 @@
 
   <div class="field">
     <%= f.label :name %>
-    <%= f.text_field :name, value: Faker::FunnyName.name %><br>
+    <%= f.text_field :name, value: @event.name ||= Faker::FunnyName.name %><br>
 
     <%= f.label :description %>
-    <%= f.text_area :description, value: Faker::Lorem.sentence %><br>
+    <%= f.text_area :description, value: @event.description ||= Faker::Lorem.sentence %><br>
 
     <%= f.label :date %>
-    <%= f.date_field :date, value: Time.zone.today %><br>
+    <%= f.date_field :date%><br>
 
     <%= f.label :route_id %>
     <% selected = @event.route_id.present? ? {selected: @event.route_id} : { } %>

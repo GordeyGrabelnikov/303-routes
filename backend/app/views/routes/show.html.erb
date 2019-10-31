@@ -46,8 +46,6 @@
 <%= link_to t('helpers.links.back'), routes_path, class: 'btn btn-success'%>
 <%= link_to  t('helpers.titles.edit', model: t('activerecord.models.route')), edit_route_path, class: 'btn btn-success' %>
 
-
-
 <div>
   <% if @route.unpublished? &&  current_user.admin?%>
     <%= form_with(url: update_route_status_route_path, method: :patch, local: true) do |f| %>
@@ -55,3 +53,113 @@
 <% end %>
   <% end  %>
 </div>
+
+
+
+<title>Waypoints in Directions</title>
+
+
+<div id="map"></div>
+<div id="right-panel">
+  <p>Total Distance: <span id="total"></span></p>
+
+</div>
+<script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 14,
+            center: {lat: 54.991105, lng: 73.371160}
+        });
+        var directionsService = new google.maps.DirectionsService;
+        var directionsRenderer = new google.maps.DirectionsRenderer({
+            panel: document.getElementById('right-panel')
+        });
+
+        directionsRenderer.setMap(map);
+        calculateAndDisplayRoute(directionsService, directionsRenderer)
+    }
+
+    function computeTotalDistance(result) {
+        var total = 0;
+        var myroute = result.routes[0];
+        for (var i = 0; i < myroute.legs.length; i++) {
+            total += myroute.legs[i].distance.value;
+        }
+        total = total / 1000;
+        document.getElementById('total').innerHTML = total + ' km';
+    }
+
+
+    function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+        var selectedMode = "<%= @route.movement_type %>";
+        var waypts = [];
+        <% @route.point_ids.each do |point|%>;
+            waypts.push({placeId: "<%= point %>"})
+        <% end %>
+        var src = waypts.shift();
+        var dest = waypts.pop();
+        waypts = waypts.map(function(point) {
+            return {
+                location: point,
+                stopover: true
+            };
+        });
+        directionsService.route({
+            origin: src,
+            destination: dest,
+            waypoints: waypts,
+            optimizeWaypoints: true,
+            travelMode: google.maps.TravelMode[selectedMode]
+        }, function(response, status) {
+            if (status === 'OK') {
+                directionsRenderer.setDirections(response);
+                computeTotalDistance(directionsRenderer.getDirections());
+            } else {
+                window.alert('Directions request failed due to ' + status);
+            }
+        });
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHXX8DjN4Fb2rQAarckXap5EKeAhUs8Uk&callback=initMap">
+</script>
+
+<style>
+    #right-panel {
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+    }
+
+    #right-panel select, #right-panel input {
+        font-size: 15px;
+    }
+
+    #right-panel select {
+        width: 100%;
+    }
+
+    #right-panel i {
+        font-size: 12px;
+    }
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    #map {
+        height: 400px;
+        float: left;
+        width: 70%;
+    }
+    #right-panel {
+        margin: 20px;
+        border-width: 2px;
+        width: 20%;
+        height: 400px;
+        float: left;
+        text-align: left;
+        padding-top: 0;
+    }
+
+</style>

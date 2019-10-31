@@ -5,7 +5,11 @@ class Event < ApplicationRecord
   has_many :events_users, dependent: :destroy
   has_many :users, through: :events_users
 
-  # has_one :guide, -> { events_users.find_by(role: :guide).user }
+  has_one :guide_events_user, -> { where(role: :guide) }, class_name: 'EventsUser', inverse_of: false
+  has_one :guide, through: :guide_events_user, class_name: 'User', source: :user
+
+  has_one :creator_events_user, -> { where(role: :creator) }, class_name: 'EventsUser', inverse_of: false
+  has_one :creator, through: :creator_events_user, class_name: 'User', source: :user
 
   validates :name, :description, :date, presence: true
   validates :name, uniqueness: { scope: %i[date route_id], message: 'This event exist already' }
@@ -19,8 +23,12 @@ class Event < ApplicationRecord
     users.find_by(events_users: { role: :creator })
   end
 
-  def guide
-    users.find_by(events_users: { role: :guide })
+  # def guide
+  #   users.find_by(events_users: { role: :guide })
+  # end
+
+  def role(user)
+    events_users.find_by(events_users: { user: user }).role
   end
 
   private
