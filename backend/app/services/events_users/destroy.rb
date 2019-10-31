@@ -11,7 +11,7 @@ module EventsUsers
         Event.destroy(event_id)
       else
         @event_user.destroy
-        event
+        Event.where(id: event_id).first
       end
     end
   end

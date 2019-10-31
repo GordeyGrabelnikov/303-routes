@@ -19,14 +19,6 @@ class Event < ApplicationRecord
 
   enum record_status: { unpublished: 0, published: 1, archived: 2 }
 
-  def creator
-    users.find_by(events_users: { role: :creator })
-  end
-
-  # def guide
-  #   users.find_by(events_users: { role: :guide })
-  # end
-
   def role(user)
     events_users.find_by(events_users: { user: user }).role
   end

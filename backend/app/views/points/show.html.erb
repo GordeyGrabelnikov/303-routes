@@ -15,7 +15,7 @@
     <%= render 'comments/form', commentable: @point %>
   </div>
   <ul>
-    <%= render(partial: 'comments/comment', collection: @point.comments.includes([:user, :comments])) %>
+    <%= render(partial: 'comments/comment', collection: @point.comments.includes(user: { avatar_attachment: :blob })) %>
   </ul>
 </div>
 <div class="row">

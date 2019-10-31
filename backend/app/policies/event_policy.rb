@@ -4,15 +4,22 @@ class EventPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if user.nil?
-        scope.where.not(record_statuses: :unpublished)
+        scope.where.not(record_status: :unpublished)
       elsif user.admin?
         scope.all
       else
-        scope.joins(:events_users)
-             .where('record_status = ? OR (user_id = ? and role = ?)', :published, user.id, :creator)
-             .distinct
+        published_or_user_follower(scope, user)
       end
     end
+
+    private
+
+    def published_or_user_follower(scope, user)
+      scope.joins(:events_users)
+          .where('record_status = ? OR user_id = ?', Event.record_statuses[:published], user.id)
+          .distinct
+    end
+
   end
 
   def index?

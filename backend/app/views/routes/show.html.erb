@@ -31,7 +31,7 @@
   <%= render 'comments/form', commentable: @route %>
 </div>
 <ul>
-  <%= render(partial: 'comments/comment', collection: @route.comments) %>
+  <%= render(partial: 'comments/comment', collection: @route.comments.includes(:user)) %>
 </ul>
 
 <div class="row">
