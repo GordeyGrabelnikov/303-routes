@@ -5,3 +5,16 @@
  *= require_self
  *= require_tree .
 */
+
+.form-short {
+  display: flex;
+}
+
+.form-short .form-control {
+  width: auto;
+  margin: 0 10px;
+}
+
+.form-short .form-control:first-child {
+  margin-left: 0;
+}
