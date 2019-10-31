@@ -5,19 +5,18 @@
 <p>
   <%= @point.description %>
 </p>
-<div>
   <div>
     <% @point.images.each do |image| %>
       <%= image_tag(image, style: "width:150px;height:160px;object-fit:cover") if @point.images.attached? %>
     <% end %>
   </div>
+  <div id="map"></div>
   <div>
     <%= render 'comments/form', commentable: @point %>
   </div>
   <ul>
     <%= render(partial: 'comments/comment', collection: @point.comments.includes(user: { avatar_attachment: :blob })) %>
   </ul>
-</div>
 <div class="row">
   <% if current_user %>
     <div class="small-2 large-4 columns">
@@ -40,8 +39,6 @@
 
 
 
-<h3>My Google Maps Demo</h3>
-<div id="map"></div>
 <script>
     function initMap() {
         var uluru = {lat: <%= @point.latitude %>, lng: <%= @point.longitude %>};
@@ -56,6 +53,6 @@
 <style>
   #map {
     height: 400px;
-    width: 100%;
+    width: 50%;
   }
 </style>
