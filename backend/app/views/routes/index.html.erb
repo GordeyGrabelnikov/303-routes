@@ -3,7 +3,7 @@
     <li class="active">
       <a data-toggle="tab" href="#home">
         <i class="green ace-icon fa fa-user bigger-120"></i>
-        Published routes
+        <%= t('helpers.titles.published_route') %>
       </a>
     </li>
 
@@ -11,7 +11,7 @@
       <% if current_user.present?  %>
         <a data-toggle="tab" href="#friends">
           <i class="blue ace-icon fa fa-users bigger-120"></i>
-          My routes
+          <%= t('helpers.titles.my_routes') %>
         </a>
       <% end %>
     </li>
@@ -20,7 +20,7 @@
       <% if current_user.present? && current_user.admin?  %>
         <a data-toggle="tab" href="#unpublished_events">
           <i class="orange ace-icon fa fa-rss bigger-120"></i>
-          Unpublished routes
+          <%= t('helpers.titles.unpublished_route') %>
         </a>
       <% end %>
     </li>
@@ -28,8 +28,8 @@
     <li style="float:right">
       <%= form_tag routes_path, method: :get do %>
         <%= text_field_tag :search, params[:search] %>
-        <%= select_tag :category, options_for_select( Route.movement_types.keys.to_a), include_blank: 'Choose route type'%>
-        <%= submit_tag 'Search' %>
+        <%= select_tag :category, options_for_select( Route.movement_types.keys.to_a), include_blank: t('helpers.titles.blank_movement_type')%>
+        <%= submit_tag t('helpers.links.search') %>
       <% end %>
     </li>
   </ul>

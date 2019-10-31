@@ -1,0 +1,8 @@
+<tr>
+  <td><%= archived_event.name  %></td>
+  <td><%= archived_event.date  %></td>
+  <td><%= archived_event.route.name  %></td>
+  <td><%= link_to t('helpers.links.show'), event_path(archived_event),  class: 'btn btn-success'  %></td>
+  <td><%= imdb_style_rating_for archived_event, 'event' %> </td>
+</tr>
+

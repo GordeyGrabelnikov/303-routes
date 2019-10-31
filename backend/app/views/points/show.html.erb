@@ -5,11 +5,7 @@
 <p>
   <%= @point.description %>
 </p>
-  <div>
-    <% @point.images.each do |image| %>
-      <%= image_tag(image, style: "width:150px;height:160px;object-fit:cover") if @point.images.attached? %>
-    <% end %>
-  </div>
+
   <div id="map"></div>
   <div>
     <%= render 'comments/form', commentable: @point %>
@@ -56,3 +52,43 @@
     width: 50%;
   }
 </style>
+
+
+
+
+<!--<div>-->
+  <%# @point.images.each do |image| %>
+    <%#= image_tag(image, style: "width:150px;height:160px;object-fit:cover") if @point.images.attached? %>
+  <%# end %>
+<!--</div>-->
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <% @point.images.each_with_index do |photo, n| %>
+      <li data-target='#MyCarousel' data-slide-to="#{n}" class="#{'active' if n == 0}"></li>
+    <% end %>
+  </ol>
+
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <%= image_tag(@point.images.first) if @point.images.attached? %>
+    </div>
+    <% @point.images.drop(1).each do |photo| %>
+      <div class="item">
+        <%= image_tag(photo) if @point.images.attached? %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+</div>
