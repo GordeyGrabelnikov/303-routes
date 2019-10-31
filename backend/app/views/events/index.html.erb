@@ -31,10 +31,10 @@
       </li>
 
       <li style="float:right">
-        <%= form_tag events_path, method: :get do %>
-          <%= text_field_tag :search, params[:search] %>
-          <%= select_tag :category, options_from_collection_for_select( Route.published, :id, :name), include_blank: 'Choose route'%>
-          <%= submit_tag 'Search' %>
+        <%= form_tag events_path, method: :get, class: "form-short" do %>
+          <%= text_field_tag :search, params[:search], class: "form-control" %>
+          <%= select_tag :category, options_from_collection_for_select( Route.published, :id, :name), include_blank: 'Choose route', class: "form-control" %>
+          <%= submit_tag 'Search', class: "form-control" %>
         <% end %>
       </li>
     </ul>
