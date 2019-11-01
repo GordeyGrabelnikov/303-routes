@@ -15,7 +15,11 @@ ru:
       coordinate: 'Координаты'
     show:
       point_name: 'Название:'
-
+  users:
+    show:
+      birthday: "Дата рождения:"
+      joined: "Зарегистрировался:"
+      mail: "Контакты:"
   routes:
     index:
       title: 'Список маршрутов'
@@ -26,6 +30,12 @@ ru:
       route_type: 'Тип:'
       route_points: 'Точки маршрута:'
       route_author: 'Автора маршрута:'
+    edit:
+      start: "Старт:"
+      end: "Окончание:"
+      waypoints: "Промежуточные точки:"
+      hint: "(Ctrl+Click или Cmd+Click для множественного выбора)"
+      build_route: 'Построить маршрут'
   events:
     index:
       event_title: 'Список событий'

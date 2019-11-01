@@ -5,7 +5,7 @@
       <%= select_tag :category, options_from_collection_for_select( Route.published, :id, :name), include_blank: t('helpers.titles.blank_route'), class: "form-control" %>
       <%= submit_tag t('helpers.links.search'), class: "btn btn-info form-control" %>
     <% end %>
-    <%= link_to '', new_event_path, class: 'icon icon--big icon--add', title: t('helpers.titles.new', model: t('activerecord.models.event')) %>
+    <%= link_to '', new_event_path, class: 'icon icon--big icon--add', title: t('helpers.titles.new', model: t('activerecord.models.event')) if current_user %>
   </div>
   <ul class="nav nav-tabs padding-18">
     <li class="active">
@@ -18,14 +18,14 @@
     <li>
       <a data-toggle="tab" href="#friends">
         <i class="blue ace-icon fa fa-users bigger-120"></i>
-        Events history
+        <%= t('helpers.titles.past_events') %>
       </a>
     </li>
 
     <li>
       <a data-toggle="tab" href="#user_events">
         <i class="blue ace-icon fa fa-users bigger-120"></i>
-        My events
+        <%= t('helpers.titles.my_events') %>
       </a>
     </li>
 
@@ -86,7 +86,7 @@
         </thead>
 
         <tbody>
-        <%= render(partial: 'user_event', collection: @events.joins(:events_users).where(events_users: {user: current_user}).includes([:route]))%>
+        <%= render(partial: 'user_event', collection: @events.joins(:events_users).where(events_users: {user: current_user}).includes([:route, :creator]))%>
         </tbody>
       </table>
     </div>

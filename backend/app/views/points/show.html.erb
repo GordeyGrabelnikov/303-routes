@@ -26,6 +26,10 @@
     <div class="row">
       <div class="col-sm-12" style="text-align: center;">
         <%= link_to t('helpers.links.back'), points_path, class: "btn btn-info" %>
+        <% if current_user && current_user.admin? %>
+          <%= link_to t('helpers.titles.edit', model: t('activerecord.models.event')), edit_point_path, class: 'btn btn-info' %>
+          <%= link_to t('helpers.titles.delete', model: t('activerecord.models.event')), point_path, method: :delete, data: {confirm: t('helpers.links.confirm')}, class: 'btn btn-danger' %>
+        <% end %>
         <% if @point.unpublished? &&  current_user.admin?%>
           <%= form_with(url: update_point_status_point_path, method: :patch, local: true, class: 'form--single-btn') do |f| %>
             <%= submit_tag 'Confirm', class: 'btn btn-success' %>
@@ -42,12 +46,6 @@
   </div>
   <div class="col-sm-6">
     <div id="right-panel">
-      <!--<div>-->
-        <%# @point.images.each do |image| %>
-          <%#= image_tag(image, style: "width:150px;height:160px;object-fit:cover") if @point.images.attached? %>
-        <%# end %>
-      <!--</div>-->
-      
       <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">

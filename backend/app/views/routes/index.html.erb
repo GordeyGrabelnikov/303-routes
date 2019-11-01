@@ -5,7 +5,7 @@
       <%= select_tag :category, options_for_select( Route.movement_types.keys.to_a), include_blank: t('helpers.titles.blank_movement_type'), class: "form-control" %>
       <%= submit_tag t('helpers.links.search'), class: "btn btn-info form-control" %>
     <% end %>
-    <%= link_to '', new_route_path, class: 'icon icon--big icon--add', title: t('helpers.titles.new', model: t('activerecord.models.route')) %>
+    <%= link_to '', new_route_path, class: 'icon icon--big icon--add', title: t('helpers.titles.new', model: t('activerecord.models.route')) if current_user %>
   </div>
 
   <ul class="nav nav-tabs padding-18">
@@ -47,7 +47,7 @@
         </thead>
 
         <tbody>
-        <%= render(partial: 'route', collection: @routes.published) %>
+        <%= render(partial: 'published_route', collection: @routes.published) %>
         </tbody>
       </table>
     </div>

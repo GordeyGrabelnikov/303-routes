@@ -50,7 +50,10 @@
     <div class="row">
       <div class="col-sm-12" style="text-align: center;">
         <%= link_to t('helpers.links.back'), routes_path, class: 'btn btn-info'%>
-        <%= link_to  t('helpers.titles.edit', model: t('activerecord.models.route')), edit_route_path, class: 'btn btn-info' %>
+        <% if current_user && (current_user == @route.user  || current_user.admin?)%>
+          <%= link_to  t('helpers.titles.edit', model: t('activerecord.models.route')), edit_route_path, class: 'btn btn-info' %>
+          <%= link_to  t('helpers.titles.delete', model: t('activerecord.models.route')), route_path, method: :delete, data: {confirm: t('helpers.links.confirm')},  class: 'btn btn-danger' %>
+        <% end %>
         <% if @route.unpublished? &&  current_user.admin?%>
           <%= form_with(url: update_route_status_route_path, method: :patch, local: true, class: "form--single-btn") do |f| %>
             <%= submit_tag 'Confirm', class: "btn btn-success" %>

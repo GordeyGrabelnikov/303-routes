@@ -16,10 +16,9 @@ class EventPolicy < ApplicationPolicy
 
     def published_or_user_follower(scope, user)
       scope.joins(:events_users)
-          .where('record_status = ? OR user_id = ?', Event.record_statuses[:published], user.id)
-          .distinct
+           .where('record_status = ? OR user_id = ?', Event.record_statuses[:published], user.id)
+           .distinct
     end
-
   end
 
   def index?

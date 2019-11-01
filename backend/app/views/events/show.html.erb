@@ -37,7 +37,10 @@
             <% end %>
           <% end %>
           <%= link_to t('helpers.links.back'), events_path, class: 'btn btn-info' %>
-          <%= link_to t('helpers.titles.edit', model: t('activerecord.models.event')), edit_event_path, class: 'btn btn-info' %>
+          <% if current_user && (current_user == @event.creator || current_user.admin?) %>
+            <%= link_to t('helpers.titles.edit', model: t('activerecord.models.event')), edit_event_path, class: 'btn btn-info' %>
+            <%= link_to t('helpers.titles.delete', model: t('activerecord.models.event')), event_path, method: :delete, data: {confirm: t('helpers.links.confirm')},  class: 'btn btn-danger' %>
+          <% end %>
           <% if @event.unpublished? &&  current_user.admin?%>
             <%= form_with(url: update_event_status_event_path, method: :patch, local: true, class: "form--single-btn") do |f| %>
               <%= submit_tag 'Confirm', class: "btn btn-success" %>

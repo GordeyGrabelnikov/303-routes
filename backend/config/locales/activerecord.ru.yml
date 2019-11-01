@@ -9,18 +9,25 @@ ru:
       point:
         name: 'Название достопримечательности'
         coordinates: 'Координаты'
+        latitude: "Широта"
+        longitude: "Долгота"
+        address: "Адрес"
         image: 'Фотография'
         description: 'Описание'
       event:
-        event_name: 'Название события'
-        event_description: 'Описание события'
-        event_date: 'Дата'
+        name: 'Название'
+        description: 'Описание'
+        date: 'Дата'
         route_id: 'Выберите маршрут'
         guide_id: 'Экскурсовод'
       route:
         name: 'Название маршрута'
-        route_type: 'Тип маршрута'
+        movement_type: 'Тип маршрута:'
         route_images: 'Фотографии'
+        movement_status:
+          WALKING: 'прогулка'
+          BICYCLING: 'велосипед'
+          DRIVING: 'автомобиль'
       user:
         first_name: 'Имя'
         last_name: 'Фамилия'
@@ -40,8 +47,6 @@ ru:
           attributes:
             current_password:
               blank: 'должен быть введен'
-#        <%= f.collection_check_boxes(:point_ids, Point.all.order('id DESC'), :id, :name) do |b| %>
-#        <%= b.label points: 'form-control text-center text-uppercase' %>
         events_user:
           attributes:
             user:
