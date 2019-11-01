@@ -22,7 +22,10 @@
   <% end %>
 </div>
 <%= link_to t('helpers.links.back'), points_path %>
-
+<% if current_user && current_user.admin? %>
+  <%= link_to t('helpers.titles.edit', model: t('activerecord.models.event')), edit_point_path, class: 'btn btn-success' %>
+  <%= link_to t('helpers.titles.delete', model: t('activerecord.models.event')), point_path, method: :delete, data: {confirm: t('helpers.links.confirm')},  class: 'btn btn-success' %>
+<% end %>
 
 
 <div>
@@ -53,14 +56,6 @@
   }
 </style>
 
-
-
-
-<!--<div>-->
-  <%# @point.images.each do |image| %>
-    <%#= image_tag(image, style: "width:150px;height:160px;object-fit:cover") if @point.images.attached? %>
-  <%# end %>
-<!--</div>-->
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->

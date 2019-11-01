@@ -4,12 +4,13 @@
       <%= image_tag(comment.user.avatar, class: "media-object", style: "width:45px;height:45px;border-radius:100%") if comment.user.avatar.attached? %>
     </div>
     <div class="media-body">
-      <h4 class="media-heading"><%= "#{comment.user.first_name} #{comment.user.last_name}" %>
-        <small><i>Submitted <%= time_ago_in_words(comment.created_at) %> ago</i></small></h4>
+      <h4 class="media-heading"><%= "#{comment.user.first_name} #{comment.user.last_name}" %></h4>
       <span><%= comment.body %></span>
-      <%= form_with(model: [ comment, Comment.new ], local: true) do |f| %>
-        <%= f.text_area :body, class: 'form-control', rows: '3'%><br/>
-        <%= f.submit t('.reply')  %>
+      <% if current_user %>
+        <%= form_with(model: [ comment, Comment.new ], local: true) do |f| %>
+          <%= f.text_area :body, class: 'form-control', rows: '3'%><br/>
+          <%= f.submit t('.reply')  %>
+        <% end %>
       <% end %>
     </div>
   </div>

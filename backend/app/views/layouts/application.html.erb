@@ -72,7 +72,7 @@
                  <%= image_tag(current_user.avatar, class: "img-circle avatar", style: "width:40px", alt: " avatar image") if current_user.avatar.attached? %>
                 </div>
                 <ul class="dropdown-menu user-dropdown">
-                  <li><%= link_to 'My profile', current_user%></li>
+                  <li><%= link_to t('helpers.links.my_profile'), current_user%></li>
                   <li role="separator" class="divider"></li>
                   <li class="more">
                     <ul>

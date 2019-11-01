@@ -46,7 +46,7 @@
         </thead>
 
         <tbody>
-        <%= render(partial: 'route', collection: @routes.published) %>
+        <%= render(partial: 'published_route', collection: @routes.published) %>
         </tbody>
       </table>
     </div>
@@ -96,4 +96,4 @@
     </div>
   </div>
 </div>
-<%= link_to t('helpers.titles.new', model: t('activerecord.models.route')), new_route_path, class: 'btn btn-success'  %>
+<%= link_to t('helpers.titles.new', model: t('activerecord.models.route')), new_route_path, class: 'btn btn-success'  if current_user%>

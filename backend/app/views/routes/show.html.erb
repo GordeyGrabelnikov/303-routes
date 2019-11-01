@@ -44,13 +44,15 @@
 </div>
 
 <%= link_to t('helpers.links.back'), routes_path, class: 'btn btn-success'%>
-<%= link_to  t('helpers.titles.edit', model: t('activerecord.models.route')), edit_route_path, class: 'btn btn-success' %>
-
+<% if current_user && (current_user == @route.user  || current_user.admin?)%>
+    <%= link_to  t('helpers.titles.edit', model: t('activerecord.models.route')), edit_route_path, class: 'btn btn-success' %>
+    <%= link_to  t('helpers.titles.delete', model: t('activerecord.models.route')), route_path, method: :delete, data: {confirm: t('helpers.links.confirm')},  class: 'btn btn-success' %>
+<% end %>
 <div>
   <% if @route.unpublished? &&  current_user.admin?%>
     <%= form_with(url: update_route_status_route_path, method: :patch, local: true) do |f| %>
-    <%= submit_tag 'Confirm' %>
-<% end %>
+        <%= submit_tag 'Confirm' %>
+    <% end %>
   <% end  %>
 </div>
 

@@ -1,4 +1,4 @@
-<h1> <%= t('helpers.titles.edit', model: t('activerecord.models.routes')) %></h1>
+<h1> <%= t('helpers.titles.edit', model: t('activerecord.models.route')) %></h1>
 
 <%= form_with(model: @route, local: true, html: { multipart: true }) do |f| %>
 
@@ -10,29 +10,29 @@
     <%= f.file_field :route_images, multiple: true  %><br>
 
     <div id="mode">
-      <b>Mode of Travel: </b>
+      <b><%= f.label :movement_type %></b>
       <% selected = @route.movement_type.present? ? {selected: @route.movement_type} : { } %>
       <%= f.select(:movement_type, Route.movement_types.keys.to_a.collect {|movement_type| [ movement_type.capitalize, movement_type ] }, selected)%>
     </div>
     <div id="points" style="display:none;"></div>
     <div>
       <div>
-        <b>Start:</b>
+        <b><%= t('routes.edit.start')%></b>
         <% selected = @route.points.present? ? {selected: @route.points.first.google_point_id} : { } %>
         <%= select(Point, :google_point_id, Point.published.collect {|point| [ point.name, point.google_point_id ] }, selected, id: 'start')%>
         <br>
       </div>
-      <b>Waypoints:</b> <br>
-      <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br>
+      <b><%= t('routes.edit.waypoints')%></b> <br>
+      <i><%= t('routes.edit.hint')%></i> <br>
       <%= select_tag 'waypoints', options_from_collection_for_select(Point.published, :google_point_id, :name, ['ChIJicCo3OH9qkMRHsrPdbmyBzc']), multiple: true, size: '10%' %>
       <br>
       <div>
-        <b>End:</b>
+        <b><%= t('routes.edit.end')%></b>
           <% selected = @route.points.present? ? {selected: @route.points.last.google_point_id} : { } %>
           <%= select(Point, :google_point_id, Point.published.collect {|point| [ point.name, point.google_point_id ] }, selected, id: 'end' )%>
         <br>
       </div>
-      <input type="button" id="submit" value="Show route">
+     <input type="button" id="submit" value="<%= t('routes.edit.build_route')%>">
     </div>
 
 

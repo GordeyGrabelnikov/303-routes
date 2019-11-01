@@ -70,8 +70,10 @@
   <% end %>
 </div>
 <%= link_to t('helpers.links.back'), events_path, class: 'btn btn-success' %>
-<%= link_to t('helpers.titles.edit', model: t('activerecord.models.event')), edit_event_path, class: 'btn btn-success' %>
-
+<% if current_user && (current_user == @event.creator || current_user.admin?) %>
+  <%= link_to t('helpers.titles.edit', model: t('activerecord.models.event')), edit_event_path, class: 'btn btn-success' %>
+  <%= link_to t('helpers.titles.delete', model: t('activerecord.models.event')), event_path, method: :delete, data: {confirm: t('helpers.links.confirm')},  class: 'btn btn-success' %>
+<% end %>
 <div>
   <% if @event.published? &&  current_user  %>
     <script type="text/javascript">

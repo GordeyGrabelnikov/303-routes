@@ -7,7 +7,7 @@
     <%if user_event.unpublished? %>
       <td><%= link_to t('helpers.links.edit'), edit_event_path(user_event),  class: 'btn btn-success'%></td>
     <% else %>
-      <td><%= link_to 'One more time', new_event_path(params: { name: user_event.name, route_id: user_event.route_id}),  class: 'btn btn-success'%></td>
+      <td><%= link_to t('helpers.links.repeat'), new_event_path(params: { name: user_event.name, route_id: user_event.route_id}),  class: 'btn btn-success'%></td>
     <% end %>
     <td><%= link_to t('helpers.links.destroy'), event_path(user_event), method: :delete, data: {confirm: t('helpers.links.confirm')},  class: 'btn btn-success' if current_user == user_event.creator%>
 <% else %>

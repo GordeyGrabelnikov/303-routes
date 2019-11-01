@@ -62,7 +62,7 @@ ru:
         characters_minimum: 'символов минимум'
         submit: 'Зарегистрироваться'
       edit:
-        title: 'Рекактировать пользователя'
+        title: 'Редактировать пользователя'
         characters_minimum: 'символов минимум'
         submit: 'Обновить'
         change_password_blank: 'не заполняйте, если не собираетесь изменять пароль' #leave blank if you don't want to change it

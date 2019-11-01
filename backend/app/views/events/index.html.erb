@@ -10,14 +10,14 @@
       <li>
         <a data-toggle="tab" href="#friends">
           <i class="blue ace-icon fa fa-users bigger-120"></i>
-          Events history
+          <%= t('helpers.titles.past_events') %>
         </a>
       </li>
 
       <li>
         <a data-toggle="tab" href="#user_events">
           <i class="blue ace-icon fa fa-users bigger-120"></i>
-          My events
+          <%= t('helpers.titles.my_events') %>
         </a>
       </li>
 
@@ -86,7 +86,7 @@
           </thead>
 
           <tbody>
-          <%= render(partial: 'user_event', collection: @events.joins(:events_users).where(events_users: {user: current_user}).includes([:route]))%>
+          <%= render(partial: 'user_event', collection: @events.joins(:events_users).where(events_users: {user: current_user}).includes([:route, :creator]))%>
           </tbody>
         </table>
       </div>
@@ -121,5 +121,5 @@
       </div>
     </div>
   </div>
-<%= link_to t('helpers.titles.new', model: t('activerecord.models.event')), new_event_path,  class: 'btn btn-success'  %>
+<%= link_to t('helpers.titles.new', model: t('activerecord.models.event')), new_event_path,  class: 'btn btn-success' if current_user %>
 

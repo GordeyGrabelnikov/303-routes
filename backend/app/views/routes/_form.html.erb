@@ -10,34 +10,34 @@
     <%= f.file_field :route_images, multiple: true  %><br>
 
     <div id="mode">
-      <b>Mode of Travel: </b>
+      <b> <%= f.label :movement_type %> </b>
       <%= f.select(:movement_type, Route.movement_types.keys.to_a.collect {|movement_type| [ movement_type.capitalize, movement_type ] })%>
     </div>
     <div id="points" style="display:none;"></div>
     <div>
-      <b>Start:</b>
+      <b><%= t('routes.edit.start')%></b>
       <select id="start">
         <% Point.published.each do |point| %>
           <option value="<%= point.google_point_id %>"> <%= point.name %></option>
         <% end %>
       </select>
       <br>
-      <b>Waypoints:</b> <br>
-      <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br>
+      <b><%= t('routes.edit.waypoints')%></b> <br>
+      <i><%= t('routes.edit.hint')%></i> <br>
       <select multiple id="waypoints">
         <% Point.published.each do |point| %>
           <option value="<%= point.google_point_id %>"> <%= point.name %></option>
         <% end %>
       </select>
       <br>
-      <b>End:</b>
+      <b><%= t('routes.edit.end')%></b>
       <select id="end">
         <% Point.published.each do |point| %>
           <option value="<%= point.google_point_id %>"> <%= point.name %></option>
         <% end %>
       </select>
       <br>
-      <input type="button" id="submit" value="Show route">
+      <input type="button" id="submit" value="<%= t('routes.edit.build_route')%>">
     </div>
 
 
@@ -147,9 +147,6 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHXX8DjN4Fb2rQAarckXap5EKeAhUs8Uk&callback=initMap">
 </script>
 </body>
-
-
-
 
 <style>
   #right-panel {
