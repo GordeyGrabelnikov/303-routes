@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_30_072051) do
+ActiveRecord::Schema.define(version: 2019_10_31_213503) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,7 +95,6 @@ ActiveRecord::Schema.define(version: 2019_10_30_072051) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "tags", default: [], null: false
     t.integer "record_status", default: 0, null: false
     t.bigint "user_id"
     t.decimal "latitude"
@@ -104,7 +103,6 @@ ActiveRecord::Schema.define(version: 2019_10_30_072051) do
     t.string "google_point_id"
     t.index ["name", "latitude", "longitude"], name: "index_points_on_name_and_latitude_and_longitude", unique: true
     t.index ["name"], name: "index_points_on_name"
-    t.index ["tags"], name: "index_points_on_tags"
     t.index ["user_id"], name: "index_points_on_user_id"
   end
 

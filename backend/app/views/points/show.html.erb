@@ -1,47 +1,93 @@
-<p>
-  <strong><%= t('.point_name') %></strong>
-  <%= @point.name %>
-</p>
-<p>
-  <%= @point.description %>
-</p>
-<div>
-  <div>
-    <% @point.images.each do |image| %>
-      <%= image_tag(image, style: "width:150px;height:160px;object-fit:cover") if @point.images.attached? %>
-    <% end %>
-  </div>
-  <div>
-    <%= render 'comments/form', commentable: @point %>
-  </div>
-  <ul>
-    <%= render(partial: 'comments/comment', collection: @point.comments.includes(user: { avatar_attachment: :blob })) %>
-  </ul>
-</div>
 <div class="row">
-  <% if current_user %>
-    <div class="small-2 large-4 columns">
-      <%= rating_for_user @point, current_user, 'name', half_show: true, star: 5, readonly: true, disable: true, cancel: false%>
-      <%= imdb_style_rating_for @point, 'name' %>
+  <div class="col-sm-8">
+    <div class="row form-group">
+      <label class="col-sm-4">
+        <%= t('.point_name') %>
+      </label>
+      <div class="col-sm-8">
+        <%= @point.name %>
+      </div>
     </div>
-  <% end %>
+    <div class="row form-group">
+      <div class="col-sm-12">
+        <%= @point.description %>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <% if current_user %>
+      <div class="row ">
+        <div class="col-sm-12 rating">
+          <%= rating_for_user @point, current_user, 'name', half_show: true, star: 5, readonly: true, disable: true, cancel: false%>
+          <%= imdb_style_rating_for @point, 'name' %>
+        </div>
+      </div>
+    <% end %>
+    <div class="row">
+      <div class="col-sm-12" style="text-align: center;">
+        <%= link_to t('helpers.links.back'), points_path, class: "btn btn-info" %>
+        <% if @point.unpublished? &&  current_user.admin?%>
+          <%= form_with(url: update_point_status_point_path, method: :patch, local: true, class: 'form--single-btn') do |f| %>
+            <%= submit_tag 'Confirm', class: 'btn btn-success' %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
-<%= link_to t('helpers.links.back'), points_path %>
 
-
+<div class="row map-wrapper">
+  <div class="col-sm-6">
+    <div id="map"></div>
+  </div>
+  <div class="col-sm-6">
+    <div id="right-panel">
+      <!--<div>-->
+        <%# @point.images.each do |image| %>
+          <%#= image_tag(image, style: "width:150px;height:160px;object-fit:cover") if @point.images.attached? %>
+        <%# end %>
+      <!--</div>-->
+      
+      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <% @point.images.each_with_index do |photo, n| %>
+            <li data-target='#MyCarousel' data-slide-to="#{n}" class="#{'active' if n == 0}"></li>
+          <% end %>
+        </ol>
+      
+        <div class="carousel-inner" role="listbox">
+          <div class="item active">
+            <%= image_tag(@point.images.first) if @point.images.attached? %>
+          </div>
+          <% @point.images.drop(1).each do |photo| %>
+            <div class="item">
+              <%= image_tag(photo) if @point.images.attached? %>
+            </div>
+          <% end %>
+        </div>
+      
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div>
-  <% if @point.unpublished? &&  current_user.admin?%>
-    <%= form_with(url: update_point_status_point_path, method: :patch, local: true) do |f| %>
-      <%= submit_tag 'Confirm' %>
-    <% end %>
-  <% end %>
+  <%= render 'comments/form', commentable: @point %>
 </div>
+<ul class="comments">
+  <%= render(partial: 'comments/comment', collection: @point.comments.includes(user: { avatar_attachment: :blob })) %>
+</ul>
 
-
-
-<h3>My Google Maps Demo</h3>
-<div id="map"></div>
 <script>
     function initMap() {
         var uluru = {lat: <%= @point.latitude %>, lng: <%= @point.longitude %>};
@@ -53,9 +99,3 @@
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHXX8DjN4Fb2rQAarckXap5EKeAhUs8Uk&callback=initMap">
 </script>
-<style>
-  #map {
-    height: 400px;
-    width: 100%;
-  }
-</style>

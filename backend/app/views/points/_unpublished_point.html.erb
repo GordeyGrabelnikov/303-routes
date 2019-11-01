@@ -1,8 +1,7 @@
 <tr>
   <td><%= unpublished_point.name  %></td>
   <td><%= "#{unpublished_point.latitude},  #{unpublished_point.longitude}" %></td>
-  <td><%= unpublished_point.tags  %></td>
-  <td><%= link_to t('helpers.links.show'), point_path(unpublished_point),  class: 'btn btn-success'  %></td>
-  <td><%= link_to t('helpers.links.edit'), edit_point_path(unpublished_point),  class: 'btn btn-success' %></td>
-  <td><%= link_to t('helpers.links.destroy'), point_path(unpublished_point), method: :delete, data: {confirm: t('helpers.links.confirm')} ,  class: 'btn btn-success' %>
+  <td><%= link_to '', point_path(unpublished_point), class: 'icon icon--show', title: t('helpers.links.show') %></td>
+  <td><%= link_to '', edit_point_path(unpublished_point), class: 'icon icon--edit', title: t('helpers.links.edit') %></td>
+  <td><%= link_to '', point_path(unpublished_point), method: :delete, data: {confirm: t('helpers.links.confirm')} ,  class: 'icon icon--delete', title: t('helpers.links.destroy') %>
 </tr>

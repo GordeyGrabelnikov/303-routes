@@ -1,61 +1,79 @@
 <%= form_with(model: @point, local: true) do |f| %>
   <%= render 'common/errors', resource: @point %>
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-    <%#= f.text_field :name, value: Faker::FunnyName.name, class: 'form-control' %>
+  <div class="row form-group">
+    <label class="col-sm-2 col-form-label">
+      <%= f.label :name %>
+    </label>
+    <div class="col-sm-10">
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description%>
-    <%#= f.text_area :description, value: Faker::Lorem.sentence, class: 'form-control' %>
+  <div class="row form-group">
+    <label class="col-sm-2 col-form-label">
+      <%= f.label :description %>
+    </label>
+    <div class="col-sm-10">
+      <%= f.text_area :description, class: 'form-control'%>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :latitude %><br />
-    <%= f.text_field :latitude%>
+  <div class="row form-group">
+    <label class="col-sm-2 col-form-label">
+      <%= f.label :latitude %>
+    </label>
+    <div class="col-sm-10">
+      <%= f.text_field :latitude, class: 'form-control' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :longitude %><br />
-    <%= f.text_field :longitude%>
+  <div class="row form-group">
+    <label class="col-sm-2 col-form-label">
+    <%= f.label :longitude %>
+    </label>
+    <div class="col-sm-10">
+      <%= f.text_field :longitude, class: 'form-control' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :address %><br />
-    <%= f.text_field :address%>
+  <div class="row form-group">
+    <label class="col-sm-2 col-form-label">
+    <%= f.label :address %>
+    </label>
+    <div class="col-sm-10">
+      <%= f.text_field :address, class: 'form-control' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :google_point_id %><br />
-    <%= f.text_field :google_point_id%>
+  <div class="row form-group" style="display: none;">
+    <label class="col-sm-2 col-form-label">
+    <%= f.label :google_point_id %>
+    </label>
+    <div class="col-sm-10">
+      <%= f.text_field :google_point_id, class: 'form-control' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :tags %><br />
-    <%= f.text_area :tags, class: 'form-control '%>
+  <div class="row form-group">
+    <label class="col-sm-2 col-form-label">
+    <%= f.label :tags %>
+    </label>
+    <div class="col-sm-10">
+      <%= f.text_area :tags, class: 'form-control' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :image %><br />
-    <%= f.file_field :images, multiple: true %>
+  <div class="row form-group" style="display: none;">
+    <label class="col-sm-2 col-form-label">
+    <%= f.label :images %>
+    </label>
+    <div class="col-sm-10">
+      <%= f.text_field :images, multiple: true, class: 'form-control' %>
+    </div>
   </div>
-  <div class="actions">
-    <%= f.submit t("#{@point.new_record? ? 'helpers.links.new' : 'helpers.links.edit' }"), class: 'btn btn-default'%>
+  <div class="row row--buttons actions--right">
+    <%= f.submit t("#{@point.new_record? ? 'helpers.links.new' : 'helpers.links.edit' }"), class: 'btn btn-success'%>
+    <%= link_to t('helpers.links.back'), points_path, class: 'btn btn-info' %>
   </div>
 
-<%= link_to t('helpers.links.back'), points_path %>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<title>Marker Labels</title>
+  <div class="row map-wrapper">
+    <div class="col-sm-12">
+      <div id="map2"></div>
+    </div>
+  </div>
 
 <script>
     function initMap2() {
@@ -107,23 +125,8 @@
             geocodeLatLng(geocoder, map, infowindow, marker_position);
         });
 
-
         var geocoder = new google.maps.Geocoder;
         var infowindow = new google.maps.InfoWindow;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         function geocodeLatLng(geocoder, map, infowindow, coordinate) {
             var latlng = coordinate;
@@ -142,45 +145,10 @@
                 }
             });
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 </script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHXX8DjN4Fb2rQAarckXap5EKeAhUs8Uk&libraries=places&callback=initMap2">
 </script>
-<body>
-<div id="map2"></div>
-</body>
 
-<style>
-  /* Always set the map height explicitly to define the size of the div
-   * element that contains the map. */
-  #map2 {
-    height: 400px;
-    width: 100%;
-  }
-  /* Optional: Makes the sample page fill the window. */
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-</style>
 <% end %>

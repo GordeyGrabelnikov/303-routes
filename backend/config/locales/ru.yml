@@ -10,9 +10,9 @@ ru:
   points:
     index:
       title: 'Список достопримечательностей'
-      point_name: 'Название'
-      point_coordinate: 'Координаты'
-      point_tags: 'Теги'
+    points_list:
+      name: 'Название'
+      coordinate: 'Координаты'
     show:
       point_name: 'Название:'
 

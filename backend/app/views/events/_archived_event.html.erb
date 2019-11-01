@@ -1,0 +1,8 @@
+<tr>
+  <td><%= archived_event.name %></td>
+  <td class="td--date"><%= archived_event.date %></td>
+  <td><%= archived_event.route.name %></td>
+  <td><%= link_to '', event_path(archived_event), class: 'icon icon--show', title: t('helpers.links.show') %></td>
+  <td><%= imdb_style_rating_for archived_event, 'event' %> </td>
+</tr>
+

@@ -1,0 +1,7 @@
+<tr>
+  <td><%= published_event.name  %></td>
+  <td class="td--date"><%= published_event.date  %></td>
+  <td><%= published_event.route.name  %></td>
+  <td><%= link_to '', event_path(published_event),  class: 'icon icon--show', title: t('helpers.links.show')  %></td>
+</tr>
+

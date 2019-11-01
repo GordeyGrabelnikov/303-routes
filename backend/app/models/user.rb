@@ -13,7 +13,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
 
   has_many :events_user_created_events, -> { where(role: :creator) }, class_name: 'EventsUser', inverse_of: false
-  has_many :created_events, through: :events_user_created_events, class_name: 'Event', source: :event, dependent: :destroy
+  has_many :created_events, through: :events_user_created_events, class_name: 'Event', source: :event
 
 
   has_one_attached :avatar

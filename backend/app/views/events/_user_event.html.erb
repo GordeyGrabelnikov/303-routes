@@ -1,0 +1,25 @@
+<tr>
+  <td><%= user_event.name  %></td>
+  <td class="td--date"><%= user_event.date  %></td>
+  <td><%= user_event.route.name  %></td>
+  <td><%= link_to '', event_path(user_event),  class: 'icon icon--show', title: t('helpers.links.show') %></td>
+  <%if current_user == user_event.creator %>
+    <%if user_event.unpublished? %>
+      <td><%= link_to '', edit_event_path(user_event),  class: 'icon icon--edit', title: t('helpers.links.edit') %></td>
+    <% else %>
+      <td><%= link_to '', new_event_path(params: { name: user_event.name, route_id: user_event.route_id}), class: 'icon icon--repeat', title: 'One more time' %></td>
+    <% end %>
+    <td><%= link_to '', event_path(user_event), method: :delete, data: {confirm: t('helpers.links.confirm')},  class: 'icon icon--delete', title: t('helpers.links.destroy') if current_user == user_event.creator%>
+<% else %>
+    <td colspan="2">
+    <div class="row">
+        <div class="col-sm-12">
+          <%= rating_for_user user_event, current_user, 'event', half_show: true, star: 5, readonly: true, disable: true, cancel: false%>
+        </div>
+    </div>
+    </td>
+  <% end %>
+  <td><%= user_event.record_status %></td>
+  <td><%= user_event.role(current_user)%></td>
+</tr>
+

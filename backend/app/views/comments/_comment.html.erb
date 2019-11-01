@@ -8,15 +8,13 @@
         <small><i>Submitted <%= time_ago_in_words(comment.created_at) %> ago</i></small></h4>
       <span><%= comment.body %></span>
       <%= form_with(model: [ comment, Comment.new ], local: true) do |f| %>
-        <%= f.text_area :body, class: 'form-control', rows: '3'%><br/>
-        <%= f.submit t('.reply')  %>
+        <%= f.text_area :body, class: 'form-control js-reply', style: 'display: none', rows: '3'%><br/>
+        <%= f.button t('.reply'), class: "btn btn-info btn-sm js-reply-btn", type: "button"  %>
+        <%= f.submit t('comments.form.comment'), class: "btn btn-info btn-sm js-reply-submit", style: 'display: none' %>
       <% end %>
     </div>
   </div>
-  <ul>
+  <ul class="comments">
     <%= render partial: 'comments/comment', collection: comment.comments.includes(:user) %>
   </ul>
 </li>
-
-
-

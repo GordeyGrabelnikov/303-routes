@@ -94,18 +94,17 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="container container--footer">
       <div class="row">
         <div class="col-lg-12">
           <%= bootstrap_flash %>
           <%= yield %>
         </div>
       </div><!--/row-->
-
-      <footer>
-        <p>Copyright © 2019 Grabelnikov Gordey</p>
-        <%= link_to "Database Analyzer", pg_hero_path, target: :blank %>
-      </footer>
     </div>
+
+    <footer>
+      Copyright © 2019 Grabelnikov Gordey
+    </footer>
   </body>
 </html>

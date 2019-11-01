@@ -3,67 +3,87 @@
 <%= render 'common/errors', resource: @route %>
 
   <div class="field">
-    <%= f.label :name  %>
-    <%= f.text_field :name, value: Faker::FunnyName.name %><br>
-
-    <%= f.label :route_images %>
-    <%= f.file_field :route_images, multiple: true  %><br>
-
-    <div id="mode">
-      <b>Mode of Travel: </b>
-      <%= f.select(:movement_type, Route.movement_types.keys.to_a.collect {|movement_type| [ movement_type.capitalize, movement_type ] })%>
+    <div class="row form-group">
+      <label class="col-sm-2 col-form-label">
+        <%= f.label :name  %>
+      </label>
+      <div class="col-sm-10">
+        <%= f.text_field :name, value: Faker::FunnyName.name, class: "form-control" %><br>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label class="col-sm-2 col-form-label">
+        <%= f.label :route_images %>
+      </label>
+      <div class="col-sm-10">
+        <%= f.file_field :route_images, multiple: true, class: "form-control" %><br>
+      </div>
+    </div>
+    <div class="row form-group" id="mode">
+      <label class="col-sm-2 col-form-label">
+        Mode of Travel:
+      </label>
+      <div class="col-sm-10">
+        <%= f.select(:movement_type, Route.movement_types.keys.to_a.collect {|movement_type| [ movement_type.capitalize, movement_type ] }, {}, {:class => 'form-control'})%>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label class="col-sm-2 col-form-label">
+        Start:
+      </label>
+      <div class="col-sm-10">
+        <select id="start" class="form-control">
+          <% Point.published.each do |point| %>
+            <option value="<%= point.google_point_id %>"> <%= point.name %></option>
+          <% end %>
+        </select>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label class="col-sm-2 col-form-label">
+        <div>Waypoints:</div>
+        <i style="font-weight: normal;">(Ctrl+Click or Cmd+Click for multiple selection)</i>
+      </label>
+      <div class="col-sm-10">
+        <select multiple id="waypoints" class="form-control">
+          <% Point.published.each do |point| %>
+            <option value="<%= point.google_point_id %>"> <%= point.name %></option>
+          <% end %>
+        </select>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label class="col-sm-2 col-form-label">
+        End:
+      </label>
+      <div class="col-sm-10">
+        <select id="end" class="form-control">
+          <% Point.published.each do |point| %>
+            <option value="<%= point.google_point_id %>"> <%= point.name %></option>
+          <% end %>
+        </select>
+      </div>
+    </div>
+    <div class="row row--buttons actions--right">
+      <input type="button" id="submit" value="Show route" class="btn btn-info">
+      <%= link_to t('helpers.links.back'), routes_path, class: "btn btn-info" %>
+      <%= f.submit t("#{@route.new_record? ? 'helpers.links.new' : 'helpers.links.edit' }"), class: "btn btn-success", style: "display: none" %>
     </div>
     <div id="points" style="display:none;"></div>
-    <div>
-      <b>Start:</b>
-      <select id="start">
-        <% Point.published.each do |point| %>
-          <option value="<%= point.google_point_id %>"> <%= point.name %></option>
-        <% end %>
-      </select>
-      <br>
-      <b>Waypoints:</b> <br>
-      <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br>
-      <select multiple id="waypoints">
-        <% Point.published.each do |point| %>
-          <option value="<%= point.google_point_id %>"> <%= point.name %></option>
-        <% end %>
-      </select>
-      <br>
-      <b>End:</b>
-      <select id="end">
-        <% Point.published.each do |point| %>
-          <option value="<%= point.google_point_id %>"> <%= point.name %></option>
-        <% end %>
-      </select>
-      <br>
-      <input type="button" id="submit" value="Show route">
-    </div>
-
-
-
-
   </div>
-  <div class="actions">
-    <%= f.submit t("#{@route.new_record? ? 'helpers.links.new' : 'helpers.links.edit' }")%>
-  </div>
-
-<%= link_to t('helpers.links.back'), routes_path %>
-
 <% end %>
 
-
-
-
-<title>Waypoints in Directions</title>
-
-
-<body>
-<div id="map"></div>
-<div id="right-panel">
-  <p>Total Distance: <span id="total"></span></p>
-
+<div class="row map-wrapper">
+  <div class="col-sm-6">
+    <div id="map"></div>
+  </div>
+  <div class="col-sm-6">
+    <div id="right-panel">
+      <p>Total Distance: <span id="total"></span></p>
+    </div>
+  </div>
 </div>
+
 <script>
     function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
@@ -79,9 +99,10 @@
 
 
 
-        document.getElementById('submit').addEventListener('click', function() {
+        var showRoute = document.getElementById('submit');
+        showRoute.addEventListener('click', function() {
             calculateAndDisplayRoute(directionsService, directionsRenderer);
-
+            showRoute.parentNode.querySelector('input[type="submit"]').style.display = 'initial';
         });
         document.getElementById('mode').addEventListener('change', function() {
             calculateAndDisplayRoute(directionsService, directionsRenderer);
@@ -146,47 +167,3 @@
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHXX8DjN4Fb2rQAarckXap5EKeAhUs8Uk&callback=initMap">
 </script>
-</body>
-
-
-
-
-<style>
-  #right-panel {
-    font-family: 'Roboto','sans-serif';
-    line-height: 30px;
-    padding-left: 10px;
-  }
-
-  #right-panel select, #right-panel input {
-    font-size: 15px;
-  }
-
-  #right-panel select {
-    width: 100%;
-  }
-
-  #right-panel i {
-    font-size: 12px;
-  }
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  #map {
-    height: 400px;
-    float: left;
-    width: 70%;
-  }
-  #right-panel {
-    margin: 20px;
-    border-width: 2px;
-    width: 20%;
-    height: 400px;
-    float: left;
-    text-align: left;
-    padding-top: 0;
-  }
-
-</style>

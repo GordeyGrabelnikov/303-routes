@@ -6,15 +6,169 @@
  *= require_tree .
 */
 
-.form-short {
+body footer {
   display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  background: #ffffff;
 }
 
-.form-short .form-control {
+.search-form {
+  display: flex;
+  margin-left: 10px;
+  align-items: center;
+}
+
+.search-form .form-control {
   width: auto;
-  margin: 0 10px;
+  margin: 0 10px 0 0;
 }
 
-.form-short .form-control:first-child {
+.search-form .form-control:first-child {
   margin-left: 0;
+}
+
+.tabbable-header {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.tabbable-header > .search-form {
+  flex: 1;
+}
+
+.td--date {
+  min-width: 100px;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  display: block;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin: 0 auto;
+}
+
+  .icon:before {
+    content: '';
+  }
+
+.icon.icon--big {
+  width: 55px;
+  height: 55px;
+}
+
+.icon--show {
+  background-image: url(/assets/eye.svg);
+}
+
+  .icon--show:hover {
+    background-image: url(/assets/eye-hover.svg);
+  }
+
+.icon--add {
+  background-image: url(/assets/plus.svg);
+}
+
+  .icon--add:hover {
+    background-image: url(/assets/plus-hover.svg);    
+  }
+
+.icon--edit {
+  width: 35px;
+  height: 35px;
+  background-image: url(/assets/pen.svg);
+}
+
+  .icon--edit:hover {
+    background-image: url(/assets/pen-hover.svg);
+  }
+
+.icon--delete {
+  width: 45px;
+  height: 45px;
+  background-image: url(/assets/trash.svg);
+}
+
+  .icon--delete:hover {
+    background-image: url(/assets/trash-hover.svg);
+  }
+
+.icon--repeat {
+  background-image: url(/assets/repeat.svg);
+}
+
+  .icon--repeat:hover {
+    background-image: url(/assets/repeat-hover.svg);
+  }
+
+.guide-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.rating {
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.row--buttons {
+  margin-top: 30px;
+}
+
+.form--single-btn {
+  display: inline-block;
+}
+
+.container--footer {
+  padding-bottom: 50px;
+}
+
+.col-form-label {
+  padding-top: calc(.375rem + 1px);
+  padding-bottom: calc(.375rem + 1px);
+  margin-bottom: 0;
+  font-size: inherit;
+  line-height: 1.5;
+}
+
+.comments {
+  list-style-type: none;
+}
+
+  .comments li {
+    margin-top: 15px;
+  }
+
+.actions--right {
+  text-align: right;;
+}
+
+#map, #map2 {
+  height: 400px;
+  width: 100%;
+}
+
+.adp-warnbox,
+.adp-legal,
+.adp-placemark {
+display: none;
+}
+
+.map-wrapper {
+margin-top: 25px;
+}
+
+.carousel-inner>.item>img {
+  margin: 0 auto;
 }

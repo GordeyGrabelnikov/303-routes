@@ -10,7 +10,6 @@ ru:
         name: 'Название достопримечательности'
         coordinates: 'Координаты'
         image: 'Фотография'
-        tags: 'Теги'
         description: 'Описание'
       event:
         event_name: 'Название события'

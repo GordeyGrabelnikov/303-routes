@@ -1,0 +1,9 @@
+<tr>
+  <td><%= unpublished_event.name  %></td>
+  <td class="td--date"><%= unpublished_event.date  %></td>
+  <td><%= unpublished_event.route.name  %></td>
+  <td><%= link_to '', event_path(unpublished_event), class: 'icon icon--show', title: t('helpers.links.show')  %></td>
+  <td><%= link_to '', edit_event_path(unpublished_event), class: 'icon icon--edit', title: t('helpers.links.edit')  %></td>
+  <td><%= link_to '', event_path(unpublished_event), method: :delete, data: {confirm: t('helpers.links.confirm')}, class: 'icon icon--delete', title: t('helpers.links.destroy') %>
+</tr>
+

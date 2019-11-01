@@ -18,3 +18,18 @@
 //= require jquery.raty
 //= require ratyrate
 //= require twitter/bootstrap
+
+document.addEventListener('DOMContentLoaded', function () {
+  var replyButtons = document.querySelectorAll('.comments .js-reply-btn');
+  replyButtons.forEach(function (replyButton) {
+    var reply = replyButton.parentNode.querySelector('.js-reply');
+    var submit = replyButton.parentNode.querySelector('.js-reply-submit');
+    replyButton.onclick = function () {
+      var display = reply.style.display === 'none'
+        ? 'initial'
+        : 'none';
+      reply.style.display = display;
+      submit.style.display = display;
+    };
+  });
+});

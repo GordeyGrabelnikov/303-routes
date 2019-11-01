@@ -1,69 +1,89 @@
-<p>
-  <strong><%= t('.route_name') %></strong>
-  <%= @route.name %>
-</p>
-
-<p>
-  <strong><%= t('.route_type') %></strong>
-  <%= @route.movement_type %>
-</p>
-
-<p>
-  <strong><%= t('.route_points') %></strong>
-  <% @route.points.each do |x|%>
-  <div>
-    <%= link_to "#{x.name}", x %>
+<div class="row form-group">
+  <div class="col-sm-6">
+    <div class="row form-group">
+      <label class="col-sm-4">
+        <%= t('.route_name') %>
+      </label>
+      <div class="col-sm-8">
+        <%= @route.name %>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label class="col-sm-4">
+        <%= t('.route_type') %>
+      </label>
+      <div class="col-sm-8">
+        <%= @route.movement_type %>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label class="col-sm-4">
+        <%= t('.route_points') %>
+      </label>
+      <div class="col-sm-8">
+        <% @route.points.each do |x|%>
+          <div>
+            <%= link_to "#{x.name}", x %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label class="col-sm-4">
+        <%= t('.route_author')%>
+      </label>
+      <div class="col-sm-8">
+        <%= @route.user.first_name %>
+        <%= @route.user.last_name %>
+      </div>
+    </div>
   </div>
-<% end %>
-</p>
-<p>
-  <strong><%= t('.route_author')%></strong>
-  <%= @route.user.first_name %>
-  <%= @route.user.last_name %>
-</p>
+  <div class="col-sm-6">
+    <% if current_user %>
+      <div class="row">
+        <div class="col-sm-12 rating">
+          <%= rating_for_user @route, current_user, 'route', half_show: true, star: 5, readonly: true, disable: true, cancel: false%>
+          <%= imdb_style_rating_for @route, 'route' %>
+        </div>
+      </div>
+    <% end %>
+    <div class="row">
+      <div class="col-sm-12" style="text-align: center;">
+        <%= link_to t('helpers.links.back'), routes_path, class: 'btn btn-info'%>
+        <%= link_to  t('helpers.titles.edit', model: t('activerecord.models.route')), edit_route_path, class: 'btn btn-info' %>
+        <% if @route.unpublished? &&  current_user.admin?%>
+          <%= form_with(url: update_route_status_route_path, method: :patch, local: true, class: "form--single-btn") do |f| %>
+            <%= submit_tag 'Confirm', class: "btn btn-success" %>
+          <% end %>
+        <% end  %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row map-wrapper">
+  <div class="col-sm-6">
+    <div id="map"></div>
+  </div>
+  <div class="col-sm-6">
+    <div id="right-panel">
+      <p>Total Distance: <span id="total"></span></p>
+    </div>
+  </div>
+</div>
 
 <div>
   <% @route.route_images.each do |image| %>
   <%= image_tag(image, style: "width:150px;height:160px;object-fit:cover") if @route.route_images.attached? %>
   <% end %>
 </div>
+
 <div>
   <%= render 'comments/form', commentable: @route %>
 </div>
-<ul>
+<ul class="comments">
   <%= render(partial: 'comments/comment', collection: @route.comments.includes(:user)) %>
 </ul>
 
-<div class="row">
-  <% if current_user %>
-    <div class="small-2 large-4 columns">
-      <%= rating_for_user @route, current_user, 'route', half_show: true, star: 5, readonly: true, disable: true, cancel: false%>
-      <%= imdb_style_rating_for @route, 'route' %>
-    </div>
-  <% end %>
-</div>
-
-<%= link_to t('helpers.links.back'), routes_path, class: 'btn btn-success'%>
-<%= link_to  t('helpers.titles.edit', model: t('activerecord.models.route')), edit_route_path, class: 'btn btn-success' %>
-
-<div>
-  <% if @route.unpublished? &&  current_user.admin?%>
-    <%= form_with(url: update_route_status_route_path, method: :patch, local: true) do |f| %>
-    <%= submit_tag 'Confirm' %>
-<% end %>
-  <% end  %>
-</div>
-
-
-
-<title>Waypoints in Directions</title>
-
-
-<div id="map"></div>
-<div id="right-panel">
-  <p>Total Distance: <span id="total"></span></p>
-
-</div>
 <script>
     function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
@@ -123,43 +143,3 @@
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHXX8DjN4Fb2rQAarckXap5EKeAhUs8Uk&callback=initMap">
 </script>
-
-<style>
-    #right-panel {
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-    }
-
-    #right-panel select, #right-panel input {
-        font-size: 15px;
-    }
-
-    #right-panel select {
-        width: 100%;
-    }
-
-    #right-panel i {
-        font-size: 12px;
-    }
-    html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-    #map {
-        height: 400px;
-        float: left;
-        width: 70%;
-    }
-    #right-panel {
-        margin: 20px;
-        border-width: 2px;
-        width: 20%;
-        height: 400px;
-        float: left;
-        text-align: left;
-        padding-top: 0;
-    }
-
-</style>
